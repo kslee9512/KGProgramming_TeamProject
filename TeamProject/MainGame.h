@@ -20,7 +20,7 @@ private:
 
 	Image* backBuffer;
 	Image* background;
-	Character* player1;
+	
 public:
 	HRESULT Init();		// 오버라이딩 : 다형성
 	void Release();

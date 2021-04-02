@@ -15,10 +15,8 @@ HRESULT MainGame::Init()
 	sizex = 68;
 	sizey = 104;
 	print_posx = 0;
-	player1 = new Character();
-	player1->Init(PPOS::P1);
 	background = new Image();
-	background->Init(WINSIZE_X, WINSIZE_Y, false, false);
+	background->Init("Image/BackGround/background.bmp", WINSIZE_X, WINSIZE_Y, NULL, NULL);
 	// 메인게임의 초기화 함수
 	hTimer = (HANDLE)SetTimer(g_hWnd, 0, 10, NULL);
 
@@ -38,15 +36,15 @@ void MainGame::Release()
 	delete backBuffer;
 	backBuffer = nullptr;
 
-	player1->Release();
-	delete player1;
-	player1 = nullptr;
+	background->Release();
+	delete background;
+	background = nullptr;
+
 	KillTimer(g_hWnd, 0);
 }
 
 void MainGame::Update()
 {
-	player1->Update(player1->GetStatus());
 	InvalidateRect(g_hWnd, NULL, false);
 }
 
@@ -62,7 +60,6 @@ void MainGame::Render(HDC hdc)
 	wsprintf(szText, "X : %d, Y : %d", ptMouse.x, ptMouse.y);
 	TextOut(hBackDC, 200, 20, szText, strlen(szText));
 
-	player1->Render(hBackDC);
 	backBuffer->Render(hdc, 0, 0, 0);
 }
 
