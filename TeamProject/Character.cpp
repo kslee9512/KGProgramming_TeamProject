@@ -110,19 +110,24 @@ void Character::Render(HDC hdc)
 		}
 		if (status == STATUS::JJAP)
 		{
-			image[3].Render(hdc, pos.x, pos.y, 2188 / maxFrame[3], 683, 2188 / maxFrame[3], 0, 2188 / maxFrame[3], 683, frame);
+			image[3].Render(hdc, pos.x, pos.y, 7658 / maxFrame[3], 683, 7658 / maxFrame[3], 0, 7658 / maxFrame[3], 683, frame);
 		}
 		if (status == STATUS::PUNCH)
 		{
-			image[4].Render(hdc, pos.x, pos.y, frame);
+			image[4].Render(hdc, pos.x, pos.y, 9846 / maxFrame[4], 683, 9846 / maxFrame[4], 0, 9846 / maxFrame[4], 683, frame);
 		}
 		if (status == STATUS::LOWKICK)
 		{
-			image[5].Render(hdc, pos.x, pos.y, frame);
+			image[5].Render(hdc, pos.x, pos.y, 6564 / maxFrame[5], 683, 6564 / maxFrame[5], 0, 6564 / maxFrame[5], 683, frame);
 		}
 		if (status == STATUS::HIGHKICK)
 		{
-			image[6].Render(hdc, pos.x, pos.y, frame);
+			image[6].Render(hdc, pos.x, pos.y, 13128 / maxFrame[6], 683, 13128 / maxFrame[6], 0, 13128 / maxFrame[6], 683, frame);
+		}
+		if (status == STATUS::SKILL)
+		{
+			image[7].Render(hdc, pos.x, pos.y, 3282 / maxFrame[7], 683, 3282 / maxFrame[7], 0, 3282 / maxFrame[7], 683, frame);
+			image[8].Render(hdc, pos.x, pos.y, 17504 / maxFrame[8], 683, 17504 / maxFrame[8], 0, 17504 / maxFrame[8], 683, frame);
 		}
 	}
 }

@@ -10,10 +10,12 @@ HRESULT Ash::Init(PPOS pPos)
 	maxFrame[0] = 14;
 	maxFrame[1] = 6;
 	maxFrame[2] = 6;
-	maxFrame[3] = 2;
-	maxFrame[4] = 8;
-	maxFrame[5] = 8;
-	maxFrame[6] = 9;
+	maxFrame[3] = 7;
+	maxFrame[4] = 9;
+	maxFrame[5] = 6;
+	maxFrame[6] = 12;
+	maxFrame[7] = 3;
+	maxFrame[8] = 16;
 	status = STATUS::STANCE;
 if (pPos == PPOS::P1)
 {
@@ -43,22 +45,32 @@ if (FAILED(image[2].Init("Image/Ash_Image/back.bmp", 6564, 683, maxFrame[2], 1, 
 	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
 	return E_FAIL;
 }
-if (FAILED(image[3].Init("Image/Ash_Image/JJAP.bmp", 2188, 683, maxFrame[3], 1, true, RGB(255, 255, 255))))
+if (FAILED(image[3].Init("Image/Ash_Image/JJAP.bmp", 7658, 683, maxFrame[3], 1, true, RGB(255, 255, 255))))
 {
 	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
 	return E_FAIL;
 }
-if (FAILED(image[4].Init("Image/Ash_Image/PUNCH.bmp", 976, 129, 8, 1, true, RGB(255, 255, 255))))
+if (FAILED(image[4].Init("Image/Ash_Image/PUNCH.bmp", 9846, 683, maxFrame[4], 1, true, RGB(255, 255, 255))))
 {
 	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
 	return E_FAIL;
 }
-if (FAILED(image[5].Init("Image/Ash_Image/LOWKICK.bmp", 976, 135, 8, 1, true, RGB(255, 255, 255))))
+if (FAILED(image[5].Init("Image/Ash_Image/LOWKICK.bmp", 6564, 683, maxFrame[5], 1, true, RGB(255, 255, 255))))
 {
 	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
 	return E_FAIL;
 }
-if (FAILED(image[6].Init("Image/Ash_Image/HIGHKICK.bmp", 1170, 135, 9, 1, true, RGB(255, 255, 255))))
+if (FAILED(image[6].Init("Image/Ash_Image/HIGHKICK.bmp", 13128, 683, maxFrame[6], 1, true, RGB(255, 255, 255))))
+{
+	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+	return E_FAIL;
+}
+if (FAILED(image[7].Init("Image/Ash_Image/SKILL.bmp", 3282, 683, maxFrame[7], 1, true, RGB(255, 255, 255))))
+{
+	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+	return E_FAIL;
+}
+if (FAILED(image[8].Init("Image/Ash_Image/SKILL.bmp", 17504, 683, maxFrame[8], 1, true, RGB(255, 255, 255))))
 {
 	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
 	return E_FAIL;
@@ -106,12 +118,18 @@ void Ash::Update(STATUS status)
 			SetStatus(STATUS::HIGHKICK);
 			frame = 0;
 		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown('p')
+			|| KeyManager::GetSingleton()->IsOnceKeyDown('P'))
+		{
+			SetStatus(STATUS::SKILL);
+			frame = 0;
+		}
 		if (frame >= maxFrame[status])
 		{
 			SetStatus(STATUS::STANCE);
 			frame = 0;
 		}
-		else if( STATUS::STANCE < status&& status < STATUS::JJAP ) 
+		else if( STATUS::STANCE < status && status < STATUS::JJAP ) 
 		{
 			if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LEFT)
 				|| KeyManager::GetSingleton()->IsOnceKeyUp(VK_RIGHT)) 
