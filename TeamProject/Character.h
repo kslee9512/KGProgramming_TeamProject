@@ -5,6 +5,7 @@ class Image;
 class Character : public GameNode
 {
 protected:
+	int imageWidth = 15316;
 	Image* image;
 	int maxHp;
 	int curHp;
@@ -12,7 +13,7 @@ protected:
 	PPOS pPos; //1P, 2P구분용
 	FPOINT pos; //실제 캐릭터 좌표
 	float moveSpeed;
-	int maxFrame;
+	int maxFrame[12]{ 0, };
 	int width, height;
 	int attack[5];
 	int elapsedTime;

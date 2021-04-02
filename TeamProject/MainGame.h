@@ -18,6 +18,8 @@ private:
 	POINT ptMouse{ 0, 0 };
 	char szText[128] = "";
 
+	Character* player1;
+
 	Image* backBuffer;
 	Image* background;
 	

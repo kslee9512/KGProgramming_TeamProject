@@ -4,7 +4,7 @@
 class Image
 {
 public:
-	enum IMAGE_LOAD_KIND 
+	enum IMAGE_LOAD_KIND
 	{
 		RESOURCE,		// 프로젝트 자체에 포함 시킬 이미지
 		FILE,			// 외부에서 로드할 이미지
@@ -63,12 +63,12 @@ public:
 
 	//파일로부터 이미지를 불러오는 함수
 	HRESULT Init(const char* fileName, int width, int height, int maxFrameX, int maxFrameY,
-				 bool isTransparent, COLORREF transColor);
+		bool isTransparent, COLORREF transColor);
 	void Release();
 	void Render(HDC hdc, int x, int y, int frameIndex);
 	//get, set
 	HDC GetMemDC() { if (this->imageInfo) return this->imageInfo->hMemDC; return NULL; }
-};
+	void Render(HDC hdc, int destX, int destY, int destW, int destH, int copyX, int copyY, int copyW, int copyH, int frameIndex);
 
-	extern HWND g_hWnd;
-	extern HINSTANCE g_hInstance;
+
+};

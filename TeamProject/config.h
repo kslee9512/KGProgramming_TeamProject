@@ -38,4 +38,6 @@ typedef struct tagFPoint
 //typedef tagFPoint FPOINT2;
 //typedef tagFPoint* PFPOINT2;
 
+
 extern HWND g_hWnd;
+extern HINSTANCE g_hInstance;
