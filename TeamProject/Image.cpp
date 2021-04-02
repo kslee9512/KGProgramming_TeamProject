@@ -93,6 +93,7 @@ void Image::Release()
 
 void Image::Render(HDC hdc, int x, int y, int frameIndex)
 {
+   // imageInfo->hBitmap;
     imageInfo->currFrameX = frameIndex;
     if (isTransparent)
     {
@@ -120,4 +121,18 @@ void Image::Render(HDC hdc, int x, int y, int frameIndex)
             SRCCOPY     // 복사 옵션
         );
     }
+}
+void Image::Render(HDC hdc, int destX, int destY, int destW, int destH, int copyX, int copyY, int copyW, int copyH, int frameIndex)
+{
+    imageInfo->currFrameX = frameIndex;
+    GdiTransparentBlt(
+        hdc,    //목적지 DC
+        destX, destY,   //복사 위치
+        destW, destH,
+        imageInfo->hMemDC, // 원본 DC
+        copyX * imageInfo->currFrameX, // 복사 x위치 
+        copyY, // 복사 y위치
+        copyW, copyH,// 복사 크기
+        transColor
+    );
 }

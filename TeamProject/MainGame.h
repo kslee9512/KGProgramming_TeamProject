@@ -18,9 +18,11 @@ private:
 	POINT ptMouse{ 0, 0 };
 	char szText[128] = "";
 
+	Character* player1;
+
 	Image* backBuffer;
 	Image* background;
-	Character* player1;
+	
 public:
 	HRESULT Init();		// 오버라이딩 : 다형성
 	void Release();

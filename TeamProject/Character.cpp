@@ -6,6 +6,7 @@ HRESULT Character::Init(PPOS pPos)
 	this->pPos = pPos;
 	image = new Image[12];
 	frame = 0;
+	maxFrame[12];
 	status = STATUS::STANCE;
 	if (pPos == PPOS::P1)
 	{
@@ -18,9 +19,9 @@ HRESULT Character::Init(PPOS pPos)
 		pos.y = (GROUND_Y);
 	}
 
-	if (FAILED(image[0].Init("Image/K'Image/k'_stance1p.bmp", 1344, 122, 16, 1, true, RGB(255, 255, 255))))
+	if (FAILED(image[0].Init("Image/Ash_Image/stance.bmp", 801, 124, 9, 1, true, RGB(255, 255, 255))))
 	{
-		MessageBox(g_hWnd, "Image/Iori_walk.bmp 로드 실패", "Warning", MB_OK);
+		MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
 		return E_FAIL;
 	}
 	return S_OK;
@@ -45,7 +46,7 @@ void Character::Update(STATUS status)
 	if (elapsedTime >= 5 && status == STATUS::STANCE)
 	{
 		frame++;
-		if (frame >= 16)
+		if (frame >= maxFrame[0])
 		{
 			frame = 0;
 		}
@@ -95,7 +96,34 @@ void Character::Render(HDC hdc)
 {
 	if (image)
 	{
-		image->Render(hdc, pos.x, pos.y, frame);
+		if (status == STATUS::STANCE)
+		{
+			image[0].Render(hdc, pos.x, pos.y, imageWidth / maxFrame[0],683, imageWidth / maxFrame[0],0, imageWidth / maxFrame[0],683, frame);
+		}
+		if (status == STATUS::WALK)
+		{
+			image[1].Render(hdc, pos.x-250, pos.y, 6564 / maxFrame[1], 683, 6564 / maxFrame[1], 0, 6564 / maxFrame[1], 683, frame);
+		}
+		if (status == STATUS::BACK)
+		{
+			image[2].Render(hdc, pos.x, pos.y, 6564 / maxFrame[2], 683, 6564 / maxFrame[2], 0, 6564 / maxFrame[2], 683, frame);
+		}
+		if (status == STATUS::JJAP)
+		{
+			image[3].Render(hdc, pos.x, pos.y, 2188 / maxFrame[3], 683, 2188 / maxFrame[3], 0, 2188 / maxFrame[3], 683, frame);
+		}
+		if (status == STATUS::PUNCH)
+		{
+			image[4].Render(hdc, pos.x, pos.y, frame);
+		}
+		if (status == STATUS::LOWKICK)
+		{
+			image[5].Render(hdc, pos.x, pos.y, frame);
+		}
+		if (status == STATUS::HIGHKICK)
+		{
+			image[6].Render(hdc, pos.x, pos.y, frame);
+		}
 	}
 }
 
