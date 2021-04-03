@@ -66,6 +66,7 @@ public:
 				 bool isTransparent, COLORREF transColor);
 	void Release();
 	void Render(HDC hdc, int x, int y, int frameIndex);
+	void TestRender(HDC hdc, int destX, int destY, int destW, int destH, int copyX, int copyY, int copyW, int copyH, int frameIndex);
 	//get, set
 	HDC GetMemDC() { if (this->imageInfo) return this->imageInfo->hMemDC; return NULL; }
 };

@@ -1,6 +1,6 @@
 #include "MainGame.h"
 #include "Image.h"
-#include "Character.h"
+#include "Kdash.h"
 /*
 	1. 배경 bin.bmp를 본인이 원하는 파일로 바꿔보자.
 	2. 탱크가 발사하는 미사일에 구슬.bmp를 씌워보자.
@@ -25,6 +25,9 @@ HRESULT MainGame::Init()
 	backBuffer->Init(WINSIZE_X, WINSIZE_Y);
 	isInited = true;
 
+	//캐릭터 초기화
+	kdash = new Kdash();
+	kdash->Init(PPOS::P1);
 	return S_OK;
 }
 
@@ -40,11 +43,15 @@ void MainGame::Release()
 	delete background;
 	background = nullptr;
 
+	kdash->Release();
+	delete kdash;
+	kdash = nullptr;
 	KillTimer(g_hWnd, 0);
 }
 
 void MainGame::Update()
 {
+	kdash->Update(kdash->GetStatus());
 	InvalidateRect(g_hWnd, NULL, false);
 }
 
@@ -53,13 +60,12 @@ void MainGame::Render(HDC hdc)
 
 	HDC hBackDC = backBuffer->GetMemDC();
 	background->Render(hBackDC,0, 0, 0 );
-
 	// 인사
 	TextOut(hBackDC, 20, 20, "MainGame 렌더 중", strlen("MainGame 렌더 중"));
 	// 마우스 좌표
 	wsprintf(szText, "X : %d, Y : %d", ptMouse.x, ptMouse.y);
 	TextOut(hBackDC, 200, 20, szText, strlen(szText));
-
+	kdash->Render(hBackDC);
 	backBuffer->Render(hdc, 0, 0, 0);
 }
 
