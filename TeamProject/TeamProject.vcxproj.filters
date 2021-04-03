@@ -51,6 +51,12 @@
     <ClInclude Include="CheckBox.h">
       <Filter>소스 파일\2DFrameWork\AbstractClass</Filter>
     </ClInclude>
+    <ClInclude Include="Kyo.h">
+      <Filter>소스 파일\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandQueue.h">
+      <Filter>소스 파일\2DFrameWork\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -73,6 +79,12 @@
     </ClCompile>
     <ClCompile Include="CheckBox.cpp">
       <Filter>소스 파일\2DFrameWork\AbstractClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Kyo.cpp">
+      <Filter>소스 파일\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandQueue.cpp">
+      <Filter>소스 파일\2DFrameWork\Utility</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -12,7 +12,7 @@ protected:
 	PPOS pPos; //1P, 2P구분용
 	FPOINT pos; //실제 캐릭터 좌표
 	float moveSpeed;
-	int maxFrame;
+	int maxFrame[12]{ 0, };
 	int width, height;
 	int attack[5];
 	int elapsedTime;
@@ -27,5 +27,7 @@ public:
 	inline virtual FPOINT GetPos() { return this->pos; }
 	inline virtual void SetStatus(STATUS status) { this->status = status; }
 	inline virtual STATUS GetStatus() { return this->status; }
+	HRESULT Init() { Init(PPOS::P1); }			// 멤버 변수의 초기화, 메모리 할당
+	void Update() { Update(STATUS::STANCE); }			// 프레임 단위로 게임 로직 실행 (데이터 변동)
 };
 

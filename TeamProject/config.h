@@ -28,6 +28,7 @@ enum STATUS {STANCE, WALK, BACK, JJAP, PUNCH, LOWKICK, HIGHKICK, HIT, DEFEAT, WI
 	END : ³¡
 */
 enum PPOS {P1, P2, ENDPPOS};
+enum COMMAND{NO_COMMAND, FIRST_COMMAND};
 
 typedef struct tagFPoint
 {
@@ -39,3 +40,4 @@ typedef struct tagFPoint
 //typedef tagFPoint* PFPOINT2;
 
 extern HWND g_hWnd;
+extern HINSTANCE g_hInstance;
