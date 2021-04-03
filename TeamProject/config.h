@@ -12,8 +12,6 @@ using namespace std;
 
 #define WINSIZE_X	1080
 #define WINSIZE_Y	720
-#define GROUND_X_P1 0
-#define GROUND_X_P2 200
 #define GROUND_Y	100
 enum STATUS {STANCE, WALK, BACK, JJAP, PUNCH, LOWKICK, HIGHKICK, HIT, DEFEAT, WIN, SKILL ,ENDSTATUS };
 /*

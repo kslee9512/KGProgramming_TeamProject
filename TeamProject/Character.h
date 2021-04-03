@@ -16,7 +16,13 @@ protected:
 	int width, height;
 	int attack[5];
 	int elapsedTime;
+	int bulletElapsedTime;
 	int frame; // 임시변수(삭제요망)
+	int bulletFrame;
+	bool isHit;
+	bool isDefeat;
+	bool isFired;
+	bool finishAction;
 public:
 	virtual HRESULT Init(PPOS pPos);			// 멤버 변수의 초기화, 메모리 할당
 	virtual void Release();			// 메모리 해제

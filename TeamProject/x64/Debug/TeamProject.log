@@ -1,8 +1,26 @@
 ﻿  Character.cpp
-C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(132,35): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(132,28): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(136,36): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(136,29): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(140,36): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(140,29): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(168,39): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(168,32): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(172,39): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(172,32): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(176,39): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(176,32): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(180,39): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(180,32): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(184,39): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(184,32): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(188,40): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(188,33): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(192,40): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(192,33): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(196,40): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(196,33): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(200,40): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(200,33): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(204,40): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(204,33): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(208,40): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(208,33): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(213,40): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\TeamProject\Character.cpp(213,33): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   TeamProject.vcxproj -> C:\Users\kslee\OneDrive\Desktop\KGProgramming_TeamProject\x64\Debug\TeamProject.exe
