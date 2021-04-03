@@ -41,72 +41,14 @@ void Character::Release()
 
 void Character::Update(STATUS status)
 {
-	elapsedTime++;
-	if (elapsedTime >= 5 && status == STATUS::STANCE)
-	{
-		frame++;
-		if (frame >= maxFrame[0])
-		{
-			frame = 0;
-		}
-		elapsedTime = 0;
-	}
-	else if (elapsedTime >= 7 && status == STATUS::WALK)
-	{
-		frame++;
-		if (frame >= maxFrame[1])
-		{
-			frame = 0;
-		}
-		elapsedTime = 0;
-	}
-	else if (elapsedTime >= 7 && status == STATUS::BACK)
-	{
-		frame++;
-		if (frame >= maxFrame[2])
-		{
-			frame = 0;
-		}
-		elapsedTime = 0;
-	}
-	else if (elapsedTime >= 5 && status == STATUS::JJAP)
-	{
-		frame++;
-		if (frame >= maxFrame[2])
-		{
-			frame = 0;
-		}
-		elapsedTime = 0;
-	}
-	else if (elapsedTime >= 5 && status == STATUS::PUNCH)
-	{
-		frame++;
-		if (frame >= maxFrame[3])
-		{
-			frame = 0;
-		}
-		elapsedTime = 0;
-	}
-	else if (elapsedTime >= 5 && status == STATUS::LOWKICK)
-	{
-		frame++;
-		if (frame >= maxFrame[4])
-		{
-			frame = 0;
-		}
-		elapsedTime = 0;
-	}
-	else if (elapsedTime >= 5 && status == STATUS::HIGHKICK)
-	{
-		frame++;
-		if (frame >= maxFrame[5])
-		{
-			frame = 0;
-		}
-		elapsedTime = 0;
-	}
 	if (pPos == PPOS::P1)
 	{
+		elapsedTime++;
+		if (elapsedTime >= 5)
+		{
+			frame++;
+			elapsedTime = 0;
+		}
 		if (KeyManager::GetSingleton()->IsStayKeyDown('A'))
 		{
 			SetStatus(STATUS::BACK);
@@ -118,6 +60,7 @@ void Character::Update(STATUS status)
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('U'))
 		{
 			SetStatus(STATUS::JJAP);
+			frame = 0;
 		}
 		else if (KeyManager::GetSingleton()->IsStayKeyDown('I'))
 		{
@@ -131,9 +74,18 @@ void Character::Update(STATUS status)
 		{
 			SetStatus(STATUS::HIGHKICK);
 		}
-		else
+		if (frame >= maxFrame[status])
 		{
-			SetStatus(STATUS::STANCE);
+			SetStatus(::STATUS::STANCE);
+			frame = 0;
+		}
+		else if (STATUS::STANCE < status && status < STATUS::JJAP)
+		{
+			if (KeyManager::GetSingleton()->IsOnceKeyUp('A') || KeyManager::GetSingleton()->IsOnceKeyUp('D'))
+			{
+				SetStatus(STATUS::STANCE);
+				frame = 0;
+			}
 		}
 		Move(status);
 	}
@@ -161,19 +113,19 @@ void Character::Render(HDC hdc)
 	{
 		if (status == STATUS::STANCE)
 		{
-			image[0].TestRender(hdc, 0, 150, 13710 / maxFrame[0], 659, 13710 / maxFrame[0], 0, 13710 /maxFrame[0], 659, frame);
+			image[0].TestRender(hdc, 0, 100, 13710 / maxFrame[0], 659, 13710 / maxFrame[0], 0, 13710 /maxFrame[0], 659, frame);
 		}
 		else if (status == STATUS::WALK)
 		{
-			image[2].TestRender(hdc, 0, 150, 9140 / maxFrame[1], 659, 9140 / maxFrame[1], 0, 9140 / maxFrame[1], 659,frame);
+			image[2].TestRender(hdc, 0, GROUND_Y, 7312 / maxFrame[1], 659, 7312 / maxFrame[1], 0, 7312 / maxFrame[1], 659,frame);
 		}
 		else if (status == STATUS::BACK)
 		{
-			image[4].TestRender(hdc, 0, 150, 4570 / maxFrame[2], 659, 4570 / maxFrame[2], 0, 4570 / maxFrame[2], 659,frame);
+			image[4].TestRender(hdc, 0, GROUND_Y, 8226 / maxFrame[2], 659, 8226 / maxFrame[2], 0, 8226 / maxFrame[2], 659,frame);
 		}
 		else if (status == STATUS::JJAP)
 		{
-			image[6].Render(hdc, pos.x, pos.y, frame);
+			image[6].TestRender(hdc, 0, GROUND_Y, 5484 / maxFrame[3], 659, 5484 / maxFrame[3], 0, 5484 / maxFrame[3], 659, frame);
 		}
 		else if (status == STATUS::PUNCH)
 		{
