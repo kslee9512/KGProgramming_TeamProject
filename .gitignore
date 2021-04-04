@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+# Setting Files
+.vs/
+x64/
+debug/
