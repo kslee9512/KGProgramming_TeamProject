@@ -26,7 +26,7 @@ HRESULT CommandQueue::Init()
 
 bool CommandQueue::Update(string str, int miliseconds)
 {
-	if (queue->empty()) return;
+	if (queue->empty()) return false;
 	//밀리세컨즈 단위 시간을 받아서 해당 시간만큼 time을 감소시키고
 	//해당 문자열이 있으면 반환하고 큐를 비운다.
 	string tmpStr = "";

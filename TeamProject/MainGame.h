@@ -20,6 +20,8 @@ private:
 
 	Image* backBuffer;
 	Image* background;
+	Character* player1;
+	Character* player2;
 	
 public:
 	HRESULT Init();		// 오버라이딩 : 다형성

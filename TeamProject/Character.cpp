@@ -5,7 +5,8 @@ HRESULT Character::Init(PPOS pPos)
 {
 	this->pPos = pPos;
 	image = new Image[12];
-	frame = 0;
+	frameX = 0;
+	frameY = 0;
 	status = STATUS::STANCE;
 	if (pPos == PPOS::P1)
 	{
@@ -18,7 +19,7 @@ HRESULT Character::Init(PPOS pPos)
 		pos.y = (GROUND_Y);
 	}
 
-	if (FAILED(image[0].Init("Image/K'Image/k'_stance1p.bmp", 1344, 122, 16, 1, true, RGB(255, 255, 255))))
+	if (FAILED(image[0].Init("Image/K'Image/k'_stance1p.bmp", 1344, 122, 16, 1, PPOS::P1, true, RGB(255, 255, 255))))
 	{
 		MessageBox(g_hWnd, "Image/Iori_walk.bmp 로드 실패", "Warning", MB_OK);
 		return E_FAIL;
@@ -30,7 +31,7 @@ void Character::Release()
 {
 	if (image)
 	{
-		for (int i = 0; i < 12; i++)
+		for (int i = 0; i < 11; i++)
 		{
 			image[i].Release();
 		}
@@ -39,15 +40,15 @@ void Character::Release()
 	}
 }
 
-void Character::Update(STATUS status)
+void Character::Update()
 {
 	elapsedTime++;
 	if (elapsedTime >= 5 && status == STATUS::STANCE)
 	{
-		frame++;
-		if (frame >= 16)
+		frameX++;
+		if (frameX >= 16)
 		{
-			frame = 0;
+			frameX = 0;
 		}
 		elapsedTime = 0;
 	}
@@ -93,13 +94,25 @@ void Character::Update(STATUS status)
 
 void Character::Render(HDC hdc)
 {
-	if (image)
-	{
-		image->Render(hdc, pos.x, pos.y, frame);
+	if(image){
+		if (status == STATUS::SKILL)
+		{
+			if (pPos == PPOS::P1)
+				image[status].RenderReverse(hdc, pos.x, pos.y, 679, 689);
+			else if (pPos == PPOS::P2)
+				image[status].Render(hdc, pos.x, pos.y, 679, 689);
+
+		}
+		else {
+			if (pPos == PPOS::P1)
+				image[status].RenderReverse(hdc, pos.x, pos.y, 679, 689);
+			else if (pPos == PPOS::P2)
+				image[status].Render(hdc, pos.x, pos.y, 679, 689);
+		}
 	}
 }
 
-void Character::Move(STATUS status)
+void Character::Move()
 {
 	if (pPos == PPOS::P1 && status == STATUS::WALK)
 	{

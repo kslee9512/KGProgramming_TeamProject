@@ -1,6 +1,6 @@
 #include "MainGame.h"
 #include "Image.h"
-#include "Character.h"
+#include "Kyo.h"
 /*
 	1. 배경 bin.bmp를 본인이 원하는 파일로 바꿔보자.
 	2. 탱크가 발사하는 미사일에 구슬.bmp를 씌워보자.
@@ -16,7 +16,11 @@ HRESULT MainGame::Init()
 	sizey = 104;
 	print_posx = 0;
 	background = new Image();
-	background->Init("Image/BackGround/background.bmp", WINSIZE_X, WINSIZE_Y, NULL, NULL);
+	background->Init("Image/BackGround/background.bmp", WINSIZE_X, WINSIZE_Y);
+	player1 = new Kyo();
+	player1->Init(PPOS::P1);
+	player2 = new Kyo();
+	player2->Init(PPOS::P2);
 	// 메인게임의 초기화 함수
 	hTimer = (HANDLE)SetTimer(g_hWnd, 0, 10, NULL);
 
@@ -32,19 +36,31 @@ void MainGame::Release()
 {
 	KeyManager::GetSingleton()->Release();
 
-	backBuffer->Release();
-	delete backBuffer;
-	backBuffer = nullptr;
-
+	if (player1) {
+		player1->Release();
+		delete player1;
+		player1 = nullptr;
+	}
+	if (player2) {
+		player2->Release();
+		delete player2;
+		player2 = nullptr;
+	}
 	background->Release();
 	delete background;
 	background = nullptr;
+
+	backBuffer->Release();
+	delete backBuffer;
+	backBuffer = nullptr;
 
 	KillTimer(g_hWnd, 0);
 }
 
 void MainGame::Update()
 {
+	player1->Update();
+	player2->Update();
 	InvalidateRect(g_hWnd, NULL, false);
 }
 
@@ -52,13 +68,16 @@ void MainGame::Render(HDC hdc)
 {
 
 	HDC hBackDC = backBuffer->GetMemDC();
-	background->Render(hBackDC,0, 0, 0 );
+	background->Render(hBackDC);
 
 	// 인사
 	TextOut(hBackDC, 20, 20, "MainGame 렌더 중", strlen("MainGame 렌더 중"));
 	// 마우스 좌표
 	wsprintf(szText, "X : %d, Y : %d", ptMouse.x, ptMouse.y);
 	TextOut(hBackDC, 200, 20, szText, strlen(szText));
+
+	player1->Render(hBackDC);
+	player2->Render(hBackDC);
 
 	backBuffer->Render(hdc, 0, 0, 0);
 }
@@ -88,6 +107,8 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	case WM_RBUTTONDOWN:
 		break;
 	case WM_MOUSEMOVE:
+		ptMouse.x = LOWORD(lParam);
+		ptMouse.y = HIWORD(lParam);
 		break;
 	case WM_PAINT:
 		hdc = BeginPaint(g_hWnd, &ps);
