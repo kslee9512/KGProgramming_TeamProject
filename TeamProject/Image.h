@@ -15,8 +15,11 @@ public:
 	typedef struct tagImageInfo {
 		DWORD resId;		//리소스의 고유한 아이디
 		HDC hMemDC;			//그리기를 주관하는 핸들
+		HDC hMemDC2;
 		HBITMAP hBitmap;	//이미지 정보
+		HBITMAP hBitmap2;	//이미지 정보
 		HBITMAP hOBitmap;	//기존 이미지 정보
+		HBITMAP hOBitmap2;	//기존 이미지 정보
 		int width;			//이미지 가로 크기
 		int height;			//이미지 세로 크기
 		BYTE loadType;		//로드 타입
@@ -32,8 +35,11 @@ public:
 		{
 			resId = 0;
 			hMemDC = NULL;
+			hMemDC2 = NULL;
 			hBitmap = NULL;
+			hBitmap2 = NULL;
 			hOBitmap = NULL;
+			hOBitmap2 = NULL;
 			width = 0;
 			height = 0;
 
@@ -63,15 +69,15 @@ public:
 
 
 	// 파일로부터 이미지를 로드하는 함수
-	HRESULT Init(const char* fileName, int width, int height, int maxFrameX, int maxFrameY, bool isTransparent = false, COLORREF colorToRemove = false);
+	HRESULT Init(const char* fileName, int width, int height, int maxFrameX, int maxFrameY, PPOS pPos, bool isTransparent = false, COLORREF colorToRemove = false);
 
 	// 화면에 출력
 	void Render(HDC hdc);
 	void Render(HDC hdc, int destX, int destY, int destWidth = 0, int destHeight = 0);
-	/*void RenderTransparent(HDC destHdc, int destX, int destY, int destWidth, int destHeight, int frameIdx);*/
+	void RenderReverse(HDC hdc, int destX, int destY, int destWidth = 0, int destHeight = 0);
 
 	void Update();
-	void Update(int curFrameX, int curFrameY);
+	void Update(int frameX, int frameY);
 
 	void Release();
 
