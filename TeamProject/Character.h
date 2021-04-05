@@ -14,18 +14,14 @@ protected:
 	FPOINT pos; //실제 캐릭터 좌표
 	float moveSpeed;
 	int maxFrame[12]{ 0, };
-<<<<<<< HEAD
 
 	int maxImage;
-
-=======
-	int maxImage;
->>>>>>> origin/SES
 	int width, height;
 	int attack[5];
 	int elapsedTime;
 	int frameX; // 임시변수(삭제요망)
 	int frameY;
+
 public:
 	virtual HRESULT Init(PPOS pPos);			// 멤버 변수의 초기화, 메모리 할당
 	virtual void Release();			// 메모리 해제
@@ -36,11 +32,5 @@ public:
 	inline virtual FPOINT GetPos() { return this->pos; }
 	inline virtual void SetStatus(STATUS status) { this->status = status; }
 	inline virtual STATUS GetStatus() { return this->status; }
-<<<<<<< HEAD
 	// 프레임 단위로 게임 로직 실행 (데이터 변동)
 };
-=======
-			// 프레임 단위로 게임 로직 실행 (데이터 변동)
-};
-
->>>>>>> origin/SES

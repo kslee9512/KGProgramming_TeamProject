@@ -18,17 +18,11 @@ private:
 	POINT ptMouse{ 0, 0 };
 	char szText[128] = "";
 
-	Character* player1;
-
 	Image* backBuffer;
 	Image* background;
 	Character* player1;
 	Character* player2;
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> origin/SES
 public:
 	HRESULT Init();		
 	void Release();

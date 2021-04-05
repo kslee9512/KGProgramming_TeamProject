@@ -5,7 +5,8 @@ HRESULT Ash::Init(PPOS pPos)
 {
 	this->pPos = pPos;
 	image = new Image[15];
-	frame = 0;
+	frameX = 0;
+	frameY = 0;
 	moveSpeed = 1;
 	maxFrame[0] = 14;
 	maxFrame[1] = 6;
@@ -103,56 +104,56 @@ void Ash::Update(STATUS status)
 		if (KeyManager::GetSingleton()->IsStayKeyDown('a') 
 			|| KeyManager::GetSingleton()->IsStayKeyDown('A'))
 		{
-			if (frame == 0)
+			if (frameX == 0)
 				SetStatus(STATUS::BACK);
 		}
 		else if (KeyManager::GetSingleton()->IsStayKeyDown('d')
 			|| KeyManager::GetSingleton()->IsStayKeyDown('D'))
 		{
-			if (frame == 0)
+			if (frameX == 0)
 				SetStatus(STATUS::WALK);
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('u')
 			|| KeyManager::GetSingleton()->IsOnceKeyDown('U'))
 		{
 			SetStatus(STATUS::JJAP);
-			frame = 0;
+			frameX = 0;
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('i')
 			|| KeyManager::GetSingleton()->IsOnceKeyDown('I'))
 		{
 			SetStatus(STATUS::PUNCH);
-			frame = 0;
+			frameX = 0;
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('j')
 			|| KeyManager::GetSingleton()->IsOnceKeyDown('J'))
 		{
 			SetStatus(STATUS::LOWKICK);
-			frame = 0;
+			frameX = 0;
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('k')
 			|| KeyManager::GetSingleton()->IsOnceKeyDown('K'))
 		{
 			SetStatus(STATUS::HIGHKICK);
-			frame = 0;
+			frameX = 0;
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('p')
 			|| KeyManager::GetSingleton()->IsOnceKeyDown('P'))
 		{
 			SetStatus(STATUS::SKILL);
-			frame = 0;
+			frameX = 0;
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('l')
 			|| KeyManager::GetSingleton()->IsOnceKeyDown('L'))
 		{
 			SetStatus(STATUS::HIT);
-			frame = 0;
+			frameX = 0;
 		}
 
-		if (frame >= maxFrame[status])
+		if (frameX >= maxFrame[status])
 		{
 			SetStatus(STATUS::STANCE);
-			frame = 0;
+			frameX = 0;
 		}
 		else if( STATUS::STANCE < status && status < STATUS::JJAP ) 
 		{
@@ -160,7 +161,7 @@ void Ash::Update(STATUS status)
 				|| KeyManager::GetSingleton()->IsOnceKeyUp(VK_RIGHT))
 			{
 				SetStatus(STATUS::STANCE);
-				frame = 0;
+				frameX = 0;
 			}
 		}
 		if (status == STATUS::WALK)
@@ -172,13 +173,13 @@ void Ash::Update(STATUS status)
 			|| KeyManager::GetSingleton()->IsOnceKeyDown('M'))
 		{
 			SetStatus(STATUS::DEFEAT);
-			frame = 0;
+			frameX = 0;
 		}
 		if (KeyManager::GetSingleton()->IsOnceKeyDown('n')
 			|| KeyManager::GetSingleton()->IsOnceKeyDown('N'))
 		{
 			SetStatus(STATUS::WIN);
-			frame = 0;
+			frameX = 0;
 		}
 	}
 
@@ -192,16 +193,16 @@ void Ash::Update(STATUS status)
 		{
 			SetStatus(STATUS::WALK);
 		}
-		if (frame >= maxFrame[status])
+		if (frameX >= maxFrame[status])
 		{
 			SetStatus(STATUS::STANCE);
-			frame = 0;
+			frameX = 0;
 		}
 	}
 	elapsedTime++;
 	if (elapsedTime >= 5)
 	{
-		frame++;
+		frameX++;
 		elapsedTime = 0;
 	}
 
