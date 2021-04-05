@@ -115,7 +115,7 @@ void Image::Render(HDC hdc, int destX, int destY, int destWidth, int destHeight)
 	if (isTransparent)
 	{
 		destWidth = !destWidth ? imageInfo->width : destWidth;
-		destWidth = !destWidth ? imageInfo->height : destHeight;
+		destHeight = !destHeight ? imageInfo->height : destHeight;
 		GdiTransparentBlt(
 			hdc,
 			destX, destY,
@@ -146,10 +146,10 @@ void Image::RenderReverse(HDC hdc, int destX, int destY, int destWidth, int dest
 	if (isTransparent)
 	{
 		destWidth = !destWidth ? imageInfo->width : destWidth;
-		destWidth = !destWidth ? imageInfo->height : destHeight;
+		destHeight = !destHeight ? imageInfo->height : destHeight;
 		StretchBlt(
 			imageInfo->hMemDC,
-			destWidth, 0,
+			destWidth - 1, 0,
 			-destWidth, destHeight,
 			imageInfo->hMemDC2,
 			imageInfo->width / imageInfo->maxFrameX * (imageInfo->curFrameX),
@@ -174,7 +174,7 @@ void Image::RenderReverse(HDC hdc, int destX, int destY, int destWidth, int dest
 
 	StretchBlt(
 		hdc,
-		destX + destWidth, destY,
+		(destX + destWidth) - 1, destY,
 		-destWidth, destHeight,
 		imageInfo->hMemDC,
 		imageInfo->width / imageInfo->maxFrameX * (imageInfo->curFrameX),

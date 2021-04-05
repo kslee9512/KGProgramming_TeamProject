@@ -5,7 +5,6 @@ class Image;
 class Character : public GameNode
 {
 protected:
-	int imageWidth = 15316;
 	Image* image;
 	int maxHp;
 	int curHp;
@@ -21,6 +20,8 @@ protected:
 	int elapsedTime;
 	int frameX; // 임시변수(삭제요망)
 	int frameY;
+	int spriteWidth;
+	int spriteHeight;
 
 public:
 	virtual HRESULT Init(PPOS pPos);			// 멤버 변수의 초기화, 메모리 할당

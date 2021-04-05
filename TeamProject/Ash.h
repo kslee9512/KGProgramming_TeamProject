@@ -1,8 +1,10 @@
 #pragma once
 #include "Character.h"
+
 class Ash :public Character
 {
-	void Update(STATUS status);
+public:
+	HRESULT Init();
 	HRESULT Init(PPOS pPos);
+	void Update();
 };
-

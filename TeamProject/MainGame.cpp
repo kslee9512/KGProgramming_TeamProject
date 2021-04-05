@@ -20,7 +20,7 @@ HRESULT MainGame::Init()
 	print_posx = 0;
 	background = new Image();
 	background->Init("Image/BackGround/background.bmp", WINSIZE_X, WINSIZE_Y);
-	player1 = new Kyo();
+	player1 = new Kdash();
 	player1->Init(PPOS::P1);
 	player2 = new Kyo();
 

@@ -45,25 +45,6 @@ void Character::Release()
 
 void Character::Update()
 {
-	elapsedTime++;
-	if (elapsedTime >= 5 && status == STATUS::STANCE)
-	{
-		frameX++;
-		if (frameX >= 16)
-		{
-			elapsedTime = 0;
-
-			frameX = 0;
-		}
-	}
-	else if (elapsedTime >= 5 && status == STATUS::WALK)
-	{
-		//앞으로 이동 시 이미지 출력되도록 UPDATE 작성
-	}
-	else if (elapsedTime >= 5 && status == STATUS::BACK)
-	{
-		// 뒤로 이동 시 이미지 출력되도록 UDPATER 작성
-	}
 	if (pPos == PPOS::P1)
 	{
 		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LEFT))
@@ -94,6 +75,17 @@ void Character::Update()
 			SetStatus(STATUS::STANCE);
 		}
 	}
+	elapsedTime++;
+	if (elapsedTime >= 5 && status == STATUS::STANCE)
+	{
+		frameX++;
+		if (frameX >= 16)
+		{
+			elapsedTime = 0;
+
+			frameX = 0;
+		}
+	}
 }
 
 void Character::Render(HDC hdc)
@@ -102,20 +94,20 @@ void Character::Render(HDC hdc)
 		if (status == STATUS::SKILL)
 		{
 			if (pPos == PPOS::P1) {
-				image[status].RenderReverse(hdc, pos.x, pos.y, 679, 689);
-				image[11].RenderReverse(hdc, pos.x + 479, pos.y - 189, 679, 689);
+				image[status].RenderReverse(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
+				image[11].RenderReverse(hdc, pos.x + 479, pos.y - 189, spriteWidth, spriteHeight);
 			}
 			else if (pPos == PPOS::P2) {
-				image[status].Render(hdc, pos.x, pos.y, 679, 689);
-				image[11].Render(hdc, pos.x - 479, pos.y - 189, 679, 689);
+				image[status].Render(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
+				image[11].Render(hdc, pos.x - 479, pos.y - 189, spriteWidth, spriteHeight);
 			}
 		}
 		else {
 			if (pPos == PPOS::P1) {
-				image[status].RenderReverse(hdc, pos.x, pos.y, 679, 689);
+				image[status].RenderReverse(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
 			}
 			else if (pPos == PPOS::P2) {
-				image[status].Render(hdc, pos.x, pos.y, 679, 689);
+				image[status].Render(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
 			}
 		}
 	}
