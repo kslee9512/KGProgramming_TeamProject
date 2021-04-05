@@ -95,11 +95,11 @@ void Character::Render(HDC hdc)
 		{
 			if (pPos == PPOS::P1) {
 				image[status].RenderReverse(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
-				image[11].RenderReverse(hdc, pos.x + 479, pos.y - 189, spriteWidth, spriteHeight);
+				image[11].RenderReverse(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
 			}
 			else if (pPos == PPOS::P2) {
 				image[status].Render(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
-				image[11].Render(hdc, pos.x - 479, pos.y - 189, spriteWidth, spriteHeight);
+				image[11].Render(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
 			}
 		}
 		else {

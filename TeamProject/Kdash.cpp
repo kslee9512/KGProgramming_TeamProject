@@ -115,6 +115,31 @@ HRESULT Kdash::Init(PPOS pPos)
 	return S_OK;
 }
 
+void Kdash::Render(HDC hdc)
+{
+    if (image) {
+        if (status == STATUS::SKILL)
+        {
+            if (pPos == PPOS::P1) {
+                image[status].RenderReverse(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
+                image[11].RenderReverse(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
+            }
+            else if (pPos == PPOS::P2) {
+                image[status].Render(hdc, pos.x - 150, pos.y, spriteWidth, spriteHeight);
+                image[11].Render(hdc, pos.x - 150, pos.y, spriteWidth, spriteHeight);
+            }
+        }
+        else {
+            if (pPos == PPOS::P1) {
+                image[status].RenderReverse(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
+            }
+            else if (pPos == PPOS::P2) {
+                image[status].Render(hdc, pos.x - 150, pos.y, spriteWidth, spriteHeight);
+            }
+        }
+    }
+}
+
 void Kdash::Update()
 {
     if (pPos == PPOS::P1)

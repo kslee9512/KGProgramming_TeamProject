@@ -242,3 +242,28 @@ void Ash::Update()
         elapsedTime = 0;
     }
 }
+
+void Ash::Render(HDC hdc)
+{
+    if (image) {
+        if (status == STATUS::SKILL)
+        {
+            if (pPos == PPOS::P1) {
+                image[status].RenderReverse(hdc, pos.x + 20, pos.y + 35, spriteWidth, spriteHeight);
+                image[11].RenderReverse(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
+            }
+            else if (pPos == PPOS::P2) {
+                image[status].Render(hdc, pos.x - 400, pos.y + 35, spriteWidth, spriteHeight);
+                image[11].Render(hdc, pos.x - 400, pos.y + 45, spriteWidth, spriteHeight);
+            }
+        }
+        else {
+            if (pPos == PPOS::P1) {
+                image[status].RenderReverse(hdc, pos.x - 20, pos.y + 35, spriteWidth, spriteHeight);
+            }
+            else if (pPos == PPOS::P2) {
+                image[status].Render(hdc, pos.x - 400, pos.y + 45, spriteWidth, spriteHeight);
+            }
+        }
+    }
+}
