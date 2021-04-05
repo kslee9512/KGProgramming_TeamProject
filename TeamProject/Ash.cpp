@@ -105,142 +105,161 @@ HRESULT Ash::Init(PPOS pPos)
 
 void Ash::Update()
 {
-    if (pPos == PPOS::P1)
-    {
-        if (KeyManager::GetSingleton()->IsOnceKeyDown('U'))
-        {
-            status = STATUS::JJAP;
-            frameX = 0;
-        }
-        else if (KeyManager::GetSingleton()->IsOnceKeyDown('I'))
-        {
-            status = STATUS::PUNCH;
-            frameX = 0;
-        }
-        else if (KeyManager::GetSingleton()->IsOnceKeyDown('J'))
-        {
-            status = STATUS::LOWKICK;
-            frameX = 0;
-        }
-        else if (KeyManager::GetSingleton()->IsOnceKeyDown('K'))
-        {
-            status = STATUS::HIGHKICK;
-            frameX = 0;
-        }
-        else if (KeyManager::GetSingleton()->IsOnceKeyDown('P'))
-        {
-            status = STATUS::SKILL;
-            frameX = 0;
-        }
-        else if (KeyManager::GetSingleton()->IsOnceKeyDown('A'))
-        {
-            if (STATUS::STANCE <= status && status <= STATUS::BACK) {
-                if (status != STATUS::BACK)
-                    frameX = 0;
-                status = STATUS::BACK;
-            }
-        }
-        else if (KeyManager::GetSingleton()->IsOnceKeyDown('D'))
-        {
-            if (STATUS::STANCE <= status && status <= STATUS::BACK) {
-                if (status != STATUS::WALK)
-                    frameX = 0;
-                status = STATUS::WALK;
-            }
-        }
-        if (STATUS::WALK <= status && status <= STATUS::BACK)
-        {
-            if (KeyManager::GetSingleton()->IsOnceKeyUp('A')
-                || KeyManager::GetSingleton()->IsOnceKeyUp('D'))
-            {
-                status = STATUS::STANCE;
-                frameX = 0;
-            }
-        }
-        else if (frameX >= maxFrame[status])
-        {
-            status = STATUS::STANCE;
-            frameX = 0;
-        }
-    }
-    else if (pPos == PPOS::P2)
-    {
-        if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD5))
-        {
-            status = STATUS::JJAP;
-            frameX = 0;
-        }
-        else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD6))
-        {
-            status = STATUS::PUNCH;
-            frameX = 0;
-        }
-        else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD2))
-        {
-            status = STATUS::LOWKICK;
-            frameX = 0;
-        }
-        else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD3))
-        {
-            status = STATUS::HIGHKICK;
-            frameX = 0;
-        }
-        else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD0))
-        {
-            status = STATUS::SKILL;
-            frameX = 0;
-        }
-        else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RIGHT))
-        {
-            if (STATUS::STANCE <= status && status <= STATUS::BACK) {
-                if (status != STATUS::BACK)
-                    frameX = 0;
-                status = STATUS::BACK;
-            }
-        }
-        else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LEFT))
-        {
-            if (STATUS::STANCE <= status && status <= STATUS::BACK) {
-                if (status != STATUS::WALK)
-                    frameX = 0;
-                status = STATUS::WALK;
-            }
-        }
-        if (STATUS::WALK <= status && status <= STATUS::BACK)
-        {
-            if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LEFT)
-                || KeyManager::GetSingleton()->IsOnceKeyUp(VK_RIGHT))
-            {
-                status = STATUS::STANCE;
-                frameX = 0;
-            }
-        }
-        else if (frameX >= maxFrame[status])
-        {
-            status = STATUS::STANCE;
-            frameX = 0;
-        }
-    }
-    elapsedTime++;
-    if (elapsedTime >= 5)
-    {
-        if (status >= STATUS::WALK && status <= STATUS::BACK) {
-
-            Move();
-            if (frameX >= maxFrame[status])
-                frameX = 0;
-            image[status].Update(frameX, frameY);
-        }
-        else if (status == STATUS::SKILL) {
-            image[status].Update(frameX, frameY);
-            image[11].Update(frameX, frameY);
-        }
-        else {
-            image[status].Update(frameX, frameY);
-        }
-        frameX++;
-        elapsedTime = 0;
-    }
+	if (pPos == PPOS::P1)
+	{
+		if (KeyManager::GetSingleton()->IsOnceKeyDown('U'))
+		{
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::JJAP;
+				frameX = 0;
+			}
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown('I'))
+		{
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::PUNCH;
+				frameX = 0;
+			}
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown('J'))
+		{
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::LOWKICK;
+				frameX = 0;
+			}
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown('K'))
+		{
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::HIGHKICK;
+				frameX = 0;
+			}
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown('P'))
+		{
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::SKILL;
+				frameX = 0;
+			}
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown('A'))
+		{
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				if (status != STATUS::BACK)
+					frameX = 0;
+				status = STATUS::BACK;
+			}
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown('D'))
+		{
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				if (status != STATUS::WALK)
+					frameX = 0;
+				status = STATUS::WALK;
+			}
+		}
+		if (STATUS::WALK <= status && status <= STATUS::BACK)
+		{
+			if (KeyManager::GetSingleton()->IsOnceKeyUp('A')
+				|| KeyManager::GetSingleton()->IsOnceKeyUp('D'))
+			{
+				status = STATUS::STANCE;
+				frameX = 0;
+			}
+		}
+		else if (frameX >= maxFrame[status])
+		{
+			status = STATUS::STANCE;
+			frameX = 0;
+		}
+	}
+	else if (pPos == PPOS::P2)
+	{
+		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD5))
+		{
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::JJAP;
+				frameX = 0;
+			}
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD6))
+		{
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::PUNCH;
+				frameX = 0;
+			}
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD2))
+		{
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::LOWKICK;
+				frameX = 0;
+			}
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD3))
+		{
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::HIGHKICK;
+				frameX = 0;
+			}
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD0))
+		{
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::SKILL;
+				frameX = 0;
+			}
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RIGHT))
+		{
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				if (status != STATUS::BACK)
+					frameX = 0;
+				status = STATUS::BACK;
+			}
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LEFT))
+		{
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				if (status != STATUS::WALK)
+					frameX = 0;
+				status = STATUS::WALK;
+			}
+		}
+		if (STATUS::WALK <= status && status <= STATUS::BACK)
+		{
+			if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LEFT)
+				|| KeyManager::GetSingleton()->IsOnceKeyUp(VK_RIGHT))
+			{
+				status = STATUS::STANCE;
+				frameX = 0;
+			}
+		}
+		else if (frameX >= maxFrame[status])
+		{
+			status = STATUS::STANCE;
+			frameX = 0;
+		}
+	}
+	elapsedTime++;
+	if (elapsedTime >= 5)
+	{
+		if (status >= STATUS::WALK && status <= STATUS::BACK) {
+			Move();
+			if (frameX >= maxFrame[status])
+				frameX = 0;
+			image[status].Update(frameX, frameY);
+		}
+		else if (status == STATUS::SKILL) {
+			image[status].Update(frameX, frameY);
+			image[11].Update(frameX, frameY);
+		}
+		else {
+			image[status].Update(frameX, frameY);
+		}
+		frameX++;
+		elapsedTime = 0;
+	}
 }
 
 void Ash::Render(HDC hdc)

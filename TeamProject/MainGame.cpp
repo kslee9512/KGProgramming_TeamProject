@@ -20,10 +20,6 @@ HRESULT MainGame::Init()
 	print_posx = 0;
 	background = new Image();
 	background->Init("Image/BackGround/background.bmp", WINSIZE_X, WINSIZE_Y);
-	player1 = new Kdash();
-	player1->Init(PPOS::P1);
-	player2 = new Kyo();
-	player2->Init(PPOS::P2);
 	// ????????? ???? ???
 
 	hTimer = (HANDLE)SetTimer(g_hWnd, 0, 10, NULL);
@@ -33,13 +29,79 @@ HRESULT MainGame::Init()
 	backBuffer->Init(WINSIZE_X, WINSIZE_Y);
 	isInited = true;
 
+	characterSelect = new Image();
+	characterSelect->Init("Image/BackGround/CharacterSelect.bmp", WINSIZE_X, WINSIZE_Y);
+
+	isCharChosen = false;
+	isPlayer1Chosen = false;
+	isPlayer2Chosen = false;
+	player1SelectPos.x = 55;
+	player1SelectPos.y = 100;
+	player2SelectPos.x = 50;
+	player2SelectPos.y = 95;
+
 	return S_OK;
+}
+
+void MainGame::ChooseCharacter()
+{
+	if (KeyManager::GetSingleton()->IsOnceKeyDown('A')) {
+		if (player1SelectPos.x > 100 && !isPlayer1Chosen)
+			player1SelectPos.x -= 360;
+	}
+	else if (KeyManager::GetSingleton()->IsOnceKeyDown('D')) {
+		if (player1SelectPos.x < 700 && !isPlayer1Chosen)
+			player1SelectPos.x += 360;
+	}
+	else if (KeyManager::GetSingleton()->IsOnceKeyDown('U')) {
+		isPlayer1Chosen = !isPlayer1Chosen;
+	}
+	else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LEFT)) {
+		if (player2SelectPos.x > 100 && !isPlayer2Chosen)
+			player2SelectPos.x -= 360;
+	}
+	else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RIGHT)) {
+		if (player2SelectPos.x < 700 && !isPlayer2Chosen)
+			player2SelectPos.x += 360;
+	}
+	else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD5)) {
+		isPlayer2Chosen = !isPlayer2Chosen;
+	}
+
+	if (isPlayer1Chosen && isPlayer2Chosen) {
+		if (player1SelectPos.x < 100) {
+			player1 = new Kyo();
+		}
+		else if (player1SelectPos.x < 500) {
+			player1 = new Ash();
+		}
+		else {
+			player1 = new Kdash();
+		}
+
+		if (player2SelectPos.x < 100) {
+			player2 = new Kyo();
+		}
+		else if (player2SelectPos.x < 500) {
+			player2 = new Ash();
+		}
+		else {
+			player2 = new Kdash();
+		}
+		player1->Init(PPOS::P1);
+		player2->Init(PPOS::P2);
+		isCharChosen = true;
+	}
 }
 
 void MainGame::Release()
 {
 	KeyManager::GetSingleton()->Release();
-
+	if (characterSelect) {
+		characterSelect->Release();
+		delete characterSelect;
+		characterSelect = nullptr;
+	}
 	if (player1) {
 		player1->Release();
 		delete player1;
@@ -63,27 +125,86 @@ void MainGame::Release()
 
 void MainGame::Update()
 {
-	player1->Update();
-	player2->Update();
+	if(isCharChosen){
+		player1->Update();
+		player2->Update();
+	}
+	else {
+		ChooseCharacter();
+	}
 
 	InvalidateRect(g_hWnd, NULL, false);
+}
+
+void MainGame::RenderCharacterChoice(HDC hBackDC) {
+	characterSelect->Render(hBackDC);
+	//ÀÓ½Ã ÁÂÇ¥
+	wsprintf(szText, "X : %d, Y : %d", ptMouse.x, ptMouse.y);
+	TextOut(hBackDC, 200, 20, szText, strlen(szText));
+
+	SetBkMode(hBackDC, 1);
+
+	//player1 ¼±ÅÃ¹Ú½º
+	hPen = CreatePen(PS_SOLID, 5, RGB(0, 255, 0));
+	hOldPen = (HPEN)SelectObject(hBackDC, hPen);
+	SetTextColor(hBackDC, RGB(0, 255, 0));
+	if (!isPlayer1Chosen) {
+		wsprintf(szText, "Player1");
+	}
+	else {
+		wsprintf(szText, "[#Player1]");
+	}
+	TextOut(hBackDC, player1SelectPos.x, player1SelectPos.y - 40, szText, strlen(szText));
+	MoveToEx(hBackDC, player1SelectPos.x, player1SelectPos.y, NULL);
+	LineTo(hBackDC, player1SelectPos.x + 255, player1SelectPos.y);
+	LineTo(hBackDC, player1SelectPos.x + 255, player1SelectPos.y + 500);
+	LineTo(hBackDC, player1SelectPos.x, player1SelectPos.y + 500);
+	LineTo(hBackDC, player1SelectPos.x, player1SelectPos.y);
+	SelectObject(hBackDC, hOldPen);
+	DeleteObject(hPen);
+
+	//player2 ¼±ÅÃ¹Ú½º
+	hPen = CreatePen(PS_SOLID, 5, RGB(0, 0, 255));
+	hOldPen = (HPEN)SelectObject(hBackDC, hPen);
+	SetTextColor(hBackDC, RGB(0, 0, 255));
+	if (!isPlayer2Chosen) {
+		wsprintf(szText, "Player2");
+	}
+	else {
+		wsprintf(szText, "[#Player2]");
+	}
+	TextOut(hBackDC, player2SelectPos.x + 200, player2SelectPos.y - 35, szText, strlen(szText));
+	
+	MoveToEx(hBackDC, player2SelectPos.x, player2SelectPos.y, NULL);
+	LineTo(hBackDC, player2SelectPos.x + 265, player2SelectPos.y);
+	LineTo(hBackDC, player2SelectPos.x + 265, player2SelectPos.y + 510);
+	LineTo(hBackDC, player2SelectPos.x, player2SelectPos.y + 510);
+	LineTo(hBackDC, player2SelectPos.x, player2SelectPos.y);
+	SelectObject(hBackDC, hOldPen);
+	DeleteObject(hPen);
 }
 
 void MainGame::Render(HDC hdc)
 {
 
 	HDC hBackDC = backBuffer->GetMemDC();
-	background->Render(hBackDC);
 
-	// ?¥ë?
-	TextOut(hBackDC, 20, 20, "MainGame", strlen("MainGame"));
-	// ???²J ???
-	wsprintf(szText, "X : %d, Y : %d", ptMouse.x, ptMouse.y);
-	TextOut(hBackDC, 200, 20, szText, strlen(szText));
+	if (!isCharChosen) {
+		RenderCharacterChoice(hBackDC);
+		
+	}
+	else {
+		background->Render(hBackDC);
 
-	player1->Render(hBackDC);
-	player2->Render(hBackDC);
+		// ?¥ë?
+		TextOut(hBackDC, 20, 20, "MainGame", strlen("MainGame"));
+		// ???²J ???
+		wsprintf(szText, "X : %d, Y : %d", ptMouse.x, ptMouse.y);
+		TextOut(hBackDC, 200, 20, szText, strlen(szText));
 
+		player1->Render(hBackDC);
+		player2->Render(hBackDC);
+	}
 	backBuffer->Render(hdc, 0, 0, 0);
 }
 
@@ -133,6 +254,7 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 
 	return DefWindowProc(hWnd, iMessage, wParam, lParam);
 }
+
 
 MainGame::MainGame()
 {

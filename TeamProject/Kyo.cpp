@@ -114,28 +114,38 @@ void Kyo::Update()
 	{
 		if (KeyManager::GetSingleton()->IsOnceKeyDown('U'))
 		{
-			status = STATUS::JJAP;
-			frameX = 0;
+			if(STATUS::STANCE<=status && status <= STATUS::BACK){
+				status = STATUS::JJAP;
+				frameX = 0;
+			}
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('I'))
 		{
-			status = STATUS::PUNCH;
-			frameX = 0;
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::PUNCH;
+				frameX = 0;
+			}
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('J'))
 		{
-			status = STATUS::LOWKICK;
-			frameX = 0;
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::LOWKICK;
+				frameX = 0;
+			}
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('K'))
 		{
-			status = STATUS::HIGHKICK;
-			frameX = 0;
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::HIGHKICK;
+				frameX = 0;
+			}
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('P'))
 		{
-			status = STATUS::SKILL;
-			frameX = 0;
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::SKILL;
+				frameX = 0;
+			}
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('A'))
 		{
@@ -172,28 +182,38 @@ void Kyo::Update()
 	{
 		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD5))
 		{
-			status = STATUS::JJAP;
-			frameX = 0;
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::JJAP;
+				frameX = 0;
+			}
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD6))
 		{
-			status = STATUS::PUNCH;
-			frameX = 0;
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::PUNCH;
+				frameX = 0;
+			}
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD2))
 		{
-			status = STATUS::LOWKICK;
-			frameX = 0;
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::LOWKICK;
+				frameX = 0;
+			}
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD3))
 		{
-			status = STATUS::HIGHKICK;
-			frameX = 0;
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::HIGHKICK;
+				frameX = 0;
+			}
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD0))
 		{
-			status = STATUS::SKILL;
-			frameX = 0;
+			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
+				status = STATUS::SKILL;
+				frameX = 0;
+			}
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RIGHT))
 		{
@@ -254,11 +274,11 @@ void Kyo::Render(HDC hdc)
         {
             if (pPos == PPOS::P1) {
                 image[status].RenderReverse(hdc, pos.x + 20, pos.y + 25, spriteWidth, spriteHeight);
-                image[11].RenderReverse(hdc, pos.x + 350, pos.y - 100, spriteWidth, spriteHeight);
+                image[11].RenderReverse(hdc, pos.x + 400, pos.y - 100, spriteWidth, spriteHeight);
             }
             else if (pPos == PPOS::P2) {
                 image[status].Render(hdc, pos.x, pos.y + 25, spriteWidth, spriteHeight);
-                image[11].Render(hdc, pos.x - 350, pos.y - 100, spriteWidth, spriteHeight);
+                image[11].Render(hdc, pos.x - 370, pos.y - 100, spriteWidth, spriteHeight);
             }
         }
         else {
