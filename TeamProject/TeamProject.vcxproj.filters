@@ -51,6 +51,9 @@
     <ClInclude Include="CheckBox.h">
       <Filter>소스 파일\2DFrameWork\AbstractClass</Filter>
     </ClInclude>
+    <ClInclude Include="Kdash.h">
+      <Filter>소스 파일\2DFrameWork\AbstractClass</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -72,6 +75,9 @@
       <Filter>소스 파일\Main</Filter>
     </ClCompile>
     <ClCompile Include="CheckBox.cpp">
+      <Filter>소스 파일\2DFrameWork\AbstractClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Kdash.cpp">
       <Filter>소스 파일\2DFrameWork\AbstractClass</Filter>
     </ClCompile>
   </ItemGroup>
