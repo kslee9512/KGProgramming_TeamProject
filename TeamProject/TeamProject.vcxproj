@@ -148,7 +148,9 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="Kdash.h" />
     <ClInclude Include="KeyManager.h" />
+    <ClInclude Include="Kyo.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="CommandQueue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Ash.cpp" />
@@ -158,8 +160,10 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Kdash.cpp" />
     <ClCompile Include="KeyManager.cpp" />
+    <ClCompile Include="Kyo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="CommandQueue.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

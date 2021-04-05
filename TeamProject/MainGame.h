@@ -24,7 +24,11 @@ private:
 	Image* background;
 	Character* player1;
 	Character* player2;
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> origin/SES
 public:
 	HRESULT Init();		
 	void Release();
