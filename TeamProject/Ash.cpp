@@ -109,28 +109,43 @@ void Ash::Update()
     {
         if (KeyManager::GetSingleton()->IsOnceKeyDown('U'))
         {
-            status = STATUS::JJAP;
-            frameX = 0;
+            if (STATUS::STANCE <= status && status <= STATUS::BACK)
+            {
+                status = STATUS::JJAP;
+                frameX = 0;
+            }
         }
         else if (KeyManager::GetSingleton()->IsOnceKeyDown('I'))
         {
-            status = STATUS::PUNCH;
-            frameX = 0;
+            if (STATUS::STANCE <= status && status <= STATUS::BACK)
+            {
+                status = STATUS::PUNCH;
+                frameX = 0;
+            }
         }
         else if (KeyManager::GetSingleton()->IsOnceKeyDown('J'))
         {
-            status = STATUS::LOWKICK;
-            frameX = 0;
+            if (STATUS::STANCE <= status && status <= STATUS::BACK)
+            {
+                status = STATUS::LOWKICK;
+                frameX = 0;
+            }
         }
         else if (KeyManager::GetSingleton()->IsOnceKeyDown('K'))
         {
-            status = STATUS::HIGHKICK;
-            frameX = 0;
+            if (STATUS::STANCE <= status && status <= STATUS::BACK)
+            {
+                status = STATUS::HIGHKICK;
+                frameX = 0;
+            }
         }
         else if (KeyManager::GetSingleton()->IsOnceKeyDown('P'))
         {
-            status = STATUS::SKILL;
-            frameX = 0;
+            if (STATUS::STANCE <= status && status <= STATUS::BACK)
+            {
+                status = STATUS::SKILL;
+                frameX = 0;
+            }
         }
         else if (KeyManager::GetSingleton()->IsOnceKeyDown('A'))
         {
@@ -167,28 +182,43 @@ void Ash::Update()
     {
         if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD5))
         {
-            status = STATUS::JJAP;
-            frameX = 0;
+            if (STATUS::STANCE <= status && status <= STATUS::BACK)
+            {
+                status = STATUS::JJAP;
+                frameX = 0;
+            }
         }
         else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD6))
         {
-            status = STATUS::PUNCH;
-            frameX = 0;
+            if (STATUS::STANCE <= status && status <= STATUS::BACK)
+            {
+                status = STATUS::PUNCH;
+                frameX = 0;
+            }
         }
         else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD2))
         {
-            status = STATUS::LOWKICK;
-            frameX = 0;
+            if (STATUS::STANCE <= status && status <= STATUS::BACK)
+            {
+                status = STATUS::LOWKICK;
+                frameX = 0;
+            }
         }
         else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD3))
         {
-            status = STATUS::HIGHKICK;
-            frameX = 0;
+            if (STATUS::STANCE <= status && status <= STATUS::BACK)
+            {
+                status = STATUS::HIGHKICK;
+                frameX = 0;
+            }
         }
         else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD0))
         {
-            status = STATUS::SKILL;
-            frameX = 0;
+            if (STATUS::STANCE <= status && status <= STATUS::BACK)
+            {
+                status = STATUS::SKILL;
+                frameX = 0;
+            }
         }
         else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RIGHT))
         {
