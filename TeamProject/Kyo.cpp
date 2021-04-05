@@ -245,3 +245,28 @@ void Kyo::Update()
         elapsedTime = 0;
     }
 }
+
+void Kyo::Render(HDC hdc)
+{
+    if (image) {
+        if (status == STATUS::SKILL)
+        {
+            if (pPos == PPOS::P1) {
+                image[status].RenderReverse(hdc, pos.x + 20, pos.y + 25, spriteWidth, spriteHeight);
+                image[11].RenderReverse(hdc, pos.x + 350, pos.y - 100, spriteWidth, spriteHeight);
+            }
+            else if (pPos == PPOS::P2) {
+                image[status].Render(hdc, pos.x, pos.y + 25, spriteWidth, spriteHeight);
+                image[11].Render(hdc, pos.x - 350, pos.y - 100, spriteWidth, spriteHeight);
+            }
+        }
+        else {
+            if (pPos == PPOS::P1) {
+                image[status].RenderReverse(hdc, pos.x - 20, pos.y + 25, spriteWidth, spriteHeight);
+            }
+            else if (pPos == PPOS::P2) {
+                image[status].Render(hdc, pos.x + 50, pos.y + 25, spriteWidth, spriteHeight);
+            }
+        }
+    }
+}

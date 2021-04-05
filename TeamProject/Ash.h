@@ -7,4 +7,5 @@ public:
 	HRESULT Init();
 	HRESULT Init(PPOS pPos);
 	void Update();
+	void Render(HDC hdc);
 };
