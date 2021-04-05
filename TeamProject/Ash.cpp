@@ -5,7 +5,8 @@ HRESULT Ash::Init(PPOS pPos)
 {
 	this->pPos = pPos;
 	image = new Image[15];
-	frame = 0;
+	frameX = 0;
+	frameY = 0;
 	moveSpeed = 1;
 	maxFrame[0] = 14;
 	maxFrame[1] = 6;
@@ -20,147 +21,147 @@ HRESULT Ash::Init(PPOS pPos)
 	maxFrame[10] = 16;
 	maxFrame[11] = 16;
 	status = STATUS::STANCE;
-if (pPos == PPOS::P1)
-{
-	//pos.x = (WINSIZE_X / 2) - 300;
-	//pos.y = (GROUND_Y);
-	pos.x = -200;
-	pos.y = +150;
-}
-else if (pPos == PPOS::P2)
-{
-	pos.x = (WINSIZE_X / 2) + 300;
-	pos.y = (GROUND_Y);
-}
+	if (pPos == PPOS::P1)
+	{
+		//pos.x = (WINSIZE_X / 2) - 300;
+		//pos.y = (GROUND_Y);
+		pos.x = -200;
+		pos.y = +150;
+	}
+	else if (pPos == PPOS::P2)
+	{
+		pos.x = (WINSIZE_X / 2) + 300;
+		pos.y = (GROUND_Y);
+	}
 
-if (FAILED(image[0].Init("Image/Ash_Image/stance_1.bmp", imageWidth, 683, maxFrame[0], 1, true, RGB(255, 255, 255))))
-{
-	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
-	return E_FAIL;
-}
-if (FAILED(image[1].Init("Image/Ash_Image/walk.bmp", 6564, 683, maxFrame[1], 1, true, RGB(255, 255, 255))))
-{
-	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
-	return E_FAIL;
-}
-if (FAILED(image[2].Init("Image/Ash_Image/back.bmp", 6564, 683, maxFrame[2], 1, true, RGB(255, 255, 255))))
-{
-	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
-	return E_FAIL;
-}
-if (FAILED(image[3].Init("Image/Ash_Image/JJAP.bmp", 7658, 683, maxFrame[3], 1, true, RGB(255, 255, 255))))
-{
-	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
-	return E_FAIL;
-}
-if (FAILED(image[4].Init("Image/Ash_Image/PUNCH.bmp", 9846, 683, maxFrame[4], 1, true, RGB(255, 255, 255))))
-{
-	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
-	return E_FAIL;
-}
-if (FAILED(image[5].Init("Image/Ash_Image/LOWKICK.bmp", 6564, 683, maxFrame[5], 1, true, RGB(255, 255, 255))))
-{
-	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
-	return E_FAIL;
-}
-if (FAILED(image[6].Init("Image/Ash_Image/HIGHKICK.bmp", 13128, 683, maxFrame[6], 1, true, RGB(255, 255, 255))))
-{
-	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
-	return E_FAIL;
-}
-if (FAILED(image[7].Init("Image/Ash_Image/HIT.bmp", 4376, 683, maxFrame[7], 1, true, RGB(255, 255, 255))))
-{
-	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
-	return E_FAIL;
-}
-if (FAILED(image[8].Init("Image/Ash_Image/DEFEAT.bmp", 12034, 683, maxFrame[8], 1, true, RGB(255, 255, 255))))
-{
-	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
-	return E_FAIL;
-}
-if (FAILED(image[9].Init("Image/Ash_Image/WIN.bmp", 17504, 683, maxFrame[9], 1, true, RGB(255, 255, 255))))
-{
-	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
-	return E_FAIL;
-}
-if (FAILED(image[10].Init("Image/Ash_Image/SKILL.bmp", 17504, 683, maxFrame[10], 1, true, RGB(255, 255, 255))))
-{
-	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
-	return E_FAIL;
-}
-if (FAILED(image[11].Init("Image/Ash_Image/SKILL_EFFECT.bmp", 17504, 683, maxFrame[11], 1, true, RGB(0, 0, 0))))
-{
-	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
-	return E_FAIL;
-}
-return S_OK;
+	if (FAILED(image[0].Init("Image/Ash_Image/stance_1.bmp", imageWidth, 683, maxFrame[0], 1, true, RGB(255, 255, 255))))
+	{
+		MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+		return E_FAIL;
+	}
+	if (FAILED(image[1].Init("Image/Ash_Image/walk.bmp", 6564, 683, maxFrame[1], 1, true, RGB(255, 255, 255))))
+	{
+		MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+		return E_FAIL;
+	}
+	if (FAILED(image[2].Init("Image/Ash_Image/back.bmp", 6564, 683, maxFrame[2], 1, true, RGB(255, 255, 255))))
+	{
+		MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+		return E_FAIL;
+	}
+	if (FAILED(image[3].Init("Image/Ash_Image/JJAP.bmp", 7658, 683, maxFrame[3], 1, true, RGB(255, 255, 255))))
+	{
+		MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+		return E_FAIL;
+	}
+	if (FAILED(image[4].Init("Image/Ash_Image/PUNCH.bmp", 9846, 683, maxFrame[4], 1, true, RGB(255, 255, 255))))
+	{
+		MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+		return E_FAIL;
+	}
+	if (FAILED(image[5].Init("Image/Ash_Image/LOWKICK.bmp", 6564, 683, maxFrame[5], 1, true, RGB(255, 255, 255))))
+	{
+		MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+		return E_FAIL;
+	}
+	if (FAILED(image[6].Init("Image/Ash_Image/HIGHKICK.bmp", 13128, 683, maxFrame[6], 1, true, RGB(255, 255, 255))))
+	{
+		MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+		return E_FAIL;
+	}
+	if (FAILED(image[7].Init("Image/Ash_Image/HIT.bmp", 4376, 683, maxFrame[7], 1, true, RGB(255, 255, 255))))
+	{
+		MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+		return E_FAIL;
+	}
+	if (FAILED(image[8].Init("Image/Ash_Image/DEFEAT.bmp", 12034, 683, maxFrame[8], 1, true, RGB(255, 255, 255))))
+	{
+		MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+		return E_FAIL;
+	}
+	if (FAILED(image[9].Init("Image/Ash_Image/WIN.bmp", 17504, 683, maxFrame[9], 1, true, RGB(255, 255, 255))))
+	{
+		MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+		return E_FAIL;
+	}
+	if (FAILED(image[10].Init("Image/Ash_Image/SKILL.bmp", 17504, 683, maxFrame[10], 1, true, RGB(255, 255, 255))))
+	{
+		MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+		return E_FAIL;
+	}
+	if (FAILED(image[11].Init("Image/Ash_Image/SKILL_EFFECT.bmp", 17504, 683, maxFrame[11], 1, true, RGB(0, 0, 0))))
+	{
+		MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+		return E_FAIL;
+	}
+	return S_OK;
 }
 
 void Ash::Update(STATUS status)
 {
 	if (pPos == PPOS::P1)
 	{
-		if (KeyManager::GetSingleton()->IsStayKeyDown('a') 
+		if (KeyManager::GetSingleton()->IsStayKeyDown('a')
 			|| KeyManager::GetSingleton()->IsStayKeyDown('A'))
 		{
-			if (frame == 0)
+			if (frameX == 0)
 				SetStatus(STATUS::BACK);
 		}
 		else if (KeyManager::GetSingleton()->IsStayKeyDown('d')
 			|| KeyManager::GetSingleton()->IsStayKeyDown('D'))
 		{
-			if (frame == 0)
+			if (frameX == 0)
 				SetStatus(STATUS::WALK);
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('u')
 			|| KeyManager::GetSingleton()->IsOnceKeyDown('U'))
 		{
 			SetStatus(STATUS::JJAP);
-			frame = 0;
+			frameX = 0;
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('i')
 			|| KeyManager::GetSingleton()->IsOnceKeyDown('I'))
 		{
 			SetStatus(STATUS::PUNCH);
-			frame = 0;
+			frameX = 0;
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('j')
 			|| KeyManager::GetSingleton()->IsOnceKeyDown('J'))
 		{
 			SetStatus(STATUS::LOWKICK);
-			frame = 0;
+			frameX = 0;
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('k')
 			|| KeyManager::GetSingleton()->IsOnceKeyDown('K'))
 		{
 			SetStatus(STATUS::HIGHKICK);
-			frame = 0;
+			frameX = 0;
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('p')
 			|| KeyManager::GetSingleton()->IsOnceKeyDown('P'))
 		{
 			SetStatus(STATUS::SKILL);
-			frame = 0;
+			frameX = 0;
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('l')
 			|| KeyManager::GetSingleton()->IsOnceKeyDown('L'))
 		{
 			SetStatus(STATUS::HIT);
-			frame = 0;
+			frameX = 0;
 		}
 
-		if (frame >= maxFrame[status])
+		if (frameX >= maxFrame[status])
 		{
 			SetStatus(STATUS::STANCE);
-			frame = 0;
+			frameX = 0;
 		}
-		else if( STATUS::STANCE < status && status < STATUS::JJAP ) 
+		else if (STATUS::STANCE < status && status < STATUS::JJAP)
 		{
 			if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LEFT)
 				|| KeyManager::GetSingleton()->IsOnceKeyUp(VK_RIGHT))
 			{
 				SetStatus(STATUS::STANCE);
-				frame = 0;
+				frameX = 0;
 			}
 		}
 		if (status == STATUS::WALK)
@@ -172,13 +173,13 @@ void Ash::Update(STATUS status)
 			|| KeyManager::GetSingleton()->IsOnceKeyDown('M'))
 		{
 			SetStatus(STATUS::DEFEAT);
-			frame = 0;
+			frameX = 0;
 		}
 		if (KeyManager::GetSingleton()->IsOnceKeyDown('n')
 			|| KeyManager::GetSingleton()->IsOnceKeyDown('N'))
 		{
 			SetStatus(STATUS::WIN);
-			frame = 0;
+			frameX = 0;
 		}
 	}
 
@@ -192,16 +193,16 @@ void Ash::Update(STATUS status)
 		{
 			SetStatus(STATUS::WALK);
 		}
-		if (frame >= maxFrame[status])
+		if (frameX >= maxFrame[status])
 		{
 			SetStatus(STATUS::STANCE);
-			frame = 0;
+			frameX = 0;
 		}
 	}
 	elapsedTime++;
 	if (elapsedTime >= 5)
 	{
-		frame++;
+		frameX++;
 		elapsedTime = 0;
 	}
 
@@ -252,5 +253,5 @@ void Ash::Update(STATUS status)
 	//		elapsedTime = 0;
 	//	}
 	//}
-	
+
 }

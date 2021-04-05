@@ -13,13 +13,9 @@ using namespace std;
 
 #define WINSIZE_X	1080
 #define WINSIZE_Y	720
-<<<<<<< HEAD
-#define GROUND_Y	520
-enum STATUS {STANCE, WALK, BACK, JJAP, PUNCH, LOWKICK, HIGHKICK, HIT, DEFEAT, WIN , SKILL, ENDSTATUS };
-=======
+
+enum STATUS { STANCE, WALK, BACK, JJAP, PUNCH, LOWKICK, HIGHKICK, HIT, DEFEAT, WIN, SKILL, ENDSTATUS };
 #define GROUND_Y	120
-enum STATUS {STANCE, WALK, BACK, JJAP, PUNCH, LOWKICK, HIGHKICK, HIT, SKILL, DEFEAT, WIN ,ENDSTATUS };
->>>>>>> origin/SES
 /*
 	STANCE : 통상 자세
 	WALK : 앞으로 이동
@@ -33,12 +29,9 @@ enum STATUS {STANCE, WALK, BACK, JJAP, PUNCH, LOWKICK, HIGHKICK, HIT, SKILL, DEF
 	WIN : 승리모션
 	END : 끝
 */
-<<<<<<< HEAD
+
 enum PPOS { P1, P2, ENDPPOS };
-=======
-enum PPOS {P1, P2, ENDPPOS};
-enum COMMAND{NO_COMMAND, FIRST_COMMAND};
->>>>>>> origin/SES
+enum COMMAND { NO_COMMAND, FIRST_COMMAND };
 
 typedef struct tagFPoint
 {
@@ -49,9 +42,5 @@ typedef struct tagFPoint
 //typedef tagFPoint FPOINT2;
 //typedef tagFPoint* PFPOINT2;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/SES
 extern HWND g_hWnd;
 extern HINSTANCE g_hInstance;

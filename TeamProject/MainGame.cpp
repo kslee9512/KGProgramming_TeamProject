@@ -1,11 +1,9 @@
 #include "MainGame.h"
 #include "Image.h"
-<<<<<<< HEAD
 #include "Kdash.h"
 #include "Ash.h"
-=======
 #include "Kyo.h"
->>>>>>> origin/SES
+
 /*
 	1. 배경 bin.bmp를 본인이 원하는 파일로 바꿔보자.
 	2. 탱크가 발사하는 미사일에 구슬.bmp를 씌워보자.
@@ -16,24 +14,16 @@ HRESULT MainGame::Init()
 {
 	KeyManager::GetSingleton()->Init();
 
-	player1 = new Ash;
-	player1->Init(PPOS::P1);
-
 	count = 0;
 	sizex = 68;
 	sizey = 104;
 	print_posx = 0;
 	background = new Image();
 	background->Init("Image/BackGround/background.bmp", WINSIZE_X, WINSIZE_Y);
-<<<<<<< HEAD
-	player1 = new Kdash();
-	player1->Init(PPOS::P1);
-	player2 = new Kdash();
-=======
 	player1 = new Kyo();
 	player1->Init(PPOS::P1);
 	player2 = new Kyo();
->>>>>>> origin/SES
+
 	player2->Init(PPOS::P2);
 	// 메인게임의 초기화 함수
 	hTimer = (HANDLE)SetTimer(g_hWnd, 0, 10, NULL);
@@ -75,10 +65,7 @@ void MainGame::Update()
 {
 	player1->Update();
 	player2->Update();
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/SES
 	InvalidateRect(g_hWnd, NULL, false);
 }
 
@@ -96,10 +83,7 @@ void MainGame::Render(HDC hdc)
 
 	player1->Render(hBackDC);
 	player2->Render(hBackDC);
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/SES
 	backBuffer->Render(hdc, 0, 0, 0);
 }
 

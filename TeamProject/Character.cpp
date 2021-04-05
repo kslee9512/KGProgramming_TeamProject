@@ -1,4 +1,3 @@
-
 #include "Character.h"
 #include "Image.h"
 
@@ -22,7 +21,7 @@ HRESULT Character::Init(PPOS pPos)
 		pos.y = (GROUND_Y);
 	}
 
-	if (FAILED(image[0].Init("Image/K'Image/k'_stance1p.bmp", 1344, 122, 16, 1, PPOS::P1, true, RGB(255, 255, 255))))
+	if (FAILED(image[0].Init("Image/K'Image/k'_stance1p.bmp", 1344, 122, 16, 1, true, RGB(255, 255, 255))))
 	{
 		MessageBox(g_hWnd, "Image/Iori_walk.bmp 로드 실패", "Warning", MB_OK);
 		return E_FAIL;

@@ -1,7 +1,6 @@
 #pragma once
 #include "GameNode.h"
 
-
 class Image;
 class Character;
 class MainGame : public GameNode
@@ -18,19 +17,13 @@ private:
 	POINT ptMouse{ 0, 0 };
 	char szText[128] = "";
 
-	Character* player1;
-
 	Image* backBuffer;
 	Image* background;
 	Character* player1;
 	Character* player2;
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> origin/SES
 public:
-	HRESULT Init();		
+	HRESULT Init();
 	void Release();
 	void Update();
 	void Render(HDC hdc);

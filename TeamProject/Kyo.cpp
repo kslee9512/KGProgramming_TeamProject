@@ -22,7 +22,7 @@ HRESULT Kyo::Init(PPOS pPos)
 	}
 	else if (pPos == PPOS::P2)
 	{
-		pos.x = (WINSIZE_X) - 679;
+		pos.x = (WINSIZE_X)-679;
 		pos.y = GROUND_Y;
 	}
 
@@ -38,62 +38,62 @@ HRESULT Kyo::Init(PPOS pPos)
 	maxFrame[9] = 5;
 	maxFrame[10] = 3;
 	maxFrame[11] = 30;
-	if (FAILED(image[0].Init("Image/KyoImage/kyo_bmp/kyo_stanceR.bmp", 7469, 689, maxFrame[0], 1, PPOS::P1, true, RGB(0, 0, 0))))
+	if (FAILED(image[0].Init("Image/KyoImage/kyo_bmp/kyo_stanceR.bmp", 7469, 689, maxFrame[0], 1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_stanceR.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[1].Init("Image/KyoImage/kyo_bmp/kyo_walkR.bmp", 7469, 689, maxFrame[1], 1, PPOS::P1, true, RGB(255, 255, 255))))
+	if (FAILED(image[1].Init("Image/KyoImage/kyo_bmp/kyo_walkR.bmp", 7469, 689, maxFrame[1], 1, true, RGB(255, 255, 255))))
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_walkR.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[2].Init("Image/KyoImage/kyo_bmp/kyo_backR.bmp", 6790, 689, maxFrame[2], 1, PPOS::P1, true, RGB(255, 255, 255))))
+	if (FAILED(image[2].Init("Image/KyoImage/kyo_bmp/kyo_backR.bmp", 6790, 689, maxFrame[2], 1, true, RGB(255, 255, 255))))
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_backR.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[3].Init("Image/KyoImage/kyo_bmp/kyo_jjabR.bmp", 2037, 689, maxFrame[3], 1, PPOS::P1, true, RGB(255, 255, 255))))
+	if (FAILED(image[3].Init("Image/KyoImage/kyo_bmp/kyo_jjabR.bmp", 2037, 689, maxFrame[3], 1, true, RGB(255, 255, 255))))
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_jjabR.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[4].Init("Image/KyoImage/kyo_bmp/kyo_punchR.bmp", 4074, 689, maxFrame[4], 1, PPOS::P1, true, RGB(255, 255, 255))))
+	if (FAILED(image[4].Init("Image/KyoImage/kyo_bmp/kyo_punchR.bmp", 4074, 689, maxFrame[4], 1, true, RGB(255, 255, 255))))
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_punchR.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[5].Init("Image/KyoImage/kyo_bmp/kyo_lowkickR.bmp", 2716, 689, maxFrame[5], 1, PPOS::P1, true, RGB(255, 255, 255))))
+	if (FAILED(image[5].Init("Image/KyoImage/kyo_bmp/kyo_lowkickR.bmp", 2716, 689, maxFrame[5], 1, true, RGB(255, 255, 255))))
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_lowkickR.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[6].Init("Image/KyoImage/kyo_bmp/kyo_highkickR.bmp", 4074, 689, maxFrame[6], 1, PPOS::P1, true, RGB(255, 255, 255))))
+	if (FAILED(image[6].Init("Image/KyoImage/kyo_bmp/kyo_highkickR.bmp", 4074, 689, maxFrame[6], 1, true, RGB(255, 255, 255))))
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_highkickR.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[7].Init("Image/KyoImage/kyo_bmp/kyo_hitR.bmp", 2716, 689, maxFrame[7], 1, PPOS::P1, true, RGB(255, 255, 255))))
+	if (FAILED(image[7].Init("Image/KyoImage/kyo_bmp/kyo_hitR.bmp", 2716, 689, maxFrame[7], 1, true, RGB(255, 255, 255))))
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_hitR.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[8].Init("Image/KyoImage/kyo_bmp/kyo_skill1R.bmp", 20370, 689, maxFrame[8], 1, PPOS::P1, true, RGB(0, 0, 0))))
+	if (FAILED(image[8].Init("Image/KyoImage/kyo_bmp/kyo_skill1R.bmp", 20370, 689, maxFrame[8], 1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_skill1R.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[9].Init("Image/KyoImage/kyo_bmp/kyo_defeatR.bmp", 3395, 689, maxFrame[9], 1, PPOS::P1, true, RGB(255, 255, 255))))
+	if (FAILED(image[9].Init("Image/KyoImage/kyo_bmp/kyo_defeatR.bmp", 3395, 689, maxFrame[9], 1, true, RGB(255, 255, 255))))
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_defeatR.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[10].Init("Image/KyoImage/kyo_bmp/kyo_winR.bmp", 2037, 689, maxFrame[10], 1, PPOS::P1, true, RGB(255, 255, 255))))
+	if (FAILED(image[10].Init("Image/KyoImage/kyo_bmp/kyo_winR.bmp", 2037, 689, maxFrame[10], 1, true, RGB(255, 255, 255))))
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_winR.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[11].Init("Image/KyoImage/kyo_bmp/kyo_skill1R2.bmp", 20370, 689, maxFrame[11], 1, PPOS::P1, true, RGB(0, 0, 0))))
+	if (FAILED(image[11].Init("Image/KyoImage/kyo_bmp/kyo_skill1R2.bmp", 20370, 689, maxFrame[11], 1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_skill1R2.bmp", "Warning", MB_OK);
 		return E_FAIL;
@@ -237,7 +237,8 @@ void Kyo::Update()
 		if (status == STATUS::SKILL) {
 			image[status].Update(frameX, frameY);
 			image[11].Update(frameX, frameY);
-		}else{
+		}
+		else {
 			image[status].Update(frameX, frameY);
 		}
 		frameX++;
