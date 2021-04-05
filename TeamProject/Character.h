@@ -5,6 +5,7 @@ class Image;
 class Character : public GameNode
 {
 protected:
+	int imageWidth = 15316;
 	Image* image;
 	int maxHp;
 	int curHp;
@@ -13,7 +14,13 @@ protected:
 	FPOINT pos; //실제 캐릭터 좌표
 	float moveSpeed;
 	int maxFrame[12]{ 0, };
+<<<<<<< HEAD
+
 	int maxImage;
+
+=======
+	int maxImage;
+>>>>>>> origin/SES
 	int width, height;
 	int attack[5];
 	int elapsedTime;
@@ -29,6 +36,11 @@ public:
 	inline virtual FPOINT GetPos() { return this->pos; }
 	inline virtual void SetStatus(STATUS status) { this->status = status; }
 	inline virtual STATUS GetStatus() { return this->status; }
+<<<<<<< HEAD
+	// 프레임 단위로 게임 로직 실행 (데이터 변동)
+};
+=======
 			// 프레임 단위로 게임 로직 실행 (데이터 변동)
 };
 
+>>>>>>> origin/SES

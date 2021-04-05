@@ -139,22 +139,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Ash.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CheckBox.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="Kdash.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Kyo.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="CommandQueue.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Ash.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CheckBox.cpp" />
     <ClCompile Include="GameNode.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Kdash.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="Kyo.cpp" />
     <ClCompile Include="main.cpp" />

@@ -18,13 +18,19 @@ private:
 	POINT ptMouse{ 0, 0 };
 	char szText[128] = "";
 
+	Character* player1;
+
 	Image* backBuffer;
 	Image* background;
 	Character* player1;
 	Character* player2;
+<<<<<<< HEAD
+
+=======
 	
+>>>>>>> origin/SES
 public:
-	HRESULT Init();		// 오버라이딩 : 다형성
+	HRESULT Init();		
 	void Release();
 	void Update();
 	void Render(HDC hdc);
@@ -34,4 +40,3 @@ public:
 	MainGame();
 	~MainGame();
 };
-
