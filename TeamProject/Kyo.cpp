@@ -9,11 +9,11 @@ HRESULT Kyo::Init()
 HRESULT Kyo::Init(PPOS pPos)
 {
 	this->pPos = pPos;
-	image = new Image[11];
+	image = new Image[12];
 	frameX = 0;
 	frameY = 0;
 	moveSpeed = 10;
-	maxImage = 11;
+	maxImage = 12;
 	status = STATUS::STANCE;
 	if (pPos == PPOS::P1)
 	{
@@ -34,9 +34,10 @@ HRESULT Kyo::Init(PPOS pPos)
 	maxFrame[5] = 4;
 	maxFrame[6] = 6;
 	maxFrame[7] = 4;
-	maxFrame[8] = 4;
+	maxFrame[8] = 30;
 	maxFrame[9] = 5;
 	maxFrame[10] = 3;
+	maxFrame[11] = 30;
 	if (FAILED(image[0].Init("Image/KyoImage/kyo_bmp/kyo_stanceR.bmp", 7469, 689, maxFrame[0], 1, PPOS::P1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_stanceR.bmp", "Warning", MB_OK);
@@ -77,7 +78,7 @@ HRESULT Kyo::Init(PPOS pPos)
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_hitR.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[8].Init("Image/KyoImage/kyo_bmp/kyo_skill1R.bmp", 2716, 689, maxFrame[8], 1, PPOS::P1, true, RGB(255, 255, 255))))
+	if (FAILED(image[8].Init("Image/KyoImage/kyo_bmp/kyo_skill1R.bmp", 20370, 689, maxFrame[8], 1, PPOS::P1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_skill1R.bmp", "Warning", MB_OK);
 		return E_FAIL;
@@ -90,6 +91,11 @@ HRESULT Kyo::Init(PPOS pPos)
 	if (FAILED(image[10].Init("Image/KyoImage/kyo_bmp/kyo_winR.bmp", 2037, 689, maxFrame[10], 1, PPOS::P1, true, RGB(255, 255, 255))))
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_winR.bmp", "Warning", MB_OK);
+		return E_FAIL;
+	}
+	if (FAILED(image[11].Init("Image/KyoImage/kyo_bmp/kyo_skill1R2.bmp", 20370, 689, maxFrame[11], 1, PPOS::P1, true, RGB(0, 0, 0))))
+	{
+		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_skill1R2.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
 
@@ -167,7 +173,32 @@ void Kyo::Update()
 	}
 	else if (pPos == PPOS::P2)
 	{
-		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RIGHT))
+		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD5))
+		{
+			status = STATUS::JJAP;
+			frameX = 0;
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD6))
+		{
+			status = STATUS::PUNCH;
+			frameX = 0;
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD2))
+		{
+			status = STATUS::LOWKICK;
+			frameX = 0;
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD3))
+		{
+			status = STATUS::HIGHKICK;
+			frameX = 0;
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD0))
+		{
+			status = STATUS::SKILL;
+			frameX = 0;
+		}
+		else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RIGHT))
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				if (status != STATUS::BACK)
@@ -203,7 +234,12 @@ void Kyo::Update()
 	{
 		if (status >= STATUS::WALK && status <= STATUS::BACK)
 			Move();
-		image[status].Update(frameX, frameY);
+		if (status == STATUS::SKILL) {
+			image[status].Update(frameX, frameY);
+			image[11].Update(frameX, frameY);
+		}else{
+			image[status].Update(frameX, frameY);
+		}
 		frameX++;
 		elapsedTime = 0;
 	}

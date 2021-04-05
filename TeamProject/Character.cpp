@@ -8,12 +8,9 @@ HRESULT Character::Init(PPOS pPos)
 	image = new Image[12];
 	frameX = 0;
 	frameY = 0;
-<<<<<<< HEAD
 	maxFrame[12];
-
-=======
->>>>>>> origin/SES
 	status = STATUS::STANCE;
+
 	if (pPos == PPOS::P1)
 	{
 		pos.x = (WINSIZE_X / 2) - 300;
@@ -25,14 +22,12 @@ HRESULT Character::Init(PPOS pPos)
 		pos.y = (GROUND_Y);
 	}
 
-<<<<<<< HEAD
-=======
 	if (FAILED(image[0].Init("Image/K'Image/k'_stance1p.bmp", 1344, 122, 16, 1, PPOS::P1, true, RGB(255, 255, 255))))
 	{
 		MessageBox(g_hWnd, "Image/Iori_walk.bmp 로드 실패", "Warning", MB_OK);
 		return E_FAIL;
 	}
->>>>>>> origin/SES
+
 	return S_OK;
 }
 
@@ -57,11 +52,9 @@ void Character::Update()
 		frameX++;
 		if (frameX >= 16)
 		{
-<<<<<<< HEAD
 			elapsedTime = 0;
-=======
+
 			frameX = 0;
->>>>>>> origin/SES
 		}
 	}
 	else if (elapsedTime >= 5 && status == STATUS::WALK)
@@ -106,45 +99,28 @@ void Character::Update()
 
 void Character::Render(HDC hdc)
 {
-<<<<<<< HEAD
-		if (image) {
-			if (status == STATUS::SKILL)
-			{
-				if (pPos == PPOS::P1) {
-					image[status].RenderReverse(hdc, pos.x, pos.y, 679, 689);
-					image[11].RenderReverse(hdc, pos.x + 479, pos.y - 189, 679, 689);
-				}
-				else if (pPos == PPOS::P2) {
-					image[status].Render(hdc, pos.x, pos.y, 679, 689);
-					image[11].Render(hdc, pos.x - 479, pos.y - 189, 679, 689);
-				}
-			}
-			else {
-				if (pPos == PPOS::P1) {
-					image[status].RenderReverse(hdc, pos.x, pos.y, 679, 689);
-				}
-				else if (pPos == PPOS::P2) {
-					image[status].Render(hdc, pos.x, pos.y, 679, 689);
-				}
-			}
-=======
-	if(image){
+	if (image) {
 		if (status == STATUS::SKILL)
 		{
-			if (pPos == PPOS::P1)
+			if (pPos == PPOS::P1) {
 				image[status].RenderReverse(hdc, pos.x, pos.y, 679, 689);
-			else if (pPos == PPOS::P2)
+				image[11].RenderReverse(hdc, pos.x + 479, pos.y - 189, 679, 689);
+			}
+			else if (pPos == PPOS::P2) {
 				image[status].Render(hdc, pos.x, pos.y, 679, 689);
-
+				image[11].Render(hdc, pos.x - 479, pos.y - 189, 679, 689);
+			}
 		}
 		else {
-			if (pPos == PPOS::P1)
+			if (pPos == PPOS::P1) {
 				image[status].RenderReverse(hdc, pos.x, pos.y, 679, 689);
-			else if (pPos == PPOS::P2)
+			}
+			else if (pPos == PPOS::P2) {
 				image[status].Render(hdc, pos.x, pos.y, 679, 689);
->>>>>>> origin/SES
+			}
 		}
 	}
+}
 
 void Character::Move()
 {
