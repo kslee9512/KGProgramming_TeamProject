@@ -1,2 +1,14 @@
-﻿  Kyo.cpp
+﻿  Character.cpp
+E:\KOF_프로젝트\TeamProject\Character.cpp(101,48): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+E:\KOF_프로젝트\TeamProject\Character.cpp(101,41): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+E:\KOF_프로젝트\TeamProject\Character.cpp(102,53): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+E:\KOF_프로젝트\TeamProject\Character.cpp(102,40): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+E:\KOF_프로젝트\TeamProject\Character.cpp(105,41): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+E:\KOF_프로젝트\TeamProject\Character.cpp(105,34): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+E:\KOF_프로젝트\TeamProject\Character.cpp(106,46): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+E:\KOF_프로젝트\TeamProject\Character.cpp(106,33): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+E:\KOF_프로젝트\TeamProject\Character.cpp(111,48): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+E:\KOF_프로젝트\TeamProject\Character.cpp(111,41): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+E:\KOF_프로젝트\TeamProject\Character.cpp(114,41): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+E:\KOF_프로젝트\TeamProject\Character.cpp(114,34): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   TeamProject.vcxproj -> E:\KOF_프로젝트\x64\Debug\TeamProject.exe
