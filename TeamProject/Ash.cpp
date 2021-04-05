@@ -4,7 +4,7 @@
 HRESULT Ash::Init(PPOS pPos)
 {
 	this->pPos = pPos;
-	image = new Image[12];
+	image = new Image[15];
 	frame = 0;
 	moveSpeed = 1;
 	maxFrame[0] = 14;
@@ -14,8 +14,11 @@ HRESULT Ash::Init(PPOS pPos)
 	maxFrame[4] = 9;
 	maxFrame[5] = 6;
 	maxFrame[6] = 12;
-	maxFrame[7] = 3;
-	maxFrame[8] = 16;
+	maxFrame[7] = 4;
+	maxFrame[8] = 11;
+	maxFrame[9] = 16;
+	maxFrame[10] = 16;
+	maxFrame[11] = 16;
 	status = STATUS::STANCE;
 if (pPos == PPOS::P1)
 {
@@ -65,12 +68,27 @@ if (FAILED(image[6].Init("Image/Ash_Image/HIGHKICK.bmp", 13128, 683, maxFrame[6]
 	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
 	return E_FAIL;
 }
-if (FAILED(image[7].Init("Image/Ash_Image/SKILL.bmp", 3282, 683, maxFrame[7], 1, true, RGB(255, 255, 255))))
+if (FAILED(image[7].Init("Image/Ash_Image/HIT.bmp", 4376, 683, maxFrame[7], 1, true, RGB(255, 255, 255))))
 {
 	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
 	return E_FAIL;
 }
-if (FAILED(image[8].Init("Image/Ash_Image/SKILL.bmp", 17504, 683, maxFrame[8], 1, true, RGB(255, 255, 255))))
+if (FAILED(image[8].Init("Image/Ash_Image/DEFEAT.bmp", 12034, 683, maxFrame[8], 1, true, RGB(255, 255, 255))))
+{
+	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+	return E_FAIL;
+}
+if (FAILED(image[9].Init("Image/Ash_Image/WIN.bmp", 17504, 683, maxFrame[9], 1, true, RGB(255, 255, 255))))
+{
+	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+	return E_FAIL;
+}
+if (FAILED(image[10].Init("Image/Ash_Image/SKILL.bmp", 17504, 683, maxFrame[10], 1, true, RGB(255, 255, 255))))
+{
+	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+	return E_FAIL;
+}
+if (FAILED(image[11].Init("Image/Ash_Image/SKILL_EFFECT.bmp", 17504, 683, maxFrame[11], 1, true, RGB(0, 0, 0))))
 {
 	MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
 	return E_FAIL;
@@ -124,6 +142,13 @@ void Ash::Update(STATUS status)
 			SetStatus(STATUS::SKILL);
 			frame = 0;
 		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown('l')
+			|| KeyManager::GetSingleton()->IsOnceKeyDown('L'))
+		{
+			SetStatus(STATUS::HIT);
+			frame = 0;
+		}
+
 		if (frame >= maxFrame[status])
 		{
 			SetStatus(STATUS::STANCE);
@@ -132,7 +157,7 @@ void Ash::Update(STATUS status)
 		else if( STATUS::STANCE < status && status < STATUS::JJAP ) 
 		{
 			if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LEFT)
-				|| KeyManager::GetSingleton()->IsOnceKeyUp(VK_RIGHT)) 
+				|| KeyManager::GetSingleton()->IsOnceKeyUp(VK_RIGHT))
 			{
 				SetStatus(STATUS::STANCE);
 				frame = 0;
@@ -142,7 +167,21 @@ void Ash::Update(STATUS status)
 			pos.x += moveSpeed;
 		if (status == STATUS::BACK)
 			pos.x -= moveSpeed;
+
+		if (KeyManager::GetSingleton()->IsOnceKeyDown('m')
+			|| KeyManager::GetSingleton()->IsOnceKeyDown('M'))
+		{
+			SetStatus(STATUS::DEFEAT);
+			frame = 0;
+		}
+		if (KeyManager::GetSingleton()->IsOnceKeyDown('n')
+			|| KeyManager::GetSingleton()->IsOnceKeyDown('N'))
+		{
+			SetStatus(STATUS::WIN);
+			frame = 0;
+		}
 	}
+
 	else if (pPos == PPOS::P2)
 	{
 		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RIGHT))

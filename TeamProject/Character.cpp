@@ -92,7 +92,7 @@ void Character::Update(STATUS status)
 	}
 }
 
-void Character::Render(HDC hdc)
+/*void Character::Render(HDC hdc)
 {
 	if (image)
 	{
@@ -124,13 +124,49 @@ void Character::Render(HDC hdc)
 		{
 			image[6].Render(hdc, pos.x, pos.y, 13128 / maxFrame[6], 683, 13128 / maxFrame[6], 0, 13128 / maxFrame[6], 683, frame);
 		}
+		if (status == STATUS::HIT)
+		{
+			image[7].Render(hdc, pos.x, pos.y, 4376 / maxFrame[7], 683, 4376 / maxFrame[7], 0, 4376 / maxFrame[7], 683, frame);
+		}
+		if (status == STATUS::DEFEAT)
+		{
+			image[8].Render(hdc, pos.x, pos.y, 12034 / maxFrame[8], 683, 12034 / maxFrame[8], 0, 12034 / maxFrame[8], 683, frame);
+		}
+		if (status == STATUS::WIN)
+		{
+			image[9].Render(hdc, pos.x, pos.y, 17504 / maxFrame[9], 683, 17504 / maxFrame[9], 0, 17504 / maxFrame[9], 683, frame);
+		}
 		if (status == STATUS::SKILL)
 		{
-			image[7].Render(hdc, pos.x, pos.y, 3282 / maxFrame[7], 683, 3282 / maxFrame[7], 0, 3282 / maxFrame[7], 683, frame);
-			image[8].Render(hdc, pos.x, pos.y, 17504 / maxFrame[8], 683, 17504 / maxFrame[8], 0, 17504 / maxFrame[8], 683, frame);
+			image[10].Render(hdc, pos.x, pos.y, 17504 / maxFrame[10], 683, 17504 / maxFrame[10], 0, 17504 / maxFrame[10], 683, frame);
+			image[11].Render(hdc, pos.x, pos.y, 17504 / maxFrame[11], 683, 17504 / maxFrame[11], 0, 17504 / maxFrame[11], 683, frame);
 		}
 	}
-}
+}*/
+	void Character::Render(HDC hdc)
+	{
+		if (image) {
+			if (status == STATUS::SKILL)
+			{
+				if (pPos == PPOS::P1) {
+					image[status].RenderReverse(hdc, pos.x, pos.y, 679, 689);
+					image[11].RenderReverse(hdc, pos.x + 479, pos.y - 189, 679, 689);
+				}
+				else if (pPos == PPOS::P2) {
+					image[status].Render(hdc, pos.x, pos.y, 679, 689);
+					image[11].Render(hdc, pos.x - 479, pos.y - 189, 679, 689);
+				}
+			}
+			else {
+				if (pPos == PPOS::P1) {
+					image[status].RenderReverse(hdc, pos.x, pos.y, 679, 689);
+				}
+				else if (pPos == PPOS::P2) {
+					image[status].Render(hdc, pos.x, pos.y, 679, 689);
+				}
+			}
+		}
+	}
 
 void Character::Move(STATUS status)
 {
