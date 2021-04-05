@@ -20,12 +20,12 @@ HRESULT MainGame::Init()
 	print_posx = 0;
 	background = new Image();
 	background->Init("Image/BackGround/background.bmp", WINSIZE_X, WINSIZE_Y);
-	player1 = new Kyo();
+	player1 = new Ash();
 	player1->Init(PPOS::P1);
 	player2 = new Kyo();
-
 	player2->Init(PPOS::P2);
 	// 메인게임의 초기화 함수
+
 	hTimer = (HANDLE)SetTimer(g_hWnd, 0, 10, NULL);
 
 	//백버퍼 이미지

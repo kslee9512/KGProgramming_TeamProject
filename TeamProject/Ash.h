@@ -2,7 +2,9 @@
 #include "Character.h"
 class Ash :public Character
 {
-	void Update(STATUS status);
+public:
+	void Update();
 	HRESULT Init(PPOS pPos);
+	HRESULT Init();
 };
 
