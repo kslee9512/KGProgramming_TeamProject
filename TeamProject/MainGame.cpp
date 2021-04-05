@@ -20,7 +20,7 @@ HRESULT MainGame::Init()
 	print_posx = 0;
 	background = new Image();
 	background->Init("Image/BackGround/background.bmp", WINSIZE_X, WINSIZE_Y);
-	player1 = new Ash();
+	player1 = new Kdash();
 	player1->Init(PPOS::P1);
 	player2 = new Kyo();
 	player2->Init(PPOS::P2);
@@ -76,7 +76,7 @@ void MainGame::Render(HDC hdc)
 	background->Render(hBackDC);
 
 	// ?¥ë?
-	TextOut(hBackDC, 20, 20, "MainGame ???? ??", strlen("MainGame ???? ??"));
+	TextOut(hBackDC, 20, 20, "MainGame", strlen("MainGame"));
 	// ???²J ???
 	wsprintf(szText, "X : %d, Y : %d", ptMouse.x, ptMouse.y);
 	TextOut(hBackDC, 200, 20, szText, strlen(szText));

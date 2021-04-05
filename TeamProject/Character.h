@@ -2,6 +2,7 @@
 #include "GameNode.h"
 
 class Image;
+class CheckBox;
 class Character : public GameNode
 {
 protected:
@@ -13,6 +14,9 @@ protected:
 	FPOINT pos; //실제 캐릭터 좌표
 	float moveSpeed;
 	int maxFrame[12]{ 0, };
+
+	CheckBox* hitBox;
+	CheckBox* attackBox;
 
 	int maxImage;
 	int width, height;

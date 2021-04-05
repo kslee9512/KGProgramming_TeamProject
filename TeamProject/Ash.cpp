@@ -40,57 +40,57 @@ HRESULT Ash::Init(PPOS pPos)
 		pos.y = GROUND_Y;
 	}
 
-	if (FAILED(image[0].Init("Image/Ash_Image/stance_1.bmp", spriteWidth*maxFrame[0], spriteHeight, maxFrame[0], 1, true, RGB(255, 255, 255))))
+	if (FAILED(image[0].Init("Image/Ash_Image/stance_1.bmp", spriteWidth*maxFrame[0], spriteHeight, maxFrame[0], 1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/stance.bmp ?ュ? ????", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[1].Init("Image/Ash_Image/walk.bmp", spriteWidth * maxFrame[1], spriteHeight, maxFrame[1], 1, true, RGB(255, 255, 255))))
+	if (FAILED(image[1].Init("Image/Ash_Image/walk.bmp", spriteWidth * maxFrame[1], spriteHeight, maxFrame[1], 1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/stance.bmp ?ュ? ????", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[2].Init("Image/Ash_Image/back.bmp", spriteWidth * maxFrame[2], spriteHeight, maxFrame[2], 1, true, RGB(255, 255, 255))))
+	if (FAILED(image[2].Init("Image/Ash_Image/back.bmp", spriteWidth * maxFrame[2], spriteHeight, maxFrame[2], 1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/stance.bmp ?ュ? ????", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[3].Init("Image/Ash_Image/JJAP.bmp", spriteWidth * maxFrame[3], spriteHeight, maxFrame[3], 1, true, RGB(255, 255, 255))))
+	if (FAILED(image[3].Init("Image/Ash_Image/JJAP.bmp", spriteWidth * maxFrame[3], spriteHeight, maxFrame[3], 1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/stance.bmp ?ュ? ????", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[4].Init("Image/Ash_Image/PUNCH.bmp", spriteWidth * maxFrame[4], spriteHeight, maxFrame[4], 1, true, RGB(255, 255, 255))))
+	if (FAILED(image[4].Init("Image/Ash_Image/PUNCH.bmp", spriteWidth * maxFrame[4], spriteHeight, maxFrame[4], 1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/stance.bmp ?ュ? ????", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[5].Init("Image/Ash_Image/LOWKICK.bmp", spriteWidth * maxFrame[5], spriteHeight, maxFrame[5], 1, true, RGB(255, 255, 255))))
+	if (FAILED(image[5].Init("Image/Ash_Image/LOWKICK.bmp", spriteWidth * maxFrame[5], spriteHeight, maxFrame[5], 1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/stance.bmp ?ュ? ????", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[6].Init("Image/Ash_Image/HIGHKICK.bmp", spriteWidth * maxFrame[6], spriteHeight, maxFrame[6], 1, true, RGB(255, 255, 255))))
+	if (FAILED(image[6].Init("Image/Ash_Image/HIGHKICK.bmp", spriteWidth * maxFrame[6], spriteHeight, maxFrame[6], 1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/stance.bmp ?ュ? ????", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[7].Init("Image/Ash_Image/HIT.bmp", spriteWidth * maxFrame[7], spriteHeight, maxFrame[7], 1, true, RGB(255, 255, 255))))
+	if (FAILED(image[7].Init("Image/Ash_Image/HIT.bmp", spriteWidth * maxFrame[7], spriteHeight, maxFrame[7], 1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/stance.bmp ?ュ? ????", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[8].Init("Image/Ash_Image/DEFEAT.bmp", spriteWidth * maxFrame[8], spriteHeight, maxFrame[8], 1, true, RGB(255, 255, 255))))
+	if (FAILED(image[8].Init("Image/Ash_Image/DEFEAT.bmp", spriteWidth * maxFrame[8], spriteHeight, maxFrame[8], 1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/stance.bmp ?ュ? ????", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[9].Init("Image/Ash_Image/WIN.bmp", spriteWidth * maxFrame[9], spriteHeight, maxFrame[9], 1, true, RGB(255, 255, 255))))
+	if (FAILED(image[9].Init("Image/Ash_Image/WIN.bmp", spriteWidth * maxFrame[9], spriteHeight, maxFrame[9], 1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/stance.bmp ?ュ? ????", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[10].Init("Image/Ash_Image/SKILL.bmp", spriteWidth * maxFrame[10], spriteHeight, maxFrame[10], 1, true, RGB(255, 255, 255))))
+	if (FAILED(image[10].Init("Image/Ash_Image/SKILL.bmp", spriteWidth * maxFrame[10], spriteHeight, maxFrame[10], 1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/stance.bmp ?ュ? ????", "Warning", MB_OK);
 		return E_FAIL;
