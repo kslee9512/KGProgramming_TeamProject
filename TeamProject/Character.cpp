@@ -8,6 +8,8 @@ HRESULT Character::Init(PPOS pPos)
 	image = new Image[12];
 	frameX = 0;
 	frameY = 0;
+	maxFrame[12];
+
 	status = STATUS::STANCE;
 	if (pPos == PPOS::P1)
 	{
@@ -20,11 +22,6 @@ HRESULT Character::Init(PPOS pPos)
 		pos.y = (GROUND_Y);
 	}
 
-	if (FAILED(image[0].Init("Image/K'Image/k'_stance1p.bmp", 1344, 122, 16, 1, PPOS::P1, true, RGB(255, 255, 255))))
-	{
-		MessageBox(g_hWnd, "Image/Iori_walk.bmp 로드 실패", "Warning", MB_OK);
-		return E_FAIL;
-	}
 	return S_OK;
 }
 
@@ -49,9 +46,8 @@ void Character::Update()
 		frameX++;
 		if (frameX >= 16)
 		{
-			frameX = 0;
+			elapsedTime = 0;
 		}
-		elapsedTime = 0;
 	}
 	else if (elapsedTime >= 5 && status == STATUS::WALK)
 	{
@@ -95,23 +91,28 @@ void Character::Update()
 
 void Character::Render(HDC hdc)
 {
-	if (image) {
-		if (status == STATUS::SKILL)
-		{
-			if (pPos == PPOS::P1)
-				image[status].RenderReverse(hdc, pos.x, pos.y, 679, 689);
-			else if (pPos == PPOS::P2)
-				image[status].Render(hdc, pos.x, pos.y, 679, 689);
-
-		}
-		else {
-			if (pPos == PPOS::P1)
-				image[status].RenderReverse(hdc, pos.x, pos.y, 679, 689);
-			else if (pPos == PPOS::P2)
-				image[status].Render(hdc, pos.x, pos.y, 679, 689);
+		if (image) {
+			if (status == STATUS::SKILL)
+			{
+				if (pPos == PPOS::P1) {
+					image[status].RenderReverse(hdc, pos.x, pos.y, 679, 689);
+					image[11].RenderReverse(hdc, pos.x + 479, pos.y - 189, 679, 689);
+				}
+				else if (pPos == PPOS::P2) {
+					image[status].Render(hdc, pos.x, pos.y, 679, 689);
+					image[11].Render(hdc, pos.x - 479, pos.y - 189, 679, 689);
+				}
+			}
+			else {
+				if (pPos == PPOS::P1) {
+					image[status].RenderReverse(hdc, pos.x, pos.y, 679, 689);
+				}
+				else if (pPos == PPOS::P2) {
+					image[status].Render(hdc, pos.x, pos.y, 679, 689);
+				}
+			}
 		}
 	}
-}
 
 void Character::Move()
 {

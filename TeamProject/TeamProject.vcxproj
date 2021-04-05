@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Ash.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CheckBox.h" />
     <ClInclude Include="CommonFunction.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="MainGame.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Ash.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CheckBox.cpp" />
     <ClCompile Include="GameNode.cpp" />

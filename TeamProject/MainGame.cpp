@@ -1,6 +1,7 @@
 #include "MainGame.h"
 #include "Image.h"
 #include "Kdash.h"
+#include "Ash.h"
 /*
 	1. 배경 bin.bmp를 본인이 원하는 파일로 바꿔보자.
 	2. 탱크가 발사하는 미사일에 구슬.bmp를 씌워보자.
@@ -10,6 +11,9 @@
 HRESULT MainGame::Init()
 {
 	KeyManager::GetSingleton()->Init();
+
+	player1 = new Ash;
+	player1->Init(PPOS::P1);
 
 	count = 0;
 	sizex = 68;
@@ -61,6 +65,7 @@ void MainGame::Update()
 {
 	player1->Update();
 	player2->Update();
+
 	InvalidateRect(g_hWnd, NULL, false);
 }
 
@@ -78,7 +83,6 @@ void MainGame::Render(HDC hdc)
 
 	player1->Render(hBackDC);
 	player2->Render(hBackDC);
-
 	backBuffer->Render(hdc, 0, 0, 0);
 }
 
