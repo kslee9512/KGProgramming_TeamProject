@@ -2,13 +2,13 @@
 
 HRESULT Image::Init(int width, int height)
 {
-	HDC hdc = GetDC(g_hWnd); // g_hWnd가 총괄하는 메인 hdc를 가져옴
+	HDC hdc = GetDC(g_hWnd); // g_hWnd?? ?????? ???? hdc?? ??????
 
 	imageInfo = new IMAGE_INFO();
 	imageInfo->resId = 0;
-	imageInfo->hMemDC = CreateCompatibleDC(hdc);//bitmap을 관리하는 작은 DC를 만든다. 
-	imageInfo->hBitmap = CreateCompatibleBitmap(hdc, width, height);//DC가 관리하는 업무
-	imageInfo->hOBitmap = (HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);	//bBitmap 그리기 정보를 관리하기 위해 hMemDC를 선택
+	imageInfo->hMemDC = CreateCompatibleDC(hdc);//bitmap?? ??????? ???? DC?? ?????. 
+	imageInfo->hBitmap = CreateCompatibleBitmap(hdc, width, height);//DC?? ??????? ????
+	imageInfo->hOBitmap = (HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);	//bBitmap ????? ?????? ??????? ???? hMemDC?? ????
 	imageInfo->width = width;
 	imageInfo->height = height;
 	imageInfo->loadType = IMAGE_LOAD_KIND::EMPTY;
@@ -23,10 +23,10 @@ HRESULT Image::Init(int width, int height)
 	imageInfo->curFrameX = 0;
 	imageInfo->curFrameY = 0;
 
-	//메모리를 참조 하지 않는다. hdc는 계속 살아있음
+	//????? ???? ???? ??´?. hdc?? ??? ???????
 	ReleaseDC(g_hWnd, hdc);
 
-	if (imageInfo->hBitmap == NULL)//hBitmap 생성 실패 시
+	if (imageInfo->hBitmap == NULL)//hBitmap ???? ???? ??
 	{
 		Release();
 		return E_FAIL;
@@ -37,13 +37,13 @@ HRESULT Image::Init(int width, int height)
 
 HRESULT Image::Init(const char* fileName, int width, int height, bool isTransparent, COLORREF colorToRemove)
 {
-	HDC hdc = GetDC(g_hWnd); // g_hWnd가 총괄하는 메인 hdc를 가져옴
+	HDC hdc = GetDC(g_hWnd); // g_hWnd?? ?????? ???? hdc?? ??????
 
 	imageInfo = new IMAGE_INFO();
 	imageInfo->resId = 0;
-	imageInfo->hMemDC = CreateCompatibleDC(hdc);//bitmap을 관리하는 작은 DC를 만든다. 
-	imageInfo->hBitmap = (HBITMAP)LoadImage(g_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);//DC가 관리하는 업무
-	imageInfo->hOBitmap = (HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);	//bBitmap 그리기 정보를 관리하기 위해 hMemDC를 선택
+	imageInfo->hMemDC = CreateCompatibleDC(hdc);//bitmap?? ??????? ???? DC?? ?????. 
+	imageInfo->hBitmap = (HBITMAP)LoadImage(g_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);//DC?? ??????? ????
+	imageInfo->hOBitmap = (HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);	//bBitmap ????? ?????? ??????? ???? hMemDC?? ????
 	imageInfo->width = width;
 	imageInfo->height = height;
 	imageInfo->loadType = IMAGE_LOAD_KIND::FILE;
@@ -56,10 +56,10 @@ HRESULT Image::Init(const char* fileName, int width, int height, bool isTranspar
 	imageInfo->frameHeight = height / 1;
 	imageInfo->curFrameX = 0;
 	imageInfo->curFrameY = 0;
-	//메모리를 참조 하지 않는다. hdc는 계속 살아있음
+	//????? ???? ???? ??´?. hdc?? ??? ???????
 	ReleaseDC(g_hWnd, hdc);
 
-	if (imageInfo->hBitmap == NULL)//hBitmap 생성 실패 시
+	if (imageInfo->hBitmap == NULL)//hBitmap ???? ???? ??
 	{
 		Release();
 		return E_FAIL;
@@ -70,16 +70,16 @@ HRESULT Image::Init(const char* fileName, int width, int height, bool isTranspar
 
 HRESULT Image::Init(const char* fileName, int width, int height, int maxFrameX, int maxFrameY, bool isTransparent, COLORREF colorToRemove)
 {
-	HDC hdc = GetDC(g_hWnd); // g_hWnd가 총괄하는 메인 hdc를 가져옴
+	HDC hdc = GetDC(g_hWnd); // g_hWnd?? ?????? ???? hdc?? ??????
 
 	imageInfo = new IMAGE_INFO();
 	imageInfo->resId = 0;
-	imageInfo->hMemDC = CreateCompatibleDC(hdc);//bitmap을 관리하는 작은 DC를 만든다.
+	imageInfo->hMemDC = CreateCompatibleDC(hdc);//bitmap?? ??????? ???? DC?? ?????.
 	imageInfo->hMemDC2 = CreateCompatibleDC(hdc);
 	imageInfo->hBitmap = CreateCompatibleBitmap(hdc, width, height);
-	imageInfo->hBitmap2 = (HBITMAP)LoadImage(g_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);//DC가 관리하는 업무
-	imageInfo->hOBitmap = (HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);	//bBitmap 그리기 정보를 관리하기 위해 hMemDC를 선택
-	imageInfo->hOBitmap2 = (HBITMAP)SelectObject(imageInfo->hMemDC2, imageInfo->hBitmap2);	//bBitmap 그리기 정보를 관리하기 위해 hMemDC를 선택
+	imageInfo->hBitmap2 = (HBITMAP)LoadImage(g_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);//DC?? ??????? ????
+	imageInfo->hOBitmap = (HBITMAP)SelectObject(imageInfo->hMemDC, imageInfo->hBitmap);	//bBitmap ????? ?????? ??????? ???? hMemDC?? ????
+	imageInfo->hOBitmap2 = (HBITMAP)SelectObject(imageInfo->hMemDC2, imageInfo->hBitmap2);	//bBitmap ????? ?????? ??????? ???? hMemDC?? ????
 	imageInfo->width = width;
 	imageInfo->height = height;
 	imageInfo->loadType = IMAGE_LOAD_KIND::FILE;
@@ -92,10 +92,10 @@ HRESULT Image::Init(const char* fileName, int width, int height, int maxFrameX, 
 	imageInfo->frameHeight = height / maxFrameY;
 	imageInfo->curFrameX = 0;
 	imageInfo->curFrameY = 0;
-	//메모리를 참조 하지 않는다. hdc는 계속 살아있음
+	//????? ???? ???? ??´?. hdc?? ??? ???????
 	ReleaseDC(g_hWnd, hdc);
 
-	if (imageInfo->hBitmap == NULL)//hBitmap 생성 실패 시
+	if (imageInfo->hBitmap == NULL)//hBitmap ???? ???? ??
 	{
 		Release();
 		return E_FAIL;
@@ -130,14 +130,14 @@ void Image::Render(HDC hdc, int destX, int destY, int destWidth, int destHeight)
 		return;
 	}
 	BitBlt(
-		hdc,				//복사 목적지 DC
-		destX, destY,		//붙여넣기 할 위치
-		imageInfo->width / imageInfo->maxFrameX,			//원본에서 복사될 가로, 세로 크기
+		hdc,				//???? ?????? DC
+		destX, destY,		//?????? ?? ???
+		imageInfo->width / imageInfo->maxFrameX,			//???????? ????? ????, ???? ???
 		imageInfo->height / imageInfo->maxFrameY,
-		imageInfo->hMemDC,	//원본 DC
+		imageInfo->hMemDC,	//???? DC
 		imageInfo->width / imageInfo->maxFrameX * (imageInfo->curFrameX),
-		imageInfo->height / imageInfo->maxFrameY * (imageInfo->curFrameY),		//원본에서 복사 시작 위치
-		SRCCOPY				//복사 옵션
+		imageInfo->height / imageInfo->maxFrameY * (imageInfo->curFrameY),		//???????? ???? ???? ???
+		SRCCOPY				//???? ???
 	);
 }
 
@@ -149,7 +149,7 @@ void Image::RenderReverse(HDC hdc, int destX, int destY, int destWidth, int dest
 		destHeight = !destHeight ? imageInfo->height : destHeight;
 		StretchBlt(
 			imageInfo->hMemDC,
-			destWidth-1, 0,
+			destWidth - 1, 0,
 			-destWidth, destHeight,
 			imageInfo->hMemDC2,
 			imageInfo->width / imageInfo->maxFrameX * (imageInfo->curFrameX),
@@ -174,7 +174,7 @@ void Image::RenderReverse(HDC hdc, int destX, int destY, int destWidth, int dest
 
 	StretchBlt(
 		hdc,
-		destX + destWidth-1, destY,
+		(destX + destWidth) - 1, destY,
 		-destWidth, destHeight,
 		imageInfo->hMemDC,
 		imageInfo->width / imageInfo->maxFrameX * (imageInfo->curFrameX),

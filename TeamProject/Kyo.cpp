@@ -17,6 +17,8 @@ HRESULT Kyo::Init(PPOS pPos)
 	moveSpeed = 10;
 	maxImage = 12;
 	status = STATUS::STANCE;
+	spriteWidth = 679;
+	spriteHeight = 689;
 	if (pPos == PPOS::P1)
 	{
 		pos.x = 0;

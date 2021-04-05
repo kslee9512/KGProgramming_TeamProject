@@ -4,8 +4,8 @@
 class Kdash : public Character
 {
 public:
-	HRESULT Init(PPOS pPos);
 	HRESULT Init();
+	HRESULT Init(PPOS pPos);
 	void Update();
 };
 

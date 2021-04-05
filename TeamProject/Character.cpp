@@ -45,25 +45,6 @@ void Character::Release()
 
 void Character::Update()
 {
-	elapsedTime++;
-	if (elapsedTime >= 5 && status == STATUS::STANCE)
-	{
-		frameX++;
-		if (frameX >= 16)
-		{
-			elapsedTime = 0;
-
-			frameX = 0;
-		}
-	}
-	else if (elapsedTime >= 5 && status == STATUS::WALK)
-	{
-		//앞으로 이동 시 이미지 출력되도록 UPDATE 작성
-	}
-	else if (elapsedTime >= 5 && status == STATUS::BACK)
-	{
-		// 뒤로 이동 시 이미지 출력되도록 UDPATER 작성
-	}
 	if (pPos == PPOS::P1)
 	{
 		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LEFT))
@@ -92,6 +73,17 @@ void Character::Update()
 		else
 		{
 			SetStatus(STATUS::STANCE);
+		}
+	}
+	elapsedTime++;
+	if (elapsedTime >= 5 && status == STATUS::STANCE)
+	{
+		frameX++;
+		if (frameX >= 16)
+		{
+			elapsedTime = 0;
+
+			frameX = 0;
 		}
 	}
 }
