@@ -1,3 +1,4 @@
+
 // config.h
 
 #pragma once
@@ -12,8 +13,8 @@ using namespace std;
 
 #define WINSIZE_X	1080
 #define WINSIZE_Y	720
-#define GROUND_Y	100
-enum STATUS {STANCE, WALK, BACK, JJAP, PUNCH, LOWKICK, HIGHKICK, HIT, DEFEAT, WIN, SKILL ,ENDSTATUS };
+#define GROUND_Y	520
+enum STATUS { STANCE, WALK, BACK, JJAP, PUNCH, LOWKICK, HIGHKICK, HIT, DEFEAT, WIN, SKILL, ENDSTATUS };
 /*
 	STANCE : 통상 자세
 	WALK : 앞으로 이동
@@ -27,15 +28,17 @@ enum STATUS {STANCE, WALK, BACK, JJAP, PUNCH, LOWKICK, HIGHKICK, HIT, DEFEAT, WI
 	WIN : 승리모션
 	END : 끝
 */
-enum PPOS {P1, P2, ENDPPOS};
+enum PPOS { P1, P2, ENDPPOS };
 
 typedef struct tagFPoint
 {
 	float x;
 	float y;
-} FPOINT, *PFPOINT;
+} FPOINT, * PFPOINT;
 
 //typedef tagFPoint FPOINT2;
 //typedef tagFPoint* PFPOINT2;
 
+
 extern HWND g_hWnd;
+extern HINSTANCE g_hInstance;

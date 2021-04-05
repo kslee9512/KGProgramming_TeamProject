@@ -3,7 +3,7 @@
 
 
 class Image;
-class Kdash;
+class Character;
 class MainGame : public GameNode
 {
 private:
@@ -20,9 +20,11 @@ private:
 
 	Image* backBuffer;
 	Image* background;
-	Kdash* kdash;
+	Character* player1;
+	Character* player2;
+
 public:
-	HRESULT Init();		// 오버라이딩 : 다형성
+	HRESULT Init();		
 	void Release();
 	void Update();
 	void Render(HDC hdc);
@@ -32,4 +34,3 @@ public:
 	MainGame();
 	~MainGame();
 };
-
