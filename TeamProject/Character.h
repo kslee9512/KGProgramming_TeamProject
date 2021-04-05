@@ -24,6 +24,7 @@ protected:
 	int elapsedTime;
 	int frameX; // 임시변수(삭제요망)
 	int frameY;
+
 	int spriteWidth;
 	int spriteHeight;
 

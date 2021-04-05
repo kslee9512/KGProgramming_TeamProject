@@ -2,7 +2,7 @@
 
 HRESULT Image::Init(int width, int height)
 {
-	HDC hdc = GetDC(g_hWnd);
+	HDC hdc = GetDC(g_hWnd); // g_hWnd°¡ ÃÑ°ýÇÏ´Â ¸ÞÀÎ hdc¸¦ °¡Á®¿È
 
 	imageInfo = new IMAGE_INFO();
 	imageInfo->resId = 0;
@@ -116,6 +116,7 @@ void Image::Render(HDC hdc, int destX, int destY, int destWidth, int destHeight)
 	{
 		destWidth = !destWidth ? imageInfo->width : destWidth;
 		destHeight = !destHeight ? imageInfo->height : destHeight;
+
 		GdiTransparentBlt(
 			hdc,
 			destX, destY,

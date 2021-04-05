@@ -32,7 +32,6 @@ enum STATUS { STANCE, WALK, BACK, JJAP, PUNCH, LOWKICK, HIGHKICK, HIT, DEFEAT, W
 
 enum PPOS { P1, P2, ENDPPOS };
 enum COMMAND { NO_COMMAND, FIRST_COMMAND };
-
 typedef struct tagFPoint
 {
 	float x;

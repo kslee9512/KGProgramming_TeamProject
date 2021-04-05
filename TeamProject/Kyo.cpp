@@ -44,17 +44,20 @@ HRESULT Kyo::Init(PPOS pPos)
 	maxFrame[9] = 13; //WIN
 	maxFrame[10] = 20; //SKILL
 	maxFrame[11] = 20; //SKILLEFFECT
+
 	if (FAILED(image[0].Init("Image/KyoImage/kyo_bmp/kyo_stanceR.bmp", 7469, 689, maxFrame[0], 1, true, RGB(0, 0, 0))))
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_stanceR.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
 	if (FAILED(image[1].Init("Image/KyoImage/kyo_bmp/kyo_walkR.bmp", 7469, 689, maxFrame[1], 1, true, RGB(0, 0, 0))))
+
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_walkR.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
 	if (FAILED(image[2].Init("Image/KyoImage/kyo_bmp/kyo_backR.bmp", 6790, 689, maxFrame[2], 1, true, RGB(0, 0, 0))))
+
 	{
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_backR.bmp", "Warning", MB_OK);
 		return E_FAIL;

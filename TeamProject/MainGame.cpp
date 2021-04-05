@@ -20,7 +20,6 @@ HRESULT MainGame::Init()
 	print_posx = 0;
 	background = new Image();
 	background->Init("Image/BackGround/background.bmp", WINSIZE_X, WINSIZE_Y);
-	// ????????? ???? ???
 
 	hTimer = (HANDLE)SetTimer(g_hWnd, 0, 10, NULL);
 
@@ -205,6 +204,7 @@ void MainGame::Render(HDC hdc)
 		player1->Render(hBackDC);
 		player2->Render(hBackDC);
 	}
+
 	backBuffer->Render(hdc, 0, 0, 0);
 }
 
