@@ -47,6 +47,20 @@ HRESULT Kdash::Init(PPOS pPos)
 		pos.x = 300;
 		pos.y = (GROUND_Y);
 	}
+	if (pPos == PPOS::P1) {
+		charPos.x = pos.x + 360;
+	}
+	else {
+		charPos.x = pos.x + 400;
+	}
+	charPos.y = pos.y + 420;
+
+	width = 150;
+	height = 200;
+	hitBox = new HitBox();
+	hitBox->Init(charPos, width, height);
+	attackBox = new AttackBox;
+	attackBox->Init(charPos, width, height + 50);
 	//©¦???? ????? ????
 	//1P stance??? ????
 	if (FAILED(image[0].Init("Image/KdashImage/kdash_stance2p.bmp", 13710, 659, maxFrame[0], 1, true, RGB(255, 255, 255))))
@@ -148,6 +162,7 @@ void Kdash::Render(HDC hdc)
     }
 
 	hitBox->Render(hdc);
+	attackBox->Render(hdc);
 }
 
 void Kdash::Update()
@@ -300,9 +315,17 @@ void Kdash::Update()
 		else if (status == STATUS::SKILL) {
 			image[status].Update(frameX, frameY);
 			image[11].Update(frameX, frameY);
+			attackBox->SetPos(charPos);
+			attackBox->Update(pPos, status);
+		}
+		else if (status == STATUS::HIT)
+		{
+			KnockBack(4);
 		}
 		else {
 			image[status].Update(frameX, frameY);
+			attackBox->SetPos(charPos);
+			attackBox->Update(pPos, status);
 		}
 		frameX++;
 		elapsedTime = 0;
