@@ -43,11 +43,20 @@ HRESULT Ash::Init(PPOS pPos)
 		pos.y = GROUND_Y;
 	}
 
+	if (pPos == PPOS::P1) {
+		charPos.x = pos.x + 400;
+	}
+	else {
+		charPos.x = pos.x + 270;
+	}
+	charPos.y = pos.y + 420;
+
 	width = 100;
-	height = 683;
+	height = 230;
 	hitBox = new HitBox();
-	hitBox->Init(FPOINT{ (pos.x + spriteWidth)/2, spriteHeight/2+pos.y }, width, height);
-	attackBox = new AttackBox[5];
+	hitBox->Init(charPos, width, height);
+	attackBox = new AttackBox;
+	attackBox->Init(charPos, width, height + 50);
 
 	if (FAILED(image[0].Init("Image/Ash_Image/stance_1.bmp", spriteWidth*maxFrame[0], spriteHeight, maxFrame[0], 1, true, RGB(0, 0, 0))))
 	{
@@ -262,9 +271,16 @@ void Ash::Update()
 		else if (status == STATUS::SKILL) {
 			image[status].Update(frameX, frameY);
 			image[11].Update(frameX, frameY);
+			attackBox->SetPos(charPos);
+			attackBox->Update(pPos, status);
+		}
+		else if (status == STATUS::HIT) {
+			KnockBack(4);
 		}
 		else {
 			image[status].Update(frameX, frameY);
+			attackBox->SetPos(charPos);
+			attackBox->Update(pPos, status);
 		}
 		frameX++;
 		elapsedTime = 0;
@@ -295,4 +311,5 @@ void Ash::Render(HDC hdc)
         }
     }
 	hitBox->Render(hdc);
+	attackBox->Render(hdc);
 }
