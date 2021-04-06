@@ -11,7 +11,7 @@ HRESULT Ash::Init()
 
 HRESULT Ash::Init(PPOS pPos)
 {
-
+	curHp = maxHp;
 	this->pPos = pPos;
 	image = new Image[12];
 	frameX = 0;

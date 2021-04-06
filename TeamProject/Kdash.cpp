@@ -10,7 +10,7 @@ HRESULT Kdash::Init()
 
 HRESULT Kdash::Init(PPOS pPos)
 {
-
+	curHp = maxHp;
 	width = 100;
 	height = 683;
 	hitBox = new HitBox();

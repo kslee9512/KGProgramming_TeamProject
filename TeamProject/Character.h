@@ -7,7 +7,7 @@ class Character : public GameNode
 {
 protected:
 	Image* image;
-	int maxHp;
+	int maxHp = 400;
 	int curHp;
 	STATUS status; // 캐릭터 상태
 	PPOS pPos; //1P, 2P구분용
@@ -38,6 +38,8 @@ public:
 	virtual void Move();
 	virtual void Attack(STATUS status);
 	virtual void KnockBack(int distance);
+	inline virtual int GetCurHp() { return this->curHp; }
+	inline virtual void GotDamage(int damage) { this->curHp -= damage; }
 	inline virtual FPOINT GetPos() { return this->pos; }
 	inline virtual void SetStatus(STATUS status) { this->status = status; }
 	inline virtual STATUS GetStatus() { return this->status; }

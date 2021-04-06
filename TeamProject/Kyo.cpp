@@ -12,6 +12,7 @@ HRESULT Kyo::Init(PPOS pPos)
 {
 
 	this->pPos = pPos;
+	curHp = maxHp;
 	image = new Image[12];
 	frameX = 0;
 	frameY = 0;
@@ -205,6 +206,7 @@ void Kyo::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::JJAP;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
