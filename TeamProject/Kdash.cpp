@@ -138,6 +138,7 @@ void Kdash::Render(HDC hdc)
             }
         }
     }
+    
 }
 
 void Kdash::Update()
