@@ -1,13 +1,21 @@
 #include "Character.h"
 #include "Image.h"
+#include "HitBox.h"
+#include "AttackBox.h"
 
 HRESULT Character::Init(PPOS pPos)
 {
 	this->pPos = pPos;
 	image = new Image[12];
-	frame = 0;
+	frameX = 0;
+	frameY = 0;
 	maxFrame[12];
 	status = STATUS::STANCE;
+	
+
+	hitBox = new HitBox();
+	attackBox = new AttackBox;
+
 	if (pPos == PPOS::P1)
 	{
 		pos.x = (WINSIZE_X / 2) - 300;
@@ -19,19 +27,36 @@ HRESULT Character::Init(PPOS pPos)
 		pos.y = (GROUND_Y);
 	}
 
-	if (FAILED(image[0].Init("Image/Ash_Image/stance.bmp", 801, 124, 9, 1, true, RGB(255, 255, 255))))
+	if (pPos == PPOS::P1) {
+		charPos.x = pos.x + 400;
+	}
+	else {
+		charPos.x = pos.x + 800;
+	}
+	charPos.y = pos.y / 2 + GROUND_Y;
+
+	if (FAILED(image[0].Init("Image/K'Image/k'_stance1p.bmp", 1344, 122, 16, 1, true, RGB(255, 255, 255))))
 	{
-		MessageBox(g_hWnd, "Image/stance.bmp 로드 실패", "Warning", MB_OK);
+		MessageBox(g_hWnd, "Image/Iori_walk.bmp 로드 실패", "Warning", MB_OK);
 		return E_FAIL;
 	}
+
 	return S_OK;
 }
 
 void Character::Release()
 {
+	if(hitBox){
+		delete hitBox;
+		hitBox = nullptr;
+	}
+	if (attackBox) {
+		delete attackBox;
+		attackBox = nullptr;
+	}
 	if (image)
 	{
-		for (int i = 0; i < 12; i++)
+		for (int i = 0; i < 11; i++)
 		{
 			image[i].Release();
 		}
@@ -40,26 +65,8 @@ void Character::Release()
 	}
 }
 
-void Character::Update(STATUS status)
+void Character::Update()
 {
-	elapsedTime++;
-	if (elapsedTime >= 5 && status == STATUS::STANCE)
-	{
-		frame++;
-		if (frame >= maxFrame[0])
-		{
-			frame = 0;
-		}
-		elapsedTime = 0;
-	}
-	else if (elapsedTime >= 5 && status == STATUS::WALK)
-	{
-		//앞으로 이동 시 이미지 출력되도록 UPDATE 작성
-	}
-	else if (elapsedTime >= 5 && status == STATUS::BACK)
-	{
-		// 뒤로 이동 시 이미지 출력되도록 UDPATER 작성
-	}
 	if (pPos == PPOS::P1)
 	{
 		if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LEFT))
@@ -90,100 +97,84 @@ void Character::Update(STATUS status)
 			SetStatus(STATUS::STANCE);
 		}
 	}
+	elapsedTime++;
+	if (elapsedTime >= 5 && status == STATUS::STANCE)
+	{
+		frameX++;
+		if (frameX >= 16)
+		{
+			elapsedTime = 0;
+
+			frameX = 0;
+		}
+	}
 }
 
-/*void Character::Render(HDC hdc)
+void Character::Render(HDC hdc)
 {
-	if (image)
-	{
-		if (status == STATUS::STANCE)
-		{
-			image[0].Render(hdc, pos.x, pos.y, imageWidth / maxFrame[0],683, imageWidth / maxFrame[0],0, imageWidth / maxFrame[0],683, frame);
-		}
-		if (status == STATUS::WALK)
-		{
-			image[1].Render(hdc, pos.x-250, pos.y, 6564 / maxFrame[1], 683, 6564 / maxFrame[1], 0, 6564 / maxFrame[1], 683, frame);
-		}
-		if (status == STATUS::BACK)
-		{
-			image[2].Render(hdc, pos.x, pos.y, 6564 / maxFrame[2], 683, 6564 / maxFrame[2], 0, 6564 / maxFrame[2], 683, frame);
-		}
-		if (status == STATUS::JJAP)
-		{
-			image[3].Render(hdc, pos.x, pos.y, 7658 / maxFrame[3], 683, 7658 / maxFrame[3], 0, 7658 / maxFrame[3], 683, frame);
-		}
-		if (status == STATUS::PUNCH)
-		{
-			image[4].Render(hdc, pos.x, pos.y, 9846 / maxFrame[4], 683, 9846 / maxFrame[4], 0, 9846 / maxFrame[4], 683, frame);
-		}
-		if (status == STATUS::LOWKICK)
-		{
-			image[5].Render(hdc, pos.x, pos.y, 6564 / maxFrame[5], 683, 6564 / maxFrame[5], 0, 6564 / maxFrame[5], 683, frame);
-		}
-		if (status == STATUS::HIGHKICK)
-		{
-			image[6].Render(hdc, pos.x, pos.y, 13128 / maxFrame[6], 683, 13128 / maxFrame[6], 0, 13128 / maxFrame[6], 683, frame);
-		}
-		if (status == STATUS::HIT)
-		{
-			image[7].Render(hdc, pos.x, pos.y, 4376 / maxFrame[7], 683, 4376 / maxFrame[7], 0, 4376 / maxFrame[7], 683, frame);
-		}
-		if (status == STATUS::DEFEAT)
-		{
-			image[8].Render(hdc, pos.x, pos.y, 12034 / maxFrame[8], 683, 12034 / maxFrame[8], 0, 12034 / maxFrame[8], 683, frame);
-		}
-		if (status == STATUS::WIN)
-		{
-			image[9].Render(hdc, pos.x, pos.y, 17504 / maxFrame[9], 683, 17504 / maxFrame[9], 0, 17504 / maxFrame[9], 683, frame);
-		}
+	if (image) {
 		if (status == STATUS::SKILL)
 		{
-			image[10].Render(hdc, pos.x, pos.y, 17504 / maxFrame[10], 683, 17504 / maxFrame[10], 0, 17504 / maxFrame[10], 683, frame);
-			image[11].Render(hdc, pos.x, pos.y, 17504 / maxFrame[11], 683, 17504 / maxFrame[11], 0, 17504 / maxFrame[11], 683, frame);
-		}
-	}
-}*/
-	void Character::Render(HDC hdc)
-	{
-		if (image) {
-			if (status == STATUS::SKILL)
-			{
-				if (pPos == PPOS::P1) {
-					image[status].RenderReverse(hdc, pos.x, pos.y, 679, 689);
-					image[11].RenderReverse(hdc, pos.x + 479, pos.y - 189, 679, 689);
-				}
-				else if (pPos == PPOS::P2) {
-					image[status].Render(hdc, pos.x, pos.y, 679, 689);
-					image[11].Render(hdc, pos.x - 479, pos.y - 189, 679, 689);
-				}
+			if (pPos == PPOS::P1) {
+				image[status].RenderReverse(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
+				image[11].RenderReverse(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
 			}
-			else {
-				if (pPos == PPOS::P1) {
-					image[status].RenderReverse(hdc, pos.x, pos.y, 679, 689);
-				}
-				else if (pPos == PPOS::P2) {
-					image[status].Render(hdc, pos.x, pos.y, 679, 689);
-				}
+			else if (pPos == PPOS::P2) {
+				image[status].Render(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
+				image[11].Render(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
+			}
+		}
+		else {
+			if (pPos == PPOS::P1) {
+				image[status].RenderReverse(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
+			}
+			else if (pPos == PPOS::P2) {
+				image[status].Render(hdc, pos.x, pos.y, spriteWidth, spriteHeight);
 			}
 		}
 	}
+}
 
-void Character::Move(STATUS status)
+void Character::Move()
 {
 	if (pPos == PPOS::P1 && status == STATUS::WALK)
 	{
-		this->pos.x += moveSpeed;
+		if (!isTouched) {
+			charPos.x += moveSpeed;
+			hitBox->SetPos(charPos);
+			hitBox->Update();
+			attackBox->SetPos(charPos);
+			attackBox->Update(charPos);
+			this->pos.x += moveSpeed;
+		}
 	}
 	else if (pPos == PPOS::P1 && status == STATUS::BACK)
 	{
+		charPos.x -= moveSpeed;
+		hitBox->SetPos(charPos);
+		hitBox->Update();
+		attackBox->SetPos(charPos);
+		attackBox->Update(charPos);
 		this->pos.x -= moveSpeed;
 	}
 	else if (pPos == PPOS::P2 && status == STATUS::WALK)
 	{
-		this->pos.x -= moveSpeed;
+		if (!isTouched) {
+			charPos.x -= moveSpeed;
+			hitBox->SetPos(charPos);
+			hitBox->Update();
+			attackBox->SetPos(charPos);
+			attackBox->Update(charPos);
+			this->pos.x -= moveSpeed;
+		}
 	}
 	else if (pPos == PPOS::P2 && status == STATUS::BACK)
 	{
+		charPos.x += moveSpeed;
+		hitBox->SetPos(charPos);
+		hitBox->Update();
+		attackBox->SetPos(charPos);
+		attackBox->Update(charPos);
 		this->pos.x += moveSpeed;
 	}
 }
@@ -191,4 +182,22 @@ void Character::Move(STATUS status)
 void Character::Attack(STATUS status)
 {
 
+}
+
+void Character::KnockBack(int distance)
+{
+	if (pPos == PPOS::P1) {
+		charPos.x -= distance;
+		hitBox->SetPos(charPos);
+		hitBox->Update();
+		pos.x -= distance;
+		//TODO 화면 끝이면 막아주기
+	}
+	else if(pPos == PPOS::P2){
+		charPos.x += distance;
+		hitBox->SetPos(charPos);
+		hitBox->Update();
+		pos.x += distance;
+		//TODO 화면 끝이면 막아주기
+	}
 }
