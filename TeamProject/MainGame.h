@@ -30,8 +30,8 @@ private:
 	HPEN hOldPen;
 	
 	bool isPlayer1Chosen;
-	bool isPlayer2Chosen;
-	bool isCharChosen;
+	bool isPlayer2Chosen; 
+	GAMESTATUS gameStatus;
 
 public:
 	HRESULT Init();

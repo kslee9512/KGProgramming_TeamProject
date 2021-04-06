@@ -31,7 +31,7 @@ HRESULT MainGame::Init()
 	characterSelect = new Image();
 	characterSelect->Init("Image/BackGround/CharacterSelect.bmp", WINSIZE_X, WINSIZE_Y);
 
-	isCharChosen = false;
+	gameStatus = GAMESTATUS::CHAR_SELECT;
 	isPlayer1Chosen = false;
 	isPlayer2Chosen = false;
 	player1SelectPos.x = 55;
@@ -89,7 +89,7 @@ void MainGame::ChooseCharacter()
 		}
 		player1->Init(PPOS::P1);
 		player2->Init(PPOS::P2);
-		isCharChosen = true;
+		gameStatus = GAMESTATUS::INGAME;
 	}
 }
 
@@ -124,18 +124,21 @@ void MainGame::Release()
 
 void MainGame::Update()
 {
-	if(isCharChosen){
+	if(gameStatus == GAMESTATUS::INGAME){
 		player1->Update();
 		player2->Update();
 	}
-	else {
+	else if (gameStatus == GAMESTATUS::CHAR_SELECT) {
 		ChooseCharacter();
 	}
 
 	InvalidateRect(g_hWnd, NULL, false);
 }
 
-void MainGame::RenderCharacterChoice(HDC hBackDC) {
+void MainGame::RenderCharacterChoice(HDC hdc) {
+
+	HDC hBackDC = backBuffer->GetMemDC();
+
 	characterSelect->Render(hBackDC);
 	//임시 좌표
 	wsprintf(szText, "X : %d, Y : %d", ptMouse.x, ptMouse.y);
@@ -181,6 +184,8 @@ void MainGame::RenderCharacterChoice(HDC hBackDC) {
 	LineTo(hBackDC, player2SelectPos.x, player2SelectPos.y);
 	SelectObject(hBackDC, hOldPen);
 	DeleteObject(hPen);
+
+	backBuffer->Render(hdc, 0, 0, 0);
 }
 
 void MainGame::Render(HDC hdc)
@@ -188,22 +193,16 @@ void MainGame::Render(HDC hdc)
 
 	HDC hBackDC = backBuffer->GetMemDC();
 
-	if (!isCharChosen) {
-		RenderCharacterChoice(hBackDC);
-		
-	}
-	else {
-		background->Render(hBackDC);
+	background->Render(hBackDC);
 
-		// ?λ?
-		TextOut(hBackDC, 20, 20, "MainGame", strlen("MainGame"));
-		// ???콺 ???
-		wsprintf(szText, "X : %d, Y : %d", ptMouse.x, ptMouse.y);
-		TextOut(hBackDC, 200, 20, szText, strlen(szText));
+	// ?λ?
+	TextOut(hBackDC, 20, 20, "MainGame", strlen("MainGame"));
+	// ???콺 ???
+	wsprintf(szText, "X : %d, Y : %d", ptMouse.x, ptMouse.y);
+	TextOut(hBackDC, 200, 20, szText, strlen(szText));
 
-		player1->Render(hBackDC);
-		player2->Render(hBackDC);
-	}
+	player1->Render(hBackDC);
+	player2->Render(hBackDC);
 
 	backBuffer->Render(hdc, 0, 0, 0);
 }
@@ -241,7 +240,12 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 
 		if (isInited)
 		{
-			this->Render(hdc);
+			if (gameStatus == GAMESTATUS::CHAR_SELECT)
+				this->RenderCharacterChoice(hdc);
+			else if (gameStatus == GAMESTATUS::INGAME)
+				this->Render(hdc);
+			else if (gameStatus == GAMESTATUS::ENDGAME)
+				this->Render(hdc); //TODO 게임 종료 시 출력 사항 수정 바람
 		}
 
 		EndPaint(g_hWnd, &ps);
