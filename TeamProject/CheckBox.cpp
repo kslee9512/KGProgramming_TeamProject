@@ -23,7 +23,7 @@ void CheckBox::Release()
 }
 
 void CheckBox::Update() {
-	Update(FPOINT{ 0, 0 });
+	Update(pos);
 }
 
 void CheckBox::Update(FPOINT pos)
@@ -32,6 +32,22 @@ void CheckBox::Update(FPOINT pos)
 	rect.right = pos.x + width / 2;
 	rect.top = pos.y - height / 2;
 	rect.bottom = pos.y + height / 2;
+}
+
+void CheckBox::Update(PPOS pPos, STATUS status)
+{
+	if (pPos == PPOS::P1) {
+		rect.left = pos.x - width / 2;
+		rect.right = pos.x + width / 2 + status * 30;
+		rect.top = pos.y - height / 2;
+		rect.bottom = pos.y + height / 2;
+	}
+	else {
+		rect.left = pos.x - width / 2 - status * 30;
+		rect.right = pos.x + width / 2;
+		rect.top = pos.y - height / 2;
+		rect.bottom = pos.y + height / 2;
+	}
 }
 
 void CheckBox::Render(HDC hdc)

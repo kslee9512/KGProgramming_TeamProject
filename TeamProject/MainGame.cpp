@@ -214,11 +214,10 @@ void MainGame::CheckCollision()
 	//TODO 버그 수정
 	if (player1->GetStatus() >= STATUS::JJAP && player1->GetStatus() <= STATUS::HIGHKICK || player1->GetStatus() == STATUS::SKILL
 		|| player2->GetStatus() >= STATUS::JJAP && player2->GetStatus() <= STATUS::HIGHKICK || player2->GetStatus() == STATUS::SKILL) {
-		int p1AttackIdx = player1->GetStatus() == STATUS::SKILL ? 4 : player1->GetStatus() - 3;
-		int p2AttackIdx = player2->GetStatus() == STATUS::SKILL ? 4 : player1->GetStatus() - 3;
 
 		if (player1->getAttackBox()->GetRect().right >= player2->getHitBox()->GetRect().left) {
 			player2->SetStatus(STATUS::HIT);
+			//HP 감소
 			player1->getAttackBox()->SetActivated(false);
 		}
 		else if (player2->getAttackBox()->GetRect().left <= player1->getHitBox()->GetRect().right) {

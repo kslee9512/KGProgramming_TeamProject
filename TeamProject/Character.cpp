@@ -14,7 +14,7 @@ HRESULT Character::Init(PPOS pPos)
 	
 
 	hitBox = new HitBox();
-	attackBox = new AttackBox[5];
+	attackBox = new AttackBox;
 
 	if (pPos == PPOS::P1)
 	{
@@ -51,7 +51,7 @@ void Character::Release()
 		hitBox = nullptr;
 	}
 	if (attackBox) {
-		delete[] attackBox;
+		delete attackBox;
 		attackBox = nullptr;
 	}
 	if (image)
@@ -139,20 +139,42 @@ void Character::Move()
 {
 	if (pPos == PPOS::P1 && status == STATUS::WALK)
 	{
-		if (!isTouched)
+		if (!isTouched) {
+			charPos.x += moveSpeed;
+			hitBox->SetPos(charPos);
+			hitBox->Update();
+			attackBox->SetPos(charPos);
+			attackBox->Update(charPos);
 			this->pos.x += moveSpeed;
+		}
 	}
 	else if (pPos == PPOS::P1 && status == STATUS::BACK)
 	{
+		charPos.x -= moveSpeed;
+		hitBox->SetPos(charPos);
+		hitBox->Update();
+		attackBox->SetPos(charPos);
+		attackBox->Update(charPos);
 		this->pos.x -= moveSpeed;
 	}
 	else if (pPos == PPOS::P2 && status == STATUS::WALK)
 	{
-		if (!isTouched)
+		if (!isTouched) {
+			charPos.x -= moveSpeed;
+			hitBox->SetPos(charPos);
+			hitBox->Update();
+			attackBox->SetPos(charPos);
+			attackBox->Update(charPos);
 			this->pos.x -= moveSpeed;
+		}
 	}
 	else if (pPos == PPOS::P2 && status == STATUS::BACK)
 	{
+		charPos.x += moveSpeed;
+		hitBox->SetPos(charPos);
+		hitBox->Update();
+		attackBox->SetPos(charPos);
+		attackBox->Update(charPos);
 		this->pos.x += moveSpeed;
 	}
 }
@@ -165,10 +187,16 @@ void Character::Attack(STATUS status)
 void Character::KnockBack(int distance)
 {
 	if (pPos == PPOS::P1) {
+		charPos.x -= distance;
+		hitBox->SetPos(charPos);
+		hitBox->Update();
 		pos.x -= distance;
 		//TODO 화면 끝이면 막아주기
 	}
 	else if(pPos == PPOS::P2){
+		charPos.x += distance;
+		hitBox->SetPos(charPos);
+		hitBox->Update();
 		pos.x += distance;
 		//TODO 화면 끝이면 막아주기
 	}

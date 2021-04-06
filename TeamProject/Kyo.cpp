@@ -34,18 +34,19 @@ HRESULT Kyo::Init(PPOS pPos)
 	}
 
 	if (pPos == PPOS::P1) {
-		charPos.x = pos.x + 400;
+		charPos.x = pos.x + 360;
 	}
 	else {
-		charPos.x = pos.x + 400;
+		charPos.x = pos.x + 340;
 	}
-	charPos.y = pos.y / 2 + GROUND_Y;
+	charPos.y = pos.y + 420;
 
 	width = 100;
-	height = 683;
+	height = 230;
 	hitBox = new HitBox();
 	hitBox->Init(charPos, width, height);
-	attackBox = new AttackBox[5];
+	attackBox = new AttackBox;
+	attackBox->Init(charPos, width, height+50);
     /*
     enum STATUS { STANCE, WALK, BACK, JJAP, PUNCH, LOWKICK, HIGHKICK, HIT, DEFEAT, WIN, SKILL, ENDSTATUS };
 	*/
@@ -278,12 +279,16 @@ void Kyo::Update()
 		else if (status == STATUS::SKILL) {
 			image[status].Update(frameX, frameY);
 			image[11].Update(frameX, frameY);
+			attackBox->SetPos(charPos);
+			attackBox->Update(pPos, status);
 		}
 		else if (status == STATUS::HIT) {
 			KnockBack(4);
 		}
 		else {
 			image[status].Update(frameX, frameY);
+			attackBox->SetPos(charPos);
+			attackBox->Update(pPos, status);
 		}
 		frameX++;
 		elapsedTime = 0;
@@ -314,4 +319,5 @@ void Kyo::Render(HDC hdc)
         }
     }
 	hitBox->Render(hdc);
+	attackBox->Render(hdc);
 }

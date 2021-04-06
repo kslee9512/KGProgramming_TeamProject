@@ -5,6 +5,5 @@ class AttackBox : public CheckBox
 private:
 
 public:
-
 };
 
