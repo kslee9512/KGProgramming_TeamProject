@@ -1,5 +1,7 @@
 #include "Kdash.h"
 #include "Image.h"
+#include "HitBox.h"
+#include "AttackBox.h"
 
 HRESULT Kdash::Init()
 {
@@ -8,6 +10,12 @@ HRESULT Kdash::Init()
 
 HRESULT Kdash::Init(PPOS pPos)
 {
+
+	width = 100;
+	height = 683;
+	hitBox = new HitBox();
+	hitBox->Init(pos, width, height);
+	attackBox = new AttackBox[5];
 
 	this->pPos = pPos;
 	image = new Image[12];
@@ -138,7 +146,8 @@ void Kdash::Render(HDC hdc)
             }
         }
     }
-    
+
+	hitBox->Render(hdc);
 }
 
 void Kdash::Update()

@@ -3,6 +3,7 @@
 #include "Kdash.h"
 #include "Ash.h"
 #include "Kyo.h"
+#include "CheckBox.h"
 
 /*
 	1. ??? bin.bmp?? ?????? ????? ????? ?????.
@@ -127,6 +128,7 @@ void MainGame::Update()
 	if(gameStatus == GAMESTATUS::INGAME){
 		player1->Update();
 		player2->Update();
+		CheckCollision();
 	}
 	else if (gameStatus == GAMESTATUS::CHAR_SELECT) {
 		ChooseCharacter();
@@ -209,7 +211,29 @@ void MainGame::Render(HDC hdc)
 
 void MainGame::CheckCollision()
 {
+	//TODO 버그 수정
+	if (player1->GetStatus() >= STATUS::JJAP && player1->GetStatus() <= STATUS::HIGHKICK || player1->GetStatus() == STATUS::SKILL
+		|| player2->GetStatus() >= STATUS::JJAP && player2->GetStatus() <= STATUS::HIGHKICK || player2->GetStatus() == STATUS::SKILL) {
+		int p1AttackIdx = player1->GetStatus() == STATUS::SKILL ? 4 : player1->GetStatus() - 3;
+		int p2AttackIdx = player2->GetStatus() == STATUS::SKILL ? 4 : player1->GetStatus() - 3;
 
+		if (player1->getAttackBox()->GetRect().right >= player2->getHitBox()->GetRect().left) {
+			player2->SetStatus(STATUS::HIT);
+			player1->getAttackBox()->SetActivated(false);
+		}
+		else if (player2->getAttackBox()->GetRect().left <= player1->getHitBox()->GetRect().right) {
+			player1->SetStatus(STATUS::HIT);
+			player2->getAttackBox()->SetActivated(false);
+		}
+	}
+	if (player1->getHitBox()->GetRect().right >= player2->getHitBox()->GetRect().left) {
+		player1->SetTouched(true);
+		player2->SetTouched(true);
+	}
+	else {
+		player1->SetTouched(false);
+		player2->SetTouched(false);
+	}
 }
 
 

@@ -1,11 +1,19 @@
 #include "CheckBox.h"
+#include "CommonFunction.h"
 
 HRESULT CheckBox::Init()
 {
-	pos.x = 0;
-	pos.y = 0;
-	radius = 0;
+	return Init(FPOINT{ 0, 0}, 0 , 0);
+}
+
+HRESULT CheckBox::Init(FPOINT pos, int width, int height)
+{
+	pos = pos; // 박스의 중심좌표
+	this->width = width;
+	this->height = height;
+	rect = GetRectToCenter(pos.x, pos.y, width, height);
 	isActivated = false;
+
 	return S_OK;
 }
 
@@ -14,12 +22,29 @@ void CheckBox::Release()
 
 }
 
-void CheckBox::Update()
+void CheckBox::Update() {
+	Update(FPOINT{ 0, 0 });
+}
+
+void CheckBox::Update(FPOINT pos)
 {
-	isActivated = !isActivated;
+	rect.left = pos.x - width / 2;
+	rect.right = pos.x + width / 2;
+	rect.top = pos.y - height / 2;
+	rect.bottom = pos.y + height / 2;
 }
 
 void CheckBox::Render(HDC hdc)
 {
-	Ellipse(hdc, pos.x - radius, pos.y - radius, pos.x + radius, pos.y + radius);
+	HPEN hPen = CreatePen(PS_SOLID, 5, RGB(255, 255, 255));
+	HPEN hOldPen = (HPEN)SelectObject(hdc, hPen);
+	
+	MoveToEx(hdc, rect.left, rect.top, NULL);
+	LineTo(hdc, rect.right, rect.top);
+	LineTo(hdc, rect.right, rect.bottom);
+	LineTo(hdc, rect.left, rect.bottom);
+	LineTo(hdc, rect.left, rect.top);
+
+	SelectObject(hdc, hOldPen);
+	DeleteObject(hPen);
 }

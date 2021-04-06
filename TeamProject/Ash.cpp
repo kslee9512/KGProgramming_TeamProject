@@ -1,5 +1,7 @@
 #include "Ash.h"
 #include "Image.h"
+#include "HitBox.h"
+#include "AttackBox.h"
 
 HRESULT Ash::Init()
 {
@@ -9,6 +11,7 @@ HRESULT Ash::Init()
 
 HRESULT Ash::Init(PPOS pPos)
 {
+
 	this->pPos = pPos;
 	image = new Image[12];
 	frameX = 0;
@@ -39,6 +42,12 @@ HRESULT Ash::Init(PPOS pPos)
 		pos.x = (WINSIZE_X)-679;
 		pos.y = GROUND_Y;
 	}
+
+	width = 100;
+	height = 683;
+	hitBox = new HitBox();
+	hitBox->Init(FPOINT{ (pos.x + spriteWidth)/2, spriteHeight/2+pos.y }, width, height);
+	attackBox = new AttackBox[5];
 
 	if (FAILED(image[0].Init("Image/Ash_Image/stance_1.bmp", spriteWidth*maxFrame[0], spriteHeight, maxFrame[0], 1, true, RGB(0, 0, 0))))
 	{
@@ -285,4 +294,5 @@ void Ash::Render(HDC hdc)
             }
         }
     }
+	hitBox->Render(hdc);
 }

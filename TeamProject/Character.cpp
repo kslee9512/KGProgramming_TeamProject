@@ -1,5 +1,7 @@
 #include "Character.h"
 #include "Image.h"
+#include "HitBox.h"
+#include "AttackBox.h"
 
 HRESULT Character::Init(PPOS pPos)
 {
@@ -9,6 +11,10 @@ HRESULT Character::Init(PPOS pPos)
 	frameY = 0;
 	maxFrame[12];
 	status = STATUS::STANCE;
+	
+
+	hitBox = new HitBox();
+	attackBox = new AttackBox[5];
 
 	if (pPos == PPOS::P1)
 	{
@@ -21,6 +27,14 @@ HRESULT Character::Init(PPOS pPos)
 		pos.y = (GROUND_Y);
 	}
 
+	if (pPos == PPOS::P1) {
+		charPos.x = pos.x + 400;
+	}
+	else {
+		charPos.x = pos.x + 800;
+	}
+	charPos.y = pos.y / 2 + GROUND_Y;
+
 	if (FAILED(image[0].Init("Image/K'Image/k'_stance1p.bmp", 1344, 122, 16, 1, true, RGB(255, 255, 255))))
 	{
 		MessageBox(g_hWnd, "Image/Iori_walk.bmp 로드 실패", "Warning", MB_OK);
@@ -32,6 +46,14 @@ HRESULT Character::Init(PPOS pPos)
 
 void Character::Release()
 {
+	if(hitBox){
+		delete hitBox;
+		hitBox = nullptr;
+	}
+	if (attackBox) {
+		delete[] attackBox;
+		attackBox = nullptr;
+	}
 	if (image)
 	{
 		for (int i = 0; i < 11; i++)
@@ -117,7 +139,8 @@ void Character::Move()
 {
 	if (pPos == PPOS::P1 && status == STATUS::WALK)
 	{
-		this->pos.x += moveSpeed;
+		if (!isTouched)
+			this->pos.x += moveSpeed;
 	}
 	else if (pPos == PPOS::P1 && status == STATUS::BACK)
 	{
@@ -125,7 +148,8 @@ void Character::Move()
 	}
 	else if (pPos == PPOS::P2 && status == STATUS::WALK)
 	{
-		this->pos.x -= moveSpeed;
+		if (!isTouched)
+			this->pos.x -= moveSpeed;
 	}
 	else if (pPos == PPOS::P2 && status == STATUS::BACK)
 	{
@@ -136,4 +160,16 @@ void Character::Move()
 void Character::Attack(STATUS status)
 {
 
+}
+
+void Character::KnockBack(int distance)
+{
+	if (pPos == PPOS::P1) {
+		pos.x -= distance;
+		//TODO 화면 끝이면 막아주기
+	}
+	else if(pPos == PPOS::P2){
+		pos.x += distance;
+		//TODO 화면 끝이면 막아주기
+	}
 }

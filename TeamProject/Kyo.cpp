@@ -1,5 +1,7 @@
 #include "Kyo.h"
 #include "Image.h"
+#include "HitBox.h"
+#include "AttackBox.h"
 
 HRESULT Kyo::Init()
 {
@@ -8,6 +10,7 @@ HRESULT Kyo::Init()
 
 HRESULT Kyo::Init(PPOS pPos)
 {
+
 	this->pPos = pPos;
 	image = new Image[12];
 	frameX = 0;
@@ -29,6 +32,20 @@ HRESULT Kyo::Init(PPOS pPos)
 		pos.x = (WINSIZE_X)-679;
 		pos.y = GROUND_Y;
 	}
+
+	if (pPos == PPOS::P1) {
+		charPos.x = pos.x + 400;
+	}
+	else {
+		charPos.x = pos.x + 400;
+	}
+	charPos.y = pos.y / 2 + GROUND_Y;
+
+	width = 100;
+	height = 683;
+	hitBox = new HitBox();
+	hitBox->Init(charPos, width, height);
+	attackBox = new AttackBox[5];
     /*
     enum STATUS { STANCE, WALK, BACK, JJAP, PUNCH, LOWKICK, HIGHKICK, HIT, DEFEAT, WIN, SKILL, ENDSTATUS };
 	*/
@@ -262,6 +279,9 @@ void Kyo::Update()
 			image[status].Update(frameX, frameY);
 			image[11].Update(frameX, frameY);
 		}
+		else if (status == STATUS::HIT) {
+			KnockBack(4);
+		}
 		else {
 			image[status].Update(frameX, frameY);
 		}
@@ -293,4 +313,5 @@ void Kyo::Render(HDC hdc)
             }
         }
     }
+	hitBox->Render(hdc);
 }
