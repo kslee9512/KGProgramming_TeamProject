@@ -300,6 +300,63 @@ void Ash::Update()
 
 void Ash::Move()
 {
+
+	if (pPos == PPOS::P1 && status == STATUS::WALK)
+	{
+		if (!isTouched) {
+			this->pos.x += moveSpeed;
+			charPos.x += moveSpeed;
+			hitBox->SetPos(charPos);
+			hitBox->Update();
+			attackBox->SetPos(charPos);
+			attackBox->Update(charPos);
+		}
+	}
+	else if (pPos == PPOS::P1 && status == STATUS::BACK)
+	{
+		charPos.x -= moveSpeed;
+		if (charPos.x <= 70)
+		{
+			charPos.x += moveSpeed;
+		}
+		hitBox->SetPos(charPos);
+		hitBox->Update();
+		attackBox->SetPos(charPos);
+		attackBox->Update(charPos);
+		this->pos.x -= moveSpeed;
+		if (pos.x <= -330)
+		{
+			pos.x += moveSpeed;
+		}
+	}
+	else if (pPos == PPOS::P2 && status == STATUS::WALK)
+	{
+		if (!isTouched) {
+			charPos.x -= moveSpeed;
+			hitBox->SetPos(charPos);
+			hitBox->Update();
+			attackBox->SetPos(charPos);
+			attackBox->Update(charPos);
+			this->pos.x -= moveSpeed;
+		}
+	}
+	else if (pPos == PPOS::P2 && status == STATUS::BACK)
+	{
+		charPos.x += moveSpeed;
+		if (charPos.x >= 1000)
+		{
+			charPos.x -= moveSpeed;
+		}
+		hitBox->SetPos(charPos);
+		hitBox->Update();
+		attackBox->SetPos(charPos);
+		attackBox->Update(charPos);
+		this->pos.x += moveSpeed;
+		if (pos.x >= 730)
+		{
+			pos.x -= moveSpeed;
+		}
+	}
 }
 
 void Ash::Render(HDC hdc)

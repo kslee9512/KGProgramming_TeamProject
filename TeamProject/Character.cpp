@@ -136,7 +136,7 @@ void Character::Render(HDC hdc)
 }
 
 void Character::Move()
-{
+{/*
 	if (pPos == PPOS::P1 && status == STATUS::WALK)
 	{
 		if (!isTouched) {
@@ -192,7 +192,7 @@ void Character::Move()
 		{
 			pos.x -= moveSpeed;
 		}
-	}
+	}*/
 }
 
 void Character::Attack(STATUS status)
