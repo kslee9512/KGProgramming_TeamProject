@@ -29,14 +29,38 @@ HRESULT MainGame::Init()
 	hTimer = (HANDLE)SetTimer(g_hWnd, MAIN_TIMER_ID, 10, NULL);
 	CommandTimer = (HANDLE)SetTimer(g_hWnd, COMMAND_TIMER_ID, COMMAND_TIMER_CYCLE, NULL);
 
+
 	//????? ?????
 	backBuffer = new Image();
 	backBuffer->Init(WINSIZE_X, WINSIZE_Y);
 	isInited = true;
 
+	hpBar_p1 = new Image();
+	hpBarFrame_p1 = new Image();
+	hpBar_p2 = new Image();
+	hpBarFrame_p2 = new Image();
+	if (FAILED(hpBar_p1->Init("Image/UI/HPbar.bmp", 872, 67, 1, 1, true, RGB(255, 255, 255))))
+	{
+		MessageBox(g_hWnd, "Image/UI/HPbar.bmp", "Warning", MB_OK);
+		return E_FAIL;
+	}
+	if (FAILED(hpBarFrame_p1->Init("Image/UI/HPbar_Frame.bmp", 936, 90, 1, 1, true, RGB(255, 255, 255))))
+	{
+		MessageBox(g_hWnd, "Image/UI/HPbar_Frame.bmpp", "Warning", MB_OK);
+		return E_FAIL;
+	}
+	if (FAILED(hpBar_p2->Init("Image/UI/HPbar.bmp", 872, 67, 1, 1, true, RGB(255, 255, 255))))
+	{
+		MessageBox(g_hWnd, "Image/UI/HPbar.bmp", "Warning", MB_OK);
+		return E_FAIL;
+	}
+	if (FAILED(hpBarFrame_p2->Init("Image/UI/HPbar_Frame.bmp", 936, 90, 1, 1, true, RGB(255, 255, 255))))
+	{
+		MessageBox(g_hWnd, "Image/UI/HPbar_Frame.bmpp", "Warning", MB_OK);
+		return E_FAIL;
+	}
 	characterSelect = new Image();
 	characterSelect->Init("Image/BackGround/CharacterSelect.bmp", WINSIZE_X, WINSIZE_Y);
-
 	gameStatus = GAMESTATUS::CHAR_SELECT;
 	isPlayer1Chosen = false;
 	isPlayer2Chosen = false;
@@ -127,6 +151,24 @@ void MainGame::Release()
 
 	KillTimer(g_hWnd, MAIN_TIMER_ID);
 	KillTimer(g_hWnd, COMMAND_TIMER_ID);
+
+	hpBar_p1->Release();
+	delete hpBar_p1;
+	hpBar_p1 = nullptr;
+
+	hpBarFrame_p1->Release();
+	delete hpBarFrame_p1;
+	hpBarFrame_p1 = nullptr;
+
+	hpBar_p2->Release();
+	delete hpBar_p2;
+	hpBar_p2 = nullptr;
+
+	hpBarFrame_p2->Release();
+	delete hpBarFrame_p2;
+	hpBarFrame_p2 = nullptr;
+
+	KillTimer(g_hWnd, 0);
 }
 
 void MainGame::Update()
@@ -233,7 +275,11 @@ void MainGame::Render(HDC hdc)
 
 	player1->Render(hBackDC);
 	player2->Render(hBackDC);
+	hpBarFrame_p1->Render(hBackDC, 10, 10, 430, 70);
+	hpBar_p1->Render(hBackDC, 28, 20, player1->GetCurHp() , 50);
 
+	hpBarFrame_p2->RenderReverse(hBackDC, 630, 10, 430, 70);
+	hpBar_p2->RenderReverse(hBackDC, 648, 20, player2->GetCurHp(), 50);
 	backBuffer->Render(hdc, 0, 0, 0);
 }
 
@@ -243,14 +289,30 @@ void MainGame::CheckCollision()
 	if (player1->GetStatus() >= STATUS::JJAP && player1->GetStatus() <= STATUS::HIGHKICK || player1->GetStatus() == STATUS::SKILL
 		|| player2->GetStatus() >= STATUS::JJAP && player2->GetStatus() <= STATUS::HIGHKICK || player2->GetStatus() == STATUS::SKILL) {
 
-		if (player1->getAttackBox()->GetRect().right >= player2->getHitBox()->GetRect().left) {
-			player2->SetStatus(STATUS::HIT);
-			//HP °¨¼Ò
-			player1->getAttackBox()->SetActivated(false);
+		if (player1 ->getAttackBox()->GetActivated() && player1->getAttackBox()->GetRect().right >= player2->getHitBox()->GetRect().left) {
+			player2->GotDamage(40);
+			if (player2->GetCurHp() == 1)
+			{
+				player2->SetStatus(STATUS::DEFEAT);
+			}
+			else
+			{
+				player2->SetStatus(STATUS::HIT);
+				player1->getAttackBox()->SetActivated(false);
+			}
 		}
-		else if (player2->getAttackBox()->GetRect().left <= player1->getHitBox()->GetRect().right) {
-			player1->SetStatus(STATUS::HIT);
-			player2->getAttackBox()->SetActivated(false);
+		else if (player2->getAttackBox()->GetActivated() && player2->getAttackBox()->GetRect().left <= player1->getHitBox()->GetRect().right) {
+
+			player1->GotDamage(40);
+			if (player1->GetCurHp() == 1)
+			{
+				player1->SetStatus(STATUS::DEFEAT);
+			}
+			else
+			{
+				player1->SetStatus(STATUS::HIT);
+				player2->getAttackBox()->SetActivated(false);
+			}
 		}
 	}
 	if (player1->getHitBox()->GetRect().right >= player2->getHitBox()->GetRect().left) {

@@ -10,13 +10,13 @@ HRESULT Kdash::Init()
 
 HRESULT Kdash::Init(PPOS pPos)
 {
-
+	curHp = maxHp;
 	width = 100;
 	height = 683;
 	hitBox = new HitBox();
 	hitBox->Init(pos, width, height);
 	attackBox = new AttackBox[5];
-
+	isAlive = true;
 	this->pPos = pPos;
 	image = new Image[12];
 	frameX = 0;
@@ -165,6 +165,67 @@ void Kdash::Render(HDC hdc)
 	attackBox->Render(hdc);
 }
 
+void Kdash::Move()
+{
+
+	if (pPos == PPOS::P1 && status == STATUS::WALK)
+	{
+		if (!isTouched) {
+			this->pos.x += moveSpeed;
+			charPos.x += moveSpeed;
+			hitBox->SetPos(charPos);
+			hitBox->Update();
+			attackBox->SetPos(charPos);
+			attackBox->Update(charPos);
+		}
+	}
+	else if (pPos == PPOS::P1 && status == STATUS::BACK)
+	{
+		charPos.x -= moveSpeed;
+		if (charPos.x <= 70)
+		{
+			charPos.x += moveSpeed;
+		}
+		hitBox->SetPos(charPos);
+		hitBox->Update();
+		attackBox->SetPos(charPos);
+		attackBox->Update(charPos);
+		this->pos.x -= moveSpeed;
+		if (pos.x <= -300)
+		{
+			pos.x += moveSpeed;
+		}
+	}
+	else if (pPos == PPOS::P2 && status == STATUS::WALK)
+	{
+		if (!isTouched) {
+			charPos.x -= moveSpeed;
+			hitBox->SetPos(charPos);
+			hitBox->Update();
+			attackBox->SetPos(charPos);
+			attackBox->Update(charPos);
+			this->pos.x -= moveSpeed;
+		}
+	}
+	else if (pPos == PPOS::P2 && status == STATUS::BACK)
+	{
+		charPos.x += moveSpeed;
+		if (charPos.x >= 990)
+		{
+			charPos.x -= moveSpeed;
+		}
+		hitBox->SetPos(charPos);
+		hitBox->Update();
+		attackBox->SetPos(charPos);
+		attackBox->Update(charPos);
+		this->pos.x += moveSpeed;
+		if (pos.x >= 600)
+		{
+			pos.x -= moveSpeed;
+		}
+	}
+}
+
 void Kdash::Update()
 {
 	if (pPos == PPOS::P1)
@@ -173,6 +234,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::JJAP;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -180,6 +242,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::PUNCH;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -187,6 +250,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::LOWKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -194,6 +258,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::HIGHKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -201,6 +266,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::SKILL;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -241,6 +307,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::JJAP;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -248,6 +315,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::PUNCH;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -255,6 +323,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::LOWKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -262,6 +331,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::HIGHKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -269,6 +339,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::SKILL;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}

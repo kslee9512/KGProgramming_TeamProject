@@ -11,8 +11,9 @@ HRESULT Kyo::Init()
 
 HRESULT Kyo::Init(PPOS pPos)
 {
-
+	isAlive = true;
 	this->pPos = pPos;
+	curHp = maxHp;
 	image = new Image[12];
 	frameX = 0;
 	frameY = 0;
@@ -147,6 +148,7 @@ void Kyo::Update()
 			keyCache->PushBack('U', 300);
 			if(STATUS::STANCE<=status && status <= STATUS::BACK){
 				status = STATUS::JJAP;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -155,6 +157,7 @@ void Kyo::Update()
 			keyCache->PushBack('I', 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::PUNCH;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -163,6 +166,7 @@ void Kyo::Update()
 			keyCache->PushBack('J', 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::LOWKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -171,6 +175,7 @@ void Kyo::Update()
 			keyCache->PushBack('K', 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::HIGHKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -179,6 +184,7 @@ void Kyo::Update()
 			keyCache->PushBack('P', 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::SKILL;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -228,6 +234,7 @@ void Kyo::Update()
 			keyCache->PushBack(char{ VK_NUMPAD5 }, 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::JJAP;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -236,6 +243,7 @@ void Kyo::Update()
 			keyCache->PushBack(char{ VK_NUMPAD6 }, 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::PUNCH;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -244,6 +252,7 @@ void Kyo::Update()
 			keyCache->PushBack(char{ VK_NUMPAD2 }, 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::LOWKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -252,6 +261,7 @@ void Kyo::Update()
 			keyCache->PushBack(char{ VK_NUMPAD3 }, 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::HIGHKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -260,6 +270,7 @@ void Kyo::Update()
 			keyCache->PushBack(char{ VK_NUMPAD0 }, 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::SKILL;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -324,6 +335,67 @@ void Kyo::Update()
 		}
 		frameX++;
 		elapsedTime = 0;
+	}
+}
+
+void Kyo::Move()
+{
+
+	if (pPos == PPOS::P1 && status == STATUS::WALK)
+	{
+		if (!isTouched) {
+			this->pos.x += moveSpeed;
+			charPos.x += moveSpeed;
+			hitBox->SetPos(charPos);
+			hitBox->Update();
+			attackBox->SetPos(charPos);
+			attackBox->Update(charPos);
+		}
+	}
+	else if (pPos == PPOS::P1 && status == STATUS::BACK)
+	{
+		charPos.x -= moveSpeed;
+		if (charPos.x <= 70)
+		{
+			charPos.x += moveSpeed;
+		}
+		hitBox->SetPos(charPos);
+		hitBox->Update();
+		attackBox->SetPos(charPos);
+		attackBox->Update(charPos);
+		this->pos.x -= moveSpeed;
+		if (pos.x <= -300)
+		{
+			pos.x += moveSpeed;
+		}
+	}
+	else if (pPos == PPOS::P2 && status == STATUS::WALK)
+	{
+		if (!isTouched) {
+			charPos.x -= moveSpeed;
+			hitBox->SetPos(charPos);
+			hitBox->Update();
+			attackBox->SetPos(charPos);
+			attackBox->Update(charPos);
+			this->pos.x -= moveSpeed;
+		}
+	}
+	else if (pPos == PPOS::P2 && status == STATUS::BACK)
+	{
+		charPos.x += moveSpeed;
+		if (charPos.x >= 980)
+		{
+			charPos.x -= moveSpeed;
+		}
+		hitBox->SetPos(charPos);
+		hitBox->Update();
+		attackBox->SetPos(charPos);
+		attackBox->Update(charPos);
+		this->pos.x += moveSpeed;
+		if (pos.x >= 650)
+		{
+			pos.x -= moveSpeed;
+		}
 	}
 }
 

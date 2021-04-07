@@ -11,9 +11,10 @@ HRESULT Ash::Init()
 
 HRESULT Ash::Init(PPOS pPos)
 {
-
+	curHp = maxHp;
 	this->pPos = pPos;
 	image = new Image[12];
+	isAlive = true;
 	frameX = 0;
 	frameY = 0;
 	spriteWidth = 1094;
@@ -129,6 +130,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::JJAP;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -136,6 +138,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::PUNCH;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -143,6 +146,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::LOWKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -150,6 +154,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::HIGHKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -157,6 +162,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::SKILL;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -197,6 +203,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::JJAP;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -204,6 +211,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::PUNCH;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -211,6 +219,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::LOWKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -218,6 +227,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::HIGHKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -225,6 +235,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::SKILL;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -284,6 +295,67 @@ void Ash::Update()
 		}
 		frameX++;
 		elapsedTime = 0;
+	}
+}
+
+void Ash::Move()
+{
+
+	if (pPos == PPOS::P1 && status == STATUS::WALK)
+	{
+		if (!isTouched) {
+			this->pos.x += moveSpeed;
+			charPos.x += moveSpeed;
+			hitBox->SetPos(charPos);
+			hitBox->Update();
+			attackBox->SetPos(charPos);
+			attackBox->Update(charPos);
+		}
+	}
+	else if (pPos == PPOS::P1 && status == STATUS::BACK)
+	{
+		charPos.x -= moveSpeed;
+		if (charPos.x <= 70)
+		{
+			charPos.x += moveSpeed;
+		}
+		hitBox->SetPos(charPos);
+		hitBox->Update();
+		attackBox->SetPos(charPos);
+		attackBox->Update(charPos);
+		this->pos.x -= moveSpeed;
+		if (pos.x <= -330)
+		{
+			pos.x += moveSpeed;
+		}
+	}
+	else if (pPos == PPOS::P2 && status == STATUS::WALK)
+	{
+		if (!isTouched) {
+			charPos.x -= moveSpeed;
+			hitBox->SetPos(charPos);
+			hitBox->Update();
+			attackBox->SetPos(charPos);
+			attackBox->Update(charPos);
+			this->pos.x -= moveSpeed;
+		}
+	}
+	else if (pPos == PPOS::P2 && status == STATUS::BACK)
+	{
+		charPos.x += moveSpeed;
+		if (charPos.x >= 1000)
+		{
+			charPos.x -= moveSpeed;
+		}
+		hitBox->SetPos(charPos);
+		hitBox->Update();
+		attackBox->SetPos(charPos);
+		attackBox->Update(charPos);
+		this->pos.x += moveSpeed;
+		if (pos.x >= 730)
+		{
+			pos.x -= moveSpeed;
+		}
 	}
 }
 
