@@ -111,9 +111,9 @@ HRESULT Kyo::Init(PPOS pPos)
 		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_hitR.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
-	if (FAILED(image[8].Init("Image/KyoImage/kyo_bmp/kyo_defeatR.bmp", 8827, 689, maxFrame[8], 1, true, RGB(0, 0, 0))))
+	if (FAILED(image[8].Init("Image/KyoImage/kyo_bmp/kyo_loseR.bmp", 8827, 689, maxFrame[8], 1, true, RGB(0, 0, 0))))
 	{
-		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_defeatR.bmp", "Warning", MB_OK);
+		MessageBox(g_hWnd, "Image/KyoImage/kyo_bmp/kyo_loseR.bmp", "Warning", MB_OK);
 		return E_FAIL;
 	}
 	if (FAILED(image[9].Init("Image/KyoImage/kyo_bmp/kyo_winR.bmp", 8827, 689, maxFrame[9], 1, true, RGB(0, 0, 0))))
@@ -217,7 +217,7 @@ void Kyo::Update()
 				frameX = 0;
 			}
 		}
-		else if (frameX >= maxFrame[status])
+		else if (status != STATUS::DEFEAT && status != STATUS::WIN && frameX >= maxFrame[status])
 		{
 			status = STATUS::STANCE;
 			frameX = 0;
@@ -304,7 +304,7 @@ void Kyo::Update()
 				frameX = 0;
 			}
 		}
-		else if (frameX >= maxFrame[status])
+		else if (status != STATUS::DEFEAT && status != STATUS::WIN && frameX >= maxFrame[status])
 		{
 			status = STATUS::STANCE;
 			frameX = 0;
@@ -326,12 +326,18 @@ void Kyo::Update()
 			attackBox->Update(pPos, status);
 		}
 		else if (status == STATUS::HIT) {
-			KnockBack(4);
+			image[status].Update(frameX, frameY);
+			KnockBack(20);
 		}
 		else {
 			image[status].Update(frameX, frameY);
 			attackBox->SetPos(charPos);
 			attackBox->Update(pPos, status);
+		}
+		if (status == STATUS::DEFEAT && frameX >= maxFrame[status] || status == STATUS::WIN && frameX >= maxFrame[status]) {
+			//frameX = maxFrame[status]-1;
+			isAlive = false;
+			Sleep(100);
 		}
 		frameX++;
 		elapsedTime = 0;
@@ -422,6 +428,7 @@ void Kyo::Render(HDC hdc)
             }
         }
     }
-	hitBox->Render(hdc);
-	attackBox->Render(hdc);
+	//hitBox->Render(hdc);
+	/*if(attackBox->GetActivated())
+		attackBox->Render(hdc);*/
 }

@@ -43,8 +43,9 @@ public:
 	virtual void Move();
 	virtual void Attack(STATUS status);
 	virtual void KnockBack(int distance);
+	inline virtual bool GetAlive() { return isAlive; }
 	inline virtual int GetCurHp() { return this->curHp; }
-	inline virtual void GotDamage(int damage) { this->curHp -= damage; if (this->curHp <= 0) { this->curHp = 1; }}
+	inline virtual void GotDamage(int damage) { this->curHp -= damage; if (this->curHp <= 1) { this->curHp = 1; }}
 	inline virtual FPOINT GetPos() { return this->pos; }
 	inline virtual void SetStatus(STATUS status) { this->status = status; }
 	inline virtual void SetFrameX(int frameX) { this->frameX; }

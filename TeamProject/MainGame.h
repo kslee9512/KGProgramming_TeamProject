@@ -25,6 +25,7 @@ private:
 	Image* hpBar_p1;
 	Image* hpBarFrame_p2;
 	Image* hpBar_p2;
+	Image* koImage;
 
 	Character* player1;
 	Character* player2;

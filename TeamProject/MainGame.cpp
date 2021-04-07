@@ -39,6 +39,13 @@ HRESULT MainGame::Init()
 	hpBarFrame_p1 = new Image();
 	hpBar_p2 = new Image();
 	hpBarFrame_p2 = new Image();
+	koImage = new Image();
+
+	if (FAILED(koImage->Init("Image/UI/ko.bmp", 285, 160, 1, 1, true, RGB(0, 0, 0))))
+	{
+		MessageBox(g_hWnd, "Image/UI/ko.bmp", "Warning", MB_OK);
+		return E_FAIL;
+	}
 	if (FAILED(hpBar_p1->Init("Image/UI/HPbar.bmp", 872, 67, 1, 1, true, RGB(255, 255, 255))))
 	{
 		MessageBox(g_hWnd, "Image/UI/HPbar.bmp", "Warning", MB_OK);
@@ -141,6 +148,11 @@ void MainGame::Release()
 		delete player2;
 		player2 = nullptr;
 	}
+	if (koImage) {
+		koImage->Release();
+		delete koImage;
+		koImage = nullptr;
+	}
 	background->Release();
 	delete background;
 	background = nullptr;
@@ -174,14 +186,36 @@ void MainGame::Release()
 void MainGame::Update()
 {
 	if(gameStatus == GAMESTATUS::INGAME){
-		player1->Update();
-		player2->Update();
-		CheckCollision();
+		if (!player1->GetAlive() && !player2->GetAlive()) {
+			gameStatus = GAMESTATUS::ENDGAME;
+		}else{
+			player1->Update();
+			player2->Update();
+			CheckCollision();
+		}
 	}
 	else if (gameStatus == GAMESTATUS::CHAR_SELECT) {
 		ChooseCharacter();
 	}
-
+	else if (gameStatus == GAMESTATUS::ENDGAME) {
+		gameStatus = GAMESTATUS::CHAR_SELECT;
+		if (player1) {
+			player1->Release();
+			delete player1;
+			player1 = nullptr;
+		}
+		if (player2) {
+			player2->Release();
+			delete player2;
+			player2 = nullptr;
+		}
+		isPlayer1Chosen = false;
+		isPlayer2Chosen = false;
+		player1SelectPos.x = 55;
+		player1SelectPos.y = 100;
+		player2SelectPos.x = 50;
+		player2SelectPos.y = 95;
+	}
 	InvalidateRect(g_hWnd, NULL, false);
 }
 
@@ -280,6 +314,11 @@ void MainGame::Render(HDC hdc)
 
 	hpBarFrame_p2->RenderReverse(hBackDC, 630, 10, 430, 70);
 	hpBar_p2->RenderReverse(hBackDC, 648, 20, player2->GetCurHp(), 50);
+	if (player1->GetStatus() == STATUS::WIN || player1->GetStatus() == STATUS::DEFEAT) {
+		koImage->Update(0, 0);
+		koImage->Render(hBackDC, WINSIZE_X / 2 - 142, 100, 285, 160);
+		//Sleep(1000);
+	}
 	backBuffer->Render(hdc, 0, 0, 0);
 }
 
@@ -291,12 +330,17 @@ void MainGame::CheckCollision()
 
 		if (player1 ->getAttackBox()->GetActivated() && player1->getAttackBox()->GetRect().right >= player2->getHitBox()->GetRect().left) {
 			player2->GotDamage(40);
-			if (player2->GetCurHp() == 1)
+			if (player2->GetCurHp() <= 1)
 			{
+				player1->SetStatus(STATUS::WIN);
 				player2->SetStatus(STATUS::DEFEAT);
+				player1->SetFrameX(0);
+				player2->SetFrameX(0);
+				player1->getAttackBox()->SetActivated(false);
 			}
 			else
 			{
+				player2->SetFrameX(0);
 				player2->SetStatus(STATUS::HIT);
 				player1->getAttackBox()->SetActivated(false);
 			}
@@ -304,12 +348,17 @@ void MainGame::CheckCollision()
 		else if (player2->getAttackBox()->GetActivated() && player2->getAttackBox()->GetRect().left <= player1->getHitBox()->GetRect().right) {
 
 			player1->GotDamage(40);
-			if (player1->GetCurHp() == 1)
+			if (player1->GetCurHp() <= 1)
 			{
 				player1->SetStatus(STATUS::DEFEAT);
+				player2->SetStatus(STATUS::WIN);
+				player1->SetFrameX(0);
+				player2->SetFrameX(0);
+				player2->getAttackBox()->SetActivated(false);
 			}
 			else
 			{
+				player1->SetFrameX(0);
 				player1->SetStatus(STATUS::HIT);
 				player2->getAttackBox()->SetActivated(false);
 			}

@@ -164,8 +164,8 @@ void Kdash::Render(HDC hdc)
         }
     }
 
-	hitBox->Render(hdc);
-	attackBox->Render(hdc);
+	/*hitBox->Render(hdc);
+	attackBox->Render(hdc);*/
 }
 
 void Kdash::Move()
@@ -311,7 +311,7 @@ void Kdash::Update()
 				frameX = 0;
 			}
 		}
-		else if (frameX >= maxFrame[status])
+		else if (status != STATUS::DEFEAT && status != STATUS::WIN && frameX >= maxFrame[status])
 		{
 			status = STATUS::STANCE;
 			frameX = 0;
@@ -398,7 +398,7 @@ void Kdash::Update()
 				frameX = 0;
 			}
 		}
-		else if (frameX >= maxFrame[status])
+		else if (status != STATUS::DEFEAT && status != STATUS::WIN && frameX >= maxFrame[status])
 		{
 			status = STATUS::STANCE;
 			frameX = 0;
@@ -420,12 +420,18 @@ void Kdash::Update()
 			attackBox->Update(pPos, status);
 		}
 		else if (status == STATUS::HIT) {
-			KnockBack(4);
+			image[status].Update(frameX, frameY);
+			KnockBack(20);
 		}
 		else {
 			image[status].Update(frameX, frameY);
 			attackBox->SetPos(charPos);
 			attackBox->Update(pPos, status);
+		}
+		if (status == STATUS::DEFEAT && frameX >= maxFrame[status] || status == STATUS::WIN && frameX >= maxFrame[status]) {
+			//frameX = maxFrame[status]-1;
+			isAlive = false;
+			Sleep(100);
 		}
 		frameX++;
 		elapsedTime = 0;
