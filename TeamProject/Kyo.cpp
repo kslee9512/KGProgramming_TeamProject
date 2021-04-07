@@ -213,14 +213,16 @@ void Kyo::Update()
 			if (KeyManager::GetSingleton()->IsOnceKeyUp('A')
 				|| KeyManager::GetSingleton()->IsOnceKeyUp('D'))
 			{
-				status = STATUS::STANCE;
-				frameX = 0;
+				if (KeyManager::GetSingleton()->IsStayKeyDown('A')) {
+					status = STATUS::BACK;
+				}
+				else if (KeyManager::GetSingleton()->IsStayKeyDown('D')) {
+					status = STATUS::WALK;
+				}else{
+					status = STATUS::STANCE;
+					frameX = 0;
+				}
 			}
-		}
-		else if (status != STATUS::DEFEAT && status != STATUS::WIN && frameX >= maxFrame[status])
-		{
-			status = STATUS::STANCE;
-			frameX = 0;
 		}
 	}
 	else if (pPos == PPOS::P2)
@@ -300,19 +302,34 @@ void Kyo::Update()
 			if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LEFT)
 				|| KeyManager::GetSingleton()->IsOnceKeyUp(VK_RIGHT))
 			{
-				status = STATUS::STANCE;
-				frameX = 0;
+				if (KeyManager::GetSingleton()->IsStayKeyDown(VK_LEFT)) {
+					status = STATUS::WALK;
+				}
+				else if (KeyManager::GetSingleton()->IsStayKeyDown(VK_RIGHT)) {
+					status = STATUS::BACK;
+				}
+				else {
+					status = STATUS::STANCE;
+					frameX = 0;
+				}
 			}
-		}
-		else if (status != STATUS::DEFEAT && status != STATUS::WIN && frameX >= maxFrame[status])
-		{
-			status = STATUS::STANCE;
-			frameX = 0;
 		}
 	}
 	elapsedTime++;
 	if (elapsedTime >= 5)
 	{
+		if (status != STATUS::DEFEAT && status != STATUS::WIN && !(status >= STATUS::WALK && status <= STATUS::BACK) && frameX >= maxFrame[status]-1)
+		{
+			status = STATUS::STANCE;
+			frameX = 0;
+		}
+		else if (status == STATUS::DEFEAT && frameX >= maxFrame[status] - 1 || status == STATUS::WIN && frameX >= maxFrame[status] - 1) {
+			//frameX = maxFrame[status]-1;
+			isAlive = false;
+			frameX = maxFrame[status] - 2;
+			Sleep(100);
+		}
+
 		if (status >= STATUS::WALK && status <= STATUS::BACK){
 			Move();
 			if (frameX >= maxFrame[status])
@@ -326,19 +343,15 @@ void Kyo::Update()
 			attackBox->Update(pPos, status);
 		}
 		else if (status == STATUS::HIT) {
-			image[status].Update(frameX, frameY);
 			KnockBack(20);
+			image[status].Update(frameX, frameY);
 		}
 		else {
 			image[status].Update(frameX, frameY);
 			attackBox->SetPos(charPos);
 			attackBox->Update(pPos, status);
 		}
-		if (status == STATUS::DEFEAT && frameX >= maxFrame[status] || status == STATUS::WIN && frameX >= maxFrame[status]) {
-			//frameX = maxFrame[status]-1;
-			isAlive = false;
-			Sleep(100);
-		}
+		
 		frameX++;
 		elapsedTime = 0;
 	}
@@ -428,7 +441,6 @@ void Kyo::Render(HDC hdc)
             }
         }
     }
-	//hitBox->Render(hdc);
-	/*if(attackBox->GetActivated())
-		attackBox->Render(hdc);*/
+	hitBox->Render(hdc);
+	attackBox->Render(hdc);
 }

@@ -328,8 +328,8 @@ void MainGame::CheckCollision()
 	if (player1->GetStatus() >= STATUS::JJAP && player1->GetStatus() <= STATUS::HIGHKICK || player1->GetStatus() == STATUS::SKILL
 		|| player2->GetStatus() >= STATUS::JJAP && player2->GetStatus() <= STATUS::HIGHKICK || player2->GetStatus() == STATUS::SKILL) {
 
-		if (player1 ->getAttackBox()->GetActivated() && player1->getAttackBox()->GetRect().right >= player2->getHitBox()->GetRect().left) {
-			player2->GotDamage(40);
+		if (/*player1 ->getAttackBox()->GetActivated() &&*/ player1->getAttackBox()->GetRect().right >= player2->getHitBox()->GetRect().left) {
+			player2->GotDamage(1);
 			if (player2->GetCurHp() <= 1)
 			{
 				player1->SetStatus(STATUS::WIN);
@@ -345,9 +345,9 @@ void MainGame::CheckCollision()
 				player1->getAttackBox()->SetActivated(false);
 			}
 		}
-		else if (player2->getAttackBox()->GetActivated() && player2->getAttackBox()->GetRect().left <= player1->getHitBox()->GetRect().right) {
+		else if (/*player2->getAttackBox()->GetActivated() &&*/ player2->getAttackBox()->GetRect().left <= player1->getHitBox()->GetRect().right) {
 
-			player1->GotDamage(40);
+			player1->GotDamage(1);
 			if (player1->GetCurHp() <= 1)
 			{
 				player1->SetStatus(STATUS::DEFEAT);

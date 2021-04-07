@@ -285,29 +285,38 @@ void Ash::Update()
 			}
 		}
 
-		if (STATUS::WALK <= status && status <= STATUS::BACK)
-		{
-			if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LEFT)
-				|| KeyManager::GetSingleton()->IsOnceKeyUp(VK_RIGHT))
-			{
-				status = STATUS::STANCE;
-				frameX = 0;
-			}
-		}
-		else if (status != STATUS::DEFEAT && status != STATUS::WIN && frameX >= maxFrame[status])
-		{
-			status = STATUS::STANCE;
-			frameX = 0;
-		}
+
 	}
 	elapsedTime++;
 	if (elapsedTime >= 5)
 	{
+		if (status != STATUS::DEFEAT && status != STATUS::WIN && !(status >= STATUS::WALK && status <= STATUS::BACK) && frameX >= maxFrame[status] - 1)
+		{
+			status = STATUS::STANCE;
+			frameX = 0;
+		}
+		else if (status == STATUS::DEFEAT && frameX >= maxFrame[status] - 1 || status == STATUS::WIN && frameX >= maxFrame[status] - 1) {
+			//frameX = maxFrame[status]-1;
+			isAlive = false;
+			frameX = maxFrame[status] - 2;
+			Sleep(100);
+		}
+
 		if (status >= STATUS::WALK && status <= STATUS::BACK) {
-			Move();
-			if (frameX >= maxFrame[status])
+			if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LEFT)
+				|| KeyManager::GetSingleton()->IsOnceKeyUp(VK_RIGHT)
+				|| KeyManager::GetSingleton()->IsOnceKeyUp('D')
+				|| KeyManager::GetSingleton()->IsOnceKeyUp('A'))
+			{
+				status = STATUS::STANCE;
 				frameX = 0;
-			image[status].Update(frameX, frameY);
+			}
+			else {
+				Move();
+				if (frameX >= maxFrame[status])
+					frameX = 0;
+				image[status].Update(frameX, frameY);
+			}
 		}
 		else if (status == STATUS::SKILL) {
 			image[status].Update(frameX, frameY);
@@ -316,19 +325,15 @@ void Ash::Update()
 			attackBox->Update(pPos, status);
 		}
 		else if (status == STATUS::HIT) {
-			image[status].Update(frameX, frameY);
 			KnockBack(20);
+			image[status].Update(frameX, frameY);
 		}
 		else {
 			image[status].Update(frameX, frameY);
 			attackBox->SetPos(charPos);
 			attackBox->Update(pPos, status);
 		}
-		if (status == STATUS::DEFEAT && frameX >= maxFrame[status] || status == STATUS::WIN && frameX >= maxFrame[status]) {
-			//frameX = maxFrame[status]-1;
-			isAlive = false;
-			Sleep(100);
-		}
+
 		frameX++;
 		elapsedTime = 0;
 	}

@@ -213,16 +213,29 @@ void Character::KnockBack(int distance)
 {
 	if (pPos == PPOS::P1) {
 		charPos.x -= distance;
+		pos.x -= distance;
+		if (charPos.x <= 70)
+		{
+			pos.x += distance;
+			charPos.x += distance;
+		}
 		hitBox->SetPos(charPos);
 		hitBox->Update();
-		pos.x -= distance;
-		//TODO 화면 끝이면 막아주기
+		attackBox->SetPos(charPos);
+		attackBox->Update();
 	}
 	else if(pPos == PPOS::P2){
 		charPos.x += distance;
-		hitBox->SetPos(charPos);
-		hitBox->Update();
 		pos.x += distance;
 		//TODO 화면 끝이면 막아주기
+		if (charPos.x >= 980)
+		{
+			pos.x -= distance;
+			charPos.x -= distance;
+		}
+		hitBox->SetPos(charPos);
+		hitBox->Update();
+		attackBox->SetPos(charPos);
+		attackBox->Update();
 	}
 }
