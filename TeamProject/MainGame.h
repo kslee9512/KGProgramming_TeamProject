@@ -7,10 +7,6 @@ class MainGame : public GameNode
 {
 private:
 	bool isInited;
-	int count = 0;
-	int sizex = 68;
-	int sizey = 104;
-	int print_posx = 0;
 	HDC hdc;
 	PAINTSTRUCT ps;
 	HANDLE hTimer;
@@ -32,6 +28,7 @@ private:
 
 	FPOINT player1SelectPos;
 	FPOINT player2SelectPos;
+
 	HPEN hPen;
 	HPEN hOldPen;
 	

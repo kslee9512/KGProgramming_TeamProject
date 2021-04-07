@@ -6,11 +6,6 @@
 #include "CheckBox.h"
 #include "CommandQueue.h"
 
-/*
-	1. ??? bin.bmp?? ?????? ????? ????? ?????.
-	2. ????? ?????? ?????? ????.bmp?? ????????.
-	3. ??????? ??? ???? ???? 1????? ???????? ????? ????
-*/
 #define MAIN_TIMER_ID 0
 #define COMMAND_TIMER_ID 1
 #define COMMAND_TIMER_CYCLE 50
@@ -19,18 +14,12 @@ HRESULT MainGame::Init()
 {
 	KeyManager::GetSingleton()->Init();
 
-	count = 0;
-	sizex = 68;
-	sizey = 104;
-	print_posx = 0;
-	background = new Image();
-	background->Init("Image/BackGround/background.bmp", WINSIZE_X, WINSIZE_Y);
-
 	hTimer = (HANDLE)SetTimer(g_hWnd, MAIN_TIMER_ID, 10, NULL);
 	CommandTimer = (HANDLE)SetTimer(g_hWnd, COMMAND_TIMER_ID, COMMAND_TIMER_CYCLE, NULL);
 
-
-	//????? ?????
+	background = new Image();
+	background->Init("Image/BackGround/background.bmp", WINSIZE_X, WINSIZE_Y);
+	
 	backBuffer = new Image();
 	backBuffer->Init(WINSIZE_X, WINSIZE_Y);
 	isInited = true;
@@ -66,8 +55,10 @@ HRESULT MainGame::Init()
 		MessageBox(g_hWnd, "Image/UI/HPbar_Frame.bmpp", "Warning", MB_OK);
 		return E_FAIL;
 	}
+
 	characterSelect = new Image();
 	characterSelect->Init("Image/BackGround/CharacterSelect.bmp", WINSIZE_X, WINSIZE_Y);
+
 	gameStatus = GAMESTATUS::CHAR_SELECT;
 	isPlayer1Chosen = false;
 	isPlayer2Chosen = false;
@@ -161,9 +152,6 @@ void MainGame::Release()
 	delete backBuffer;
 	backBuffer = nullptr;
 
-	KillTimer(g_hWnd, MAIN_TIMER_ID);
-	KillTimer(g_hWnd, COMMAND_TIMER_ID);
-
 	hpBar_p1->Release();
 	delete hpBar_p1;
 	hpBar_p1 = nullptr;
@@ -180,7 +168,8 @@ void MainGame::Release()
 	delete hpBarFrame_p2;
 	hpBarFrame_p2 = nullptr;
 
-	KillTimer(g_hWnd, 0);
+	KillTimer(g_hWnd, MAIN_TIMER_ID);
+	KillTimer(g_hWnd, COMMAND_TIMER_ID);
 }
 
 void MainGame::Update()
@@ -225,7 +214,7 @@ void MainGame::UpdateCommand()
 	bool player2HasCommand = player2->GetKeyCache()->HasCommand(string{ char{VK_DOWN} } + string{ char{VK_LEFT} } + string{ char{VK_NUMPAD6} }, COMMAND_TIMER_CYCLE);
 
 	if (player1HasCommand && player2HasCommand) {
-		//플레이어가 동시에 사용했을 때 처리
+		//플레이어가 동시에 커맨드를 사용했을 때 처리
 	}
 	else if (player1HasCommand)
 	{
@@ -247,8 +236,8 @@ void MainGame::RenderCharacterChoice(HDC hdc) {
 
 	characterSelect->Render(hBackDC);
 	//임시 좌표
-	wsprintf(szText, "X : %d, Y : %d", ptMouse.x, ptMouse.y);
-	TextOut(hBackDC, 200, 20, szText, strlen(szText));
+	/*wsprintf(szText, "X : %d, Y : %d", ptMouse.x, ptMouse.y);
+	TextOut(hBackDC, 200, 20, szText, strlen(szText));*/
 
 	SetBkMode(hBackDC, 1);
 
@@ -301,11 +290,10 @@ void MainGame::Render(HDC hdc)
 
 	background->Render(hBackDC);
 
-	// ?λ?
 	TextOut(hBackDC, 20, 20, "MainGame", strlen("MainGame"));
-	// ???콺 ???
-	wsprintf(szText, "X : %d, Y : %d", ptMouse.x, ptMouse.y);
-	TextOut(hBackDC, 200, 20, szText, strlen(szText));
+	
+	/*wsprintf(szText, "X : %d, Y : %d", ptMouse.x, ptMouse.y);
+	TextOut(hBackDC, 200, 20, szText, strlen(szText));*/
 
 	player1->Render(hBackDC);
 	player2->Render(hBackDC);
@@ -365,12 +353,34 @@ void MainGame::CheckCollision()
 		}
 	}
 	if (player1->getHitBox()->GetRect().right >= player2->getHitBox()->GetRect().left) {
-		player1->SetTouched(true);
-		player2->SetTouched(true);
+		if (player1->GetStatus() == STATUS::WALK && player2->GetStatus() == STATUS::STANCE) {
+			if(player2->GetWalkingStatus() != WALKINGSTATUS::IS_BLOCKED){
+				player1->SetWalkingStatus(WALKINGSTATUS::IS_PUSHING);
+				player2->SetWalkingStatus(WALKINGSTATUS::GETTING_PUSHED);
+			}
+			else {
+				player1->SetWalkingStatus(WALKINGSTATUS::IS_CANCELLED);
+				player2->SetWalkingStatus(WALKINGSTATUS::IS_BLOCKED);
+			}
+		}
+		else if (player2->GetStatus() == STATUS::WALK && player1->GetStatus() == STATUS::STANCE) {
+			if (player1->GetWalkingStatus() != WALKINGSTATUS::IS_BLOCKED) {
+				player2->SetWalkingStatus(WALKINGSTATUS::IS_PUSHING);
+				player1->SetWalkingStatus(WALKINGSTATUS::GETTING_PUSHED);
+			}
+			else {
+				player2->SetWalkingStatus(WALKINGSTATUS::IS_CANCELLED);
+				player1->SetWalkingStatus(WALKINGSTATUS::IS_BLOCKED);
+			}
+		}
+		else if (player1->GetStatus() == STATUS::WALK && player2->GetStatus() == STATUS::WALK) {
+			player1->SetWalkingStatus(WALKINGSTATUS::IS_CANCELLED);
+			player2->SetWalkingStatus(WALKINGSTATUS::IS_CANCELLED);
+		}
 	}
 	else {
-		player1->SetTouched(false);
-		player2->SetTouched(false);
+		player1->SetWalkingStatus(WALKINGSTATUS::NORMAL_WALKING);
+		player2->SetWalkingStatus(WALKINGSTATUS::NORMAL_WALKING);
 	}
 }
 

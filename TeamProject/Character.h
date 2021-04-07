@@ -31,8 +31,9 @@ protected:
 
 	int spriteWidth;
 	int spriteHeight;
-	bool isTouched;
 	bool isAlive;
+
+	WALKINGSTATUS walkingStatus;
 
 
 public:
@@ -50,9 +51,10 @@ public:
 	inline virtual void SetStatus(STATUS status) { this->status = status; }
 	inline virtual void SetFrameX(int frameX) { this->frameX; }
 	inline virtual STATUS GetStatus() { return this->status; }
-	inline virtual void SetTouched(bool isTouched) { this->isTouched = isTouched; }
 	inline virtual CheckBox* getAttackBox() { return attackBox; }
 	inline virtual CheckBox* getHitBox() { return hitBox; }
 	inline virtual CommandQueue* GetKeyCache() { return keyCache; }
+	inline virtual void SetWalkingStatus(WALKINGSTATUS walkingStatus) { this->walkingStatus = walkingStatus; }
+	inline virtual WALKINGSTATUS GetWalkingStatus() { return walkingStatus; }
 	// 프레임 단위로 게임 로직 실행 (데이터 변동)
 };
