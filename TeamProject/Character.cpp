@@ -140,22 +140,30 @@ void Character::Move()
 	if (pPos == PPOS::P1 && status == STATUS::WALK)
 	{
 		if (!isTouched) {
+			this->pos.x += moveSpeed;
 			charPos.x += moveSpeed;
 			hitBox->SetPos(charPos);
 			hitBox->Update();
 			attackBox->SetPos(charPos);
 			attackBox->Update(charPos);
-			this->pos.x += moveSpeed;
 		}
 	}
 	else if (pPos == PPOS::P1 && status == STATUS::BACK)
 	{
 		charPos.x -= moveSpeed;
-		hitBox->SetPos(charPos);
-		hitBox->Update();
-		attackBox->SetPos(charPos);
-		attackBox->Update(charPos);
+		if (charPos.x <= 70)
+		{
+			charPos.x += moveSpeed;
+		}
+			hitBox->SetPos(charPos);
+			hitBox->Update();
+			attackBox->SetPos(charPos);
+			attackBox->Update(charPos);
 		this->pos.x -= moveSpeed;
+		if (pos.x <= -300)
+		{
+			pos.x += moveSpeed;
+		}
 	}
 	else if (pPos == PPOS::P2 && status == STATUS::WALK)
 	{
@@ -171,11 +179,19 @@ void Character::Move()
 	else if (pPos == PPOS::P2 && status == STATUS::BACK)
 	{
 		charPos.x += moveSpeed;
+		if (charPos.x >= 980)
+		{
+			charPos.x -= moveSpeed;
+		}
 		hitBox->SetPos(charPos);
 		hitBox->Update();
 		attackBox->SetPos(charPos);
 		attackBox->Update(charPos);
 		this->pos.x += moveSpeed;
+		if (pos.x >= 650)
+		{
+			pos.x -= moveSpeed;
+		}
 	}
 }
 

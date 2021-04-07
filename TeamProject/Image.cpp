@@ -165,9 +165,9 @@ void Image::RenderReverse(HDC hdc, int destX, int destY, int destWidth, int dest
 			destWidth, destHeight,
 			imageInfo->hMemDC,
 			0,
-			imageInfo->height / imageInfo->maxFrameY * imageInfo->curFrameY,
-			imageInfo->frameWidth,
-			imageInfo->frameHeight,
+			0,
+			destWidth,
+			destHeight,
 			colorToRemove
 		);
 		return;

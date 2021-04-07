@@ -10,7 +10,7 @@ HRESULT Kyo::Init()
 
 HRESULT Kyo::Init(PPOS pPos)
 {
-
+	isAlive = true;
 	this->pPos = pPos;
 	curHp = maxHp;
 	image = new Image[12];
@@ -138,6 +138,7 @@ void Kyo::Update()
 		{
 			if(STATUS::STANCE<=status && status <= STATUS::BACK){
 				status = STATUS::JJAP;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -145,6 +146,7 @@ void Kyo::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::PUNCH;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -152,6 +154,7 @@ void Kyo::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::LOWKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -159,6 +162,7 @@ void Kyo::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::HIGHKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -166,6 +170,7 @@ void Kyo::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::SKILL;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -214,6 +219,7 @@ void Kyo::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::PUNCH;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -221,6 +227,7 @@ void Kyo::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::LOWKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -228,6 +235,7 @@ void Kyo::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::HIGHKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -235,6 +243,7 @@ void Kyo::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::SKILL;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -295,6 +304,10 @@ void Kyo::Update()
 		frameX++;
 		elapsedTime = 0;
 	}
+}
+
+void Kyo::Move()
+{
 }
 
 void Kyo::Render(HDC hdc)

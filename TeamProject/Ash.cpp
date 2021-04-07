@@ -14,6 +14,7 @@ HRESULT Ash::Init(PPOS pPos)
 	curHp = maxHp;
 	this->pPos = pPos;
 	image = new Image[12];
+	isAlive = true;
 	frameX = 0;
 	frameY = 0;
 	spriteWidth = 1094;
@@ -129,6 +130,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::JJAP;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -136,6 +138,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::PUNCH;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -143,6 +146,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::LOWKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -150,6 +154,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::HIGHKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -157,6 +162,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::SKILL;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -197,6 +203,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::JJAP;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -204,6 +211,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::PUNCH;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -211,6 +219,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::LOWKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -218,6 +227,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::HIGHKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -225,6 +235,7 @@ void Ash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::SKILL;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -285,6 +296,10 @@ void Ash::Update()
 		frameX++;
 		elapsedTime = 0;
 	}
+}
+
+void Ash::Move()
+{
 }
 
 void Ash::Render(HDC hdc)

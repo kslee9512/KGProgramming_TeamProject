@@ -16,7 +16,7 @@ HRESULT Kdash::Init(PPOS pPos)
 	hitBox = new HitBox();
 	hitBox->Init(pos, width, height);
 	attackBox = new AttackBox[5];
-
+	isAlive = true;
 	this->pPos = pPos;
 	image = new Image[12];
 	frameX = 0;
@@ -165,6 +165,10 @@ void Kdash::Render(HDC hdc)
 	attackBox->Render(hdc);
 }
 
+void Kdash::Move()
+{
+}
+
 void Kdash::Update()
 {
 	if (pPos == PPOS::P1)
@@ -173,6 +177,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::JJAP;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -180,6 +185,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::PUNCH;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -187,6 +193,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::LOWKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -194,6 +201,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::HIGHKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -201,6 +209,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::SKILL;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -241,6 +250,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::JJAP;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -248,6 +258,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::PUNCH;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -255,6 +266,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::LOWKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -262,6 +274,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::HIGHKICK;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}
@@ -269,6 +282,7 @@ void Kdash::Update()
 		{
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::SKILL;
+				attackBox->SetActivated(true);
 				frameX = 0;
 			}
 		}

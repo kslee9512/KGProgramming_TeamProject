@@ -29,6 +29,7 @@ protected:
 	int spriteWidth;
 	int spriteHeight;
 	bool isTouched;
+	bool isAlive;
 
 public:
 	virtual HRESULT Init(PPOS pPos);			// 멤버 변수의 초기화, 메모리 할당
@@ -39,7 +40,7 @@ public:
 	virtual void Attack(STATUS status);
 	virtual void KnockBack(int distance);
 	inline virtual int GetCurHp() { return this->curHp; }
-	inline virtual void GotDamage(int damage) { this->curHp -= damage; }
+	inline virtual void GotDamage(int damage) { this->curHp -= damage; if (this->curHp <= 0) { this->curHp = 1; }}
 	inline virtual FPOINT GetPos() { return this->pos; }
 	inline virtual void SetStatus(STATUS status) { this->status = status; }
 	inline virtual STATUS GetStatus() { return this->status; }
