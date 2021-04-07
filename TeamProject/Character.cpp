@@ -411,11 +411,6 @@ void Character::Move()
 	}
 }
 
-void Character::Attack(STATUS status)
-{
-
-}
-
 void Character::KnockBack(int distance)
 {
 	if (pPos == PPOS::P1) {
