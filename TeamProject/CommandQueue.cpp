@@ -24,16 +24,18 @@ HRESULT CommandQueue::Init()
 }
 
 
-bool CommandQueue::Update(string str, int miliseconds)
+bool CommandQueue::HasCommand(string str, int miliseconds)
 {
-	if (queue->empty()) return false;
 	//밀리세컨즈 단위 시간을 받아서 해당 시간만큼 time을 감소시키고
 	//해당 문자열이 있으면 반환하고 큐를 비운다.
+	if (queue->empty()) return false;
+
 	string tmpStr = "";
 	for (list<datas>::iterator iter = queue->begin(); iter != queue->end(); iter++) {
 		iter->time -= miliseconds;
-		tmpStr += iter->value;
+		tmpStr.append(string{ char{iter->value} });
 	}
+
 	if (tmpStr.find(str) != string::npos) {
 		queue->clear();
 		return true;
@@ -47,9 +49,9 @@ void CommandQueue::PopInvalidElements()
 	if (queue->empty()) return;
 
 	//sort(queue->begin(), queue->end(), compare);
-	for (list<datas>::iterator iter = queue->begin(); iter != queue->end(); iter++) {
+	for (list<datas>::iterator iter = queue->begin(); iter != queue->end(); ) {
 		if (iter->time <= 0) {
-			queue->pop_front();
+			iter = queue->erase(iter);
 		}
 		else {
 			return;

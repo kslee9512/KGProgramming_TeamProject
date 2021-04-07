@@ -4,12 +4,16 @@
 #include "Ash.h"
 #include "Kyo.h"
 #include "CheckBox.h"
+#include "CommandQueue.h"
 
 /*
 	1. ??? bin.bmp?? ?????? ????? ????? ?????.
 	2. ????? ?????? ?????? ????.bmp?? ????????.
 	3. ??????? ??? ???? ???? 1????? ???????? ????? ????
 */
+#define MAIN_TIMER_ID 0
+#define COMMAND_TIMER_ID 1
+#define COMMAND_TIMER_CYCLE 50
 
 HRESULT MainGame::Init()
 {
@@ -22,7 +26,8 @@ HRESULT MainGame::Init()
 	background = new Image();
 	background->Init("Image/BackGround/background.bmp", WINSIZE_X, WINSIZE_Y);
 
-	hTimer = (HANDLE)SetTimer(g_hWnd, 0, 10, NULL);
+	hTimer = (HANDLE)SetTimer(g_hWnd, MAIN_TIMER_ID, 10, NULL);
+	CommandTimer = (HANDLE)SetTimer(g_hWnd, COMMAND_TIMER_ID, COMMAND_TIMER_CYCLE, NULL);
 
 	//????? ?????
 	backBuffer = new Image();
@@ -120,7 +125,8 @@ void MainGame::Release()
 	delete backBuffer;
 	backBuffer = nullptr;
 
-	KillTimer(g_hWnd, 0);
+	KillTimer(g_hWnd, MAIN_TIMER_ID);
+	KillTimer(g_hWnd, COMMAND_TIMER_ID);
 }
 
 void MainGame::Update()
@@ -135,6 +141,28 @@ void MainGame::Update()
 	}
 
 	InvalidateRect(g_hWnd, NULL, false);
+}
+
+void MainGame::UpdateCommand()
+{
+	bool player1HasCommand = player1->GetKeyCache()->HasCommand("SDI", COMMAND_TIMER_CYCLE);
+	bool player2HasCommand = player2->GetKeyCache()->HasCommand(string{ char{VK_DOWN} } + string{ char{VK_LEFT} } + string{ char{VK_NUMPAD6} }, COMMAND_TIMER_CYCLE);
+
+	if (player1HasCommand && player2HasCommand) {
+		//플레이어가 동시에 사용했을 때 처리
+	}
+	else if (player1HasCommand)
+	{
+		player1->SetStatus(STATUS::SKILL); 
+		player1->SetFrameX(0);
+	}
+	else if (player2HasCommand)
+	{
+		player2->SetStatus(STATUS::SKILL);
+		player2->SetFrameX(0);
+	}
+	player1->GetKeyCache()->PopInvalidElements();
+	player2->GetKeyCache()->PopInvalidElements();
 }
 
 void MainGame::RenderCharacterChoice(HDC hdc) {
@@ -236,6 +264,7 @@ void MainGame::CheckCollision()
 }
 
 
+
 LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMessage)
@@ -243,9 +272,14 @@ LRESULT MainGame::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	case WM_CREATE:
 		break;
 	case WM_TIMER:
-		if (isInited)
+		if (wParam == MAIN_TIMER_ID)
 		{
-			this->Update();
+			if(isInited)
+				this->Update();
+		}
+		else if (wParam == COMMAND_TIMER_ID) {
+			if(gameStatus == GAMESTATUS::INGAME)
+				this->UpdateCommand();
 		}
 		break;
 	case WM_LBUTTONDOWN:

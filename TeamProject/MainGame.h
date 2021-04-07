@@ -14,6 +14,7 @@ private:
 	HDC hdc;
 	PAINTSTRUCT ps;
 	HANDLE hTimer;
+	HANDLE CommandTimer;
 	POINT ptMouse{ 0, 0 };
 	char szText[128] = "";
 
@@ -33,10 +34,12 @@ private:
 	bool isPlayer2Chosen; 
 	GAMESTATUS gameStatus;
 
+
 public:
 	HRESULT Init();
 	void Release();
 	void Update();
+	void UpdateCommand();
 	void Render(HDC hdc);
 	void RenderCharacterChoice(HDC hdc);
 	void CheckCollision();

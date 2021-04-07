@@ -2,6 +2,7 @@
 #include "Image.h"
 #include "HitBox.h"
 #include "AttackBox.h"
+#include "CommandQueue.h"
 
 HRESULT Character::Init(PPOS pPos)
 {
@@ -15,6 +16,9 @@ HRESULT Character::Init(PPOS pPos)
 
 	hitBox = new HitBox();
 	attackBox = new AttackBox;
+
+	keyCache = new CommandQueue();
+	keyCache->Init();
 
 	if (pPos == PPOS::P1)
 	{
@@ -62,6 +66,11 @@ void Character::Release()
 		}
 		delete[] image;
 		image = nullptr;
+	}
+	if (keyCache) {
+		keyCache->Release();
+		delete keyCache;
+		keyCache = nullptr;
 	}
 }
 

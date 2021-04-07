@@ -2,6 +2,7 @@
 #include "Image.h"
 #include "HitBox.h"
 #include "AttackBox.h"
+#include "CommandQueue.h"
 
 HRESULT Kyo::Init()
 {
@@ -22,6 +23,10 @@ HRESULT Kyo::Init(PPOS pPos)
 	status = STATUS::STANCE;
 	spriteWidth = 679;
 	spriteHeight = 689;
+
+	keyCache = new CommandQueue();
+	keyCache->Init();
+
 	if (pPos == PPOS::P1)
 	{
 		pos.x = 0;
@@ -133,8 +138,13 @@ void Kyo::Update()
 {
 	if (pPos == PPOS::P1)
 	{
-		if (KeyManager::GetSingleton()->IsOnceKeyDown('U'))
+		if (KeyManager::GetSingleton()->IsOnceKeyDown('S'))
 		{
+			keyCache->PushBack('S', 300);
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown('U'))
+		{
+			keyCache->PushBack('U', 300);
 			if(STATUS::STANCE<=status && status <= STATUS::BACK){
 				status = STATUS::JJAP;
 				frameX = 0;
@@ -142,6 +152,7 @@ void Kyo::Update()
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('I'))
 		{
+			keyCache->PushBack('I', 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::PUNCH;
 				frameX = 0;
@@ -149,6 +160,7 @@ void Kyo::Update()
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('J'))
 		{
+			keyCache->PushBack('J', 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::LOWKICK;
 				frameX = 0;
@@ -156,6 +168,7 @@ void Kyo::Update()
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('K'))
 		{
+			keyCache->PushBack('K', 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::HIGHKICK;
 				frameX = 0;
@@ -163,6 +176,7 @@ void Kyo::Update()
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('P'))
 		{
+			keyCache->PushBack('P', 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::SKILL;
 				frameX = 0;
@@ -170,17 +184,21 @@ void Kyo::Update()
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('A'))
 		{
+			keyCache->PushBack('A', 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
-				if (status != STATUS::BACK)
+				if (status != STATUS::BACK){
 					frameX = 0;
+				}
 				status = STATUS::BACK;
 			}
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown('D'))
 		{
+			keyCache->PushBack('D', 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
-				if (status != STATUS::WALK)
+				if (status != STATUS::WALK){
 					frameX = 0;
+				}
 				status = STATUS::WALK;
 			}
 		}
@@ -201,8 +219,13 @@ void Kyo::Update()
 	}
 	else if (pPos == PPOS::P2)
 	{
-		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD5))
+		if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_DOWN))
 		{
+			keyCache->PushBack(char{ VK_DOWN }, 300);
+		}
+		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD5))
+		{
+			keyCache->PushBack(char{ VK_NUMPAD5 }, 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::JJAP;
 				frameX = 0;
@@ -210,6 +233,7 @@ void Kyo::Update()
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD6))
 		{
+			keyCache->PushBack(char{ VK_NUMPAD6 }, 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::PUNCH;
 				frameX = 0;
@@ -217,6 +241,7 @@ void Kyo::Update()
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD2))
 		{
+			keyCache->PushBack(char{ VK_NUMPAD2 }, 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::LOWKICK;
 				frameX = 0;
@@ -224,6 +249,7 @@ void Kyo::Update()
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD3))
 		{
+			keyCache->PushBack(char{ VK_NUMPAD3 }, 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::HIGHKICK;
 				frameX = 0;
@@ -231,6 +257,7 @@ void Kyo::Update()
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_NUMPAD0))
 		{
+			keyCache->PushBack(char{ VK_NUMPAD0 }, 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
 				status = STATUS::SKILL;
 				frameX = 0;
@@ -238,20 +265,25 @@ void Kyo::Update()
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_RIGHT))
 		{
+			keyCache->PushBack(char{ VK_RIGHT }, 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
-				if (status != STATUS::BACK)
+				if (status != STATUS::BACK){
 					frameX = 0;
+				}
 				status = STATUS::BACK;
 			}
 		}
 		else if (KeyManager::GetSingleton()->IsOnceKeyDown(VK_LEFT))
 		{
+			keyCache->PushBack(char{ VK_LEFT }, 300);
 			if (STATUS::STANCE <= status && status <= STATUS::BACK) {
-				if (status != STATUS::WALK)
+				if (status != STATUS::WALK){
 					frameX = 0;
+				}
 				status = STATUS::WALK;
 			}
 		}
+
 		if (STATUS::WALK <= status && status <= STATUS::BACK)
 		{
 			if (KeyManager::GetSingleton()->IsOnceKeyUp(VK_LEFT)
